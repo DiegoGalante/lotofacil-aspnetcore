@@ -13,6 +13,8 @@ namespace LoteriaFacil.Domain.Interfaces
 
         string GetFunctionJogoPessoa(int concurse);
 
-        string GetFunctionJogoPessoa(int concurse, Guid personId);
+        string GetFunctionJsonDashBoard(int concurse = 0);
+
+        string GetFunctionJogoPessoa(Guid personId, int concurse);
     }
 }

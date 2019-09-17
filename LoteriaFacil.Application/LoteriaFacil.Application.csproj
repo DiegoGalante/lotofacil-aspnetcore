@@ -20,10 +20,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="EventSourcedNormalizers\" />
     <Folder Include="Interfaces\" />
     <Folder Include="Services\" />
     <Folder Include="ViewModels\" />
-    <Folder Include="EventSourcedNormalizers\" />
   </ItemGroup>
 
 </Project>

@@ -12,6 +12,11 @@ namespace LoteriaFacil.Application.Interfaces
         Person_LotteryViewModel GetById(Guid id);
         void Update(Person_LotteryViewModel customerViewModel);
         void Remove(Guid id);
+
+        Object GetJsonDashboard(int concurse = 0);
+
+        Object GetPersonGame(Guid personId, int concurse = 0);
+        Object GetPersonGame(int concurse = 0);
         //IList<CustomerHistoryData> GetAllHistory(Guid id);
     }
 }

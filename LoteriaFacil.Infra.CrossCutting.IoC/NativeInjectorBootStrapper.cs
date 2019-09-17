@@ -45,6 +45,8 @@ namespace LoteriaFacil.Infra.CrossCutting.IoC
             services.AddScoped<ILotteryAppService, LotteryAppService>();// novo #Lottery
             services.AddScoped<IPerson_LotteryAppService, Person_LotteryAppService>();// novo #Person_Lottery
 
+            services.AddScoped<IUtilitiesAppService, UtilitiesAppService>();
+
             // Domain - Events
             services.AddScoped<INotificationHandler<DomainNotification>, DomainNotificationHandler>();
 

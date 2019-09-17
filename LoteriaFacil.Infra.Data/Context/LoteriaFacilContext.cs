@@ -19,6 +19,7 @@ namespace LoteriaFacil.Infra.Data.Context
         public DbSet<Person> Persons { get; set; } // novo #Person
         public DbSet<Configuration> Configuration { get; set; } //novo #Configuration
         public DbSet<Type_Lottery> Type_Lottery { get; set; } //novo #Type_Lottery
+
         //public DbSet<Lottery> Lottery { get; set; } //novo #Lottery
         //public DbSet<Person_Lottery> Person_Lottery { get; set; } //novo #Person_Lottery
 
