@@ -1,12 +1,13 @@
-USE [dbloteria]
+USE [LoteriaFacil]
 GO
-/****** Object:  StoredProcedure [dbo].[SP_SAVE_GAME]    Script Date: 25/06/2018 16:05:08 ******/
+/****** Object:  StoredProcedure [dbo].[SP_SAVE_GAME]    Script Date: 17/09/2019 18:44:50 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
+
 ALTER PROCEDURE [dbo].[SP_SAVE_GAME](
-	@lot_id INT, @lot_concurse INT, @lot_dtConcurse nvarchar(10), @lot_game varchar(50), 
+	@lot_id uniqueidentifier, @lot_concurse INT, @lot_dtConcurse nvarchar(10), @lot_game varchar(50), 
 	@lot_hit15 INT, @lot_hit14 INT, @lot_hit13 INT, @lot_hit12 INT, @lot_hit11 INT,
 	@lot_shared15 DECIMAL, @lot_shared14 DECIMAL, @lot_shared13 DECIMAL, @lot_shared12 DECIMAL, @lot_shared11 DECIMAL,
 	@lot_dtNextConcurse nvarchar(10),
@@ -24,19 +25,19 @@ SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED
 
 	--IF @lot_id > 0 
 	--BEGIN
-	--	SET @contJogo = (select COUNT(lot_id) from tb_lottery WITH(NOLOCK)  where lot_id = @lot_id);
+	--	SET @contJogo = (select COUNT(lot_id) from Lottery WITH(NOLOCK)  where lot_id = @lot_id);
 	--END
 
 	--IF @contJogo = 0
 	--BEGIN
-		INSERT INTO tb_lottery
-		(lot_concurse, lot_dtConcurse, lot_game, lot_hit15, lot_hit14, lot_hit13, lot_hit12, lot_hit11, lot_shared15, lot_shared14, lot_shared13, lot_shared12, lot_shared11 ,tpj_id, lot_dtNextConcurse)
+		INSERT INTO Lottery
+		(Concurse, DtConcurse, Game, Hit15, Hit14, Hit13, Hit12, Hit11, Shared15, Shared14, Shared13, Shared12, Shared11, Type_LotteryId, DtNextConcurse)
 		VALUES
 		(@lot_concurse, @dataJogo, @lot_game, @lot_hit15,  @lot_hit14,  @lot_hit13,  @lot_hit12,  @lot_hit11, @lot_shared15,  @lot_shared14,  @lot_shared13,  @lot_shared12,  @lot_shared11, @tpj_id, @dataProximoJogo);
 	--END
 	--ELSE 
 	--BEGIN
-	--	UPDATE tb_lottery 
+	--	UPDATE Lottery 
 	--	SET lot_concurse = @lot_concurse, lot_dtConcurse = @dataJogo, lot_game=@lot_game, lot_hit15=@lot_hit15, lot_hit14=@lot_hit14, lot_hit13=@lot_hit13, lot_hit12=@lot_hit12, lot_hit11=@lot_hit11, lot_shared15=@lot_shared15, lot_shared14=@lot_shared14, lot_shared13=@lot_shared13, lot_shared12=@lot_shared12, lot_shared11=@lot_shared11, tpj_id=@tpj_id
 	--	WHERE lot_id = @lot_id;
 	--END
