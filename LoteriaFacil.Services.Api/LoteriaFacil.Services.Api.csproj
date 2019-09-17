@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
+    <UserSecretsId>6c9aaf2a-60fd-468e-915d-e918d8a0c253</UserSecretsId>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="6.1.1" />
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="7.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.7.12" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="4.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\LoteriaFacil.Application\LoteriaFacil.Application.csproj" />
+    <ProjectReference Include="..\LoteriaFacil.Infra.CrossCutting.Bus\LoteriaFacil.Infra.CrossCutting.Bus.csproj" />
+    <ProjectReference Include="..\LoteriaFacil.Infra.CrossCutting.Identity\LoteriaFacil.Infra.CrossCutting.Identity.csproj" />
+    <ProjectReference Include="..\LoteriaFacil.Infra.CrossCutting.IoC\LoteriaFacil.Infra.CrossCutting.IoC.csproj" />
+  </ItemGroup>
+
+</Project>
