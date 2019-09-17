@@ -4,14 +4,16 @@ using LoteriaFacil.Infra.Data.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace LoteriaFacil.Infra.Data.Migrations
 {
     [DbContext(typeof(LoteriaFacilContext))]
-    partial class LoteriaFacilContextModelSnapshot : ModelSnapshot
+    [Migration("20190917141149_populando_banco_inicial")]
+    partial class populando_banco_inicial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

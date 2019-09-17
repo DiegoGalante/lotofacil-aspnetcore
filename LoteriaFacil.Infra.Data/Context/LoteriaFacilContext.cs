@@ -1,4 +1,4 @@
-﻿//using LoteriaFacil.Domain.Models;
+﻿using LoteriaFacil.Domain.Models;
 using LoteriaFacil.Infra.Data.Mappings;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -15,15 +15,24 @@ namespace LoteriaFacil.Infra.Data.Context
             _env = env;
         }
 
-        //public DbSet<Customer> Customers { get; set; }
-        //public DbSet<Product> Products { get; set; }
+        
+        public DbSet<Person> Persons { get; set; } // novo #Person
+        public DbSet<Configuration> Configuration { get; set; } //novo #Configuration
+        public DbSet<Type_Lottery> Type_Lottery { get; set; } //novo #Type_Lottery
+        //public DbSet<Lottery> Lottery { get; set; } //novo #Lottery
+        //public DbSet<Person_Lottery> Person_Lottery { get; set; } //novo #Person_Lottery
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //modelBuilder.ApplyConfiguration(new CustomerMap());
+            modelBuilder.ApplyConfiguration(new PersonMap()); //novo - #Person
 
-            //?
-           // modelBuilder.ApplyConfiguration(new ProductMap());
+            modelBuilder.ApplyConfiguration(new ConfigurationMap()); //novo - #Configuration
+
+            modelBuilder.ApplyConfiguration(new Type_LotteryMap()); //novo - #Type_Lottery
+
+            //modelBuilder.ApplyConfiguration(new LotteryMap()); //novo - #Lottery
+
+           // modelBuilder.ApplyConfiguration(new Person_LotteryMap()); //novo - #Person_Lottery
 
             base.OnModelCreating(modelBuilder);
         }
