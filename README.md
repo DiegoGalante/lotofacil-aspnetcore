@@ -35,7 +35,6 @@ Com este sistema é possível aplicar os conhecimento:
 
 
 # Imagens do Sistema
-* Sistema ainda não funcional, mas ficará dessa maneira.
 
 ### Página Principal
 !['Página Principal'](https://github.com/DiegoGalante/loteriafacil/blob/master/app/static/img/images_app/1_index_0.png)
