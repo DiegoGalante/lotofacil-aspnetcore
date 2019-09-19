@@ -73,10 +73,7 @@ namespace LoteriaFacil.Infra.Data.Mappings
                 .HasColumnType("datetime")
                 .IsRequired();
 
-            //builder.Property(c => c.Type_Lottery)
-            //    .HasColumnType("nvarchar(450)");
-
-            //builder.HasOne(c=>c.Type_Lottery);
+            builder.HasOne(c => c.TypeLottery);
 
         }
     }

@@ -15,22 +15,22 @@ namespace LoteriaFacil.Domain.Validations
 
         }
 
-        //protected void ValidateType_LotteryId()
+        //protected void ValidateTypeLotteryId()
         //{
-        //    RuleFor(c => c.Type_LotteryId)
+        //    RuleFor(c => c.TypeLotteryId)
         //        .NotNull()
         //        .NotEqual(0);
         //}
 
-        protected void ValidateType_LotteryId()
+        protected void ValidateTypeLotteryId()
         {
-            RuleFor(c => c.Type_Lottery.Id)
+            RuleFor(c => c.TypeLottery.Id)
                 .NotEqual(Guid.Empty);
         }
 
-        //protected void ValidateType_LotteryId()
+        //protected void ValidateTypeLotteryId()
         //{
-        //    RuleFor(c => c.Type_LotteryId)
+        //    RuleFor(c => c.TypeLotteryId)
         //        .NotEqual(Guid.Empty);
         //}
 

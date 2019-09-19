@@ -15,6 +15,20 @@
     <Compile Remove="Migrations\20190917134504_migration_inicial.Designer.cs" />
     <Compile Remove="Migrations\20190917140037_migration_inicial.cs" />
     <Compile Remove="Migrations\20190917140037_migration_inicial.Designer.cs" />
+    <Compile Remove="Migrations\20190919191511_sql_banco.cs" />
+    <Compile Remove="Migrations\20190919191511_sql_banco.Designer.cs" />
+    <Compile Remove="Migrations\20190919192025_sql_banco.cs" />
+    <Compile Remove="Migrations\20190919192025_sql_banco.Designer.cs" />
+    <Compile Remove="Migrations\20190919194336_Mudança_Nome_Tabelas.cs" />
+    <Compile Remove="Migrations\20190919194336_Mudança_Nome_Tabelas.Designer.cs" />
+    <Compile Remove="Migrations\20190919194636_Remocao_Tabelas.cs" />
+    <Compile Remove="Migrations\20190919194636_Remocao_Tabelas.Designer.cs" />
+    <Compile Remove="Migrations\20190919195608_Add_Tabelas_Com_Novos_Nomes.cs" />
+    <Compile Remove="Migrations\20190919195608_Add_Tabelas_Com_Novos_Nomes.Designer.cs" />
+    <Compile Remove="Migrations\20190919195920_Add_Nova_TypeLottery.cs" />
+    <Compile Remove="Migrations\20190919195920_Add_Nova_TypeLottery.Designer.cs" />
+    <Compile Remove="Migrations\20190919200201_Add_Nova_TypeLottery.cs" />
+    <Compile Remove="Migrations\20190919200201_Add_Nova_TypeLottery.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

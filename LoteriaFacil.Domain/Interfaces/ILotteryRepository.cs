@@ -7,9 +7,9 @@ namespace LoteriaFacil.Domain.Interfaces
 {
     public interface ILotteryRepository : IRepository<Lottery>
     {
-        //Lottery GetByType_LotteryId(int type_lotteryId);
+        //Lottery GetByTypeLotteryId(int TypeLotteryId);
 
-        Lottery GetByType_LotteryId(Guid type_lotteryId);
+        Lottery GetByTypeLotteryId(Guid TypeLotteryId);
 
         string GetFunctionJsonDashboard(int concurse);
 
@@ -35,12 +35,12 @@ namespace LoteriaFacil.Domain.Interfaces
         /// <param name="dtNextConcurse">
         /// Formato da data yyyy/mm/dd.
         /// </param>
-        /// <param name="type_LotteryId"></param>
+        /// <param name="TypeLotteryId"></param>
         void SetProcedureSP_SAVE_GAME(Guid lotteryId, int concurse, string dtConcurse, string game
                                         , int hit15, int hit14, int hit13, int hit12, int hit11
                                         , decimal shared15, decimal shared14, decimal shared13, decimal shared12, decimal shared11
-                                        , string dtNextConcurse, Guid type_LotteryId);
+                                        , string dtNextConcurse, Guid TypeLotteryId);
 
-        void SetProcedureSP_CHECK_GAME(int concurse, Guid type_LotteryId, Guid personId);
+        void SetProcedureSP_CHECK_GAME(int concurse, Guid TypeLotteryId, Guid personId);
     }
 }

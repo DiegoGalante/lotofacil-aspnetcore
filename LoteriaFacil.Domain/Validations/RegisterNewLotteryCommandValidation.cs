@@ -19,7 +19,7 @@ namespace LoteriaFacil.Domain.Validations
             ValidateShared13();
             ValidateShared12();
             ValidateShared11();
-            ValidateType_LotteryId();
+            ValidateTypeLotteryId();
             ValidateDtNextConcurse();
         }
     }

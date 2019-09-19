@@ -10,9 +10,9 @@ namespace LoteriaFacil.Application.AutoMapper
         {
             CreateMap<Person, PersonViewModel>(); //novo - #Person
             CreateMap<Configuration, ConfigurationViewModel>(); //novo - #Configuration
-            CreateMap<Type_Lottery, Type_LotteryViewModel>(); //novo - #Type_Lottery
+            CreateMap<TypeLottery, TypeLotteryViewModel>(); //novo - #TypeLottery
             CreateMap<Lottery, LotteryViewModel>(); //novo - #Lottery
-            CreateMap<Person_Lottery, Person_LotteryViewModel>(); //novo - #Person_LotteryLottery
+            CreateMap<PersonLottery, PersonLotteryViewModel>(); //novo - #PersonLotteryLottery
         }
     }
 }

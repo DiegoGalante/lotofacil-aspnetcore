@@ -15,13 +15,12 @@ namespace LoteriaFacil.Infra.Data.Context
             _env = env;
         }
 
-        
-        public DbSet<Person> Persons { get; set; } // novo #Person
-        public DbSet<Configuration> Configuration { get; set; } //novo #Configuration
-        public DbSet<Type_Lottery> Type_Lottery { get; set; } //novo #Type_Lottery
 
-        //public DbSet<Lottery> Lottery { get; set; } //novo #Lottery
-        //public DbSet<Person_Lottery> Person_Lottery { get; set; } //novo #Person_Lottery
+        public DbSet<Person> Person { get; set; } // novo #Person
+        public DbSet<Configuration> Configuration { get; set; } //novo #Configuration
+        public DbSet<TypeLottery> TypeLottery { get; set; } //novo #TypeLottery
+        public DbSet<Lottery> Lottery { get; set; } //novo #Lottery
+        public DbSet<PersonLottery> PersonLottery { get; set; } //novo #PersonLottery
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -29,11 +28,11 @@ namespace LoteriaFacil.Infra.Data.Context
 
             modelBuilder.ApplyConfiguration(new ConfigurationMap()); //novo - #Configuration
 
-            modelBuilder.ApplyConfiguration(new Type_LotteryMap()); //novo - #Type_Lottery
+            modelBuilder.ApplyConfiguration(new TypeLotteryMap()); //novo - #TypeLottery
 
-            //modelBuilder.ApplyConfiguration(new LotteryMap()); //novo - #Lottery
+            modelBuilder.ApplyConfiguration(new LotteryMap()); //novo - #Lottery
 
-           // modelBuilder.ApplyConfiguration(new Person_LotteryMap()); //novo - #Person_Lottery
+            modelBuilder.ApplyConfiguration(new PersonLotteryMap()); //novo - #PersonLottery
 
             base.OnModelCreating(modelBuilder);
         }
@@ -45,7 +44,7 @@ namespace LoteriaFacil.Infra.Data.Context
                 .SetBasePath(_env.ContentRootPath)
                 .AddJsonFile("appsettings.json")
                 .Build();
-            
+
             // define the database to use
             optionsBuilder.UseSqlServer(config.GetConnectionString("DefaultConnection"));
         }

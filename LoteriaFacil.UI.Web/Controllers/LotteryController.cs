@@ -10,15 +10,15 @@ namespace LoteriaFacil.UI.Web.Controllers
     public class LotteryController : BaseController
     {
         private readonly ILotteryAppService _lotteryAppService;
-        private readonly IPerson_LotteryAppService _person_lotteryAppService;
+        private readonly IPersonLotteryAppService _PersonLotteryAppService;
 
         public LotteryController(
             ILotteryAppService lotteryAppService,
-            IPerson_LotteryAppService person_lotteryAppService,
+            IPersonLotteryAppService PersonLotteryAppService,
             INotificationHandler<DomainNotification> notifications) : base(notifications)
         {
             _lotteryAppService = lotteryAppService;
-            _person_lotteryAppService = person_lotteryAppService;
+            _PersonLotteryAppService = PersonLotteryAppService;
         }
 
         [HttpGet]
@@ -45,21 +45,21 @@ namespace LoteriaFacil.UI.Web.Controllers
         [Route("/load")]
         public object Load()
         {
-            return _person_lotteryAppService.GetJsonDashboard();
+            return _PersonLotteryAppService.GetJsonDashboard();
         }
 
         [HttpPost]
         [Route("/loadGames")]
         public object LoadGames()
         {
-            return _person_lotteryAppService.GetPersonGame();
+            return _PersonLotteryAppService.GetPersonGame();
         }
 
         [HttpPost]
         [Route("/loadGames/{concurse:int}")]
         public object LoadGames(int concurse)
         {
-            return _person_lotteryAppService.GetPersonGame(concurse);
+            return _PersonLotteryAppService.GetPersonGame(concurse);
         }
     }
 }

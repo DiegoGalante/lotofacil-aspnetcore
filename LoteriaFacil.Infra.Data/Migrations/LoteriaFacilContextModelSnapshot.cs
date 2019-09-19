@@ -55,6 +55,74 @@ namespace LoteriaFacil.Infra.Data.Migrations
                     b.ToTable("Configuration");
                 });
 
+            modelBuilder.Entity("LoteriaFacil.Domain.Models.Lottery", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("Id");
+
+                    b.Property<int>("Concurse")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("DtConcurse")
+                        .HasColumnType("datetime");
+
+                    b.Property<DateTime>("DtNextConcurse")
+                        .HasColumnType("datetime");
+
+                    b.Property<string>("Game")
+                        .IsRequired()
+                        .HasColumnType("varchar(200)");
+
+                    b.Property<int>("Hit11")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Hit12")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Hit13")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Hit14")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Hit15")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("Shared11")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("decimal(10, 2)")
+                        .HasDefaultValue(0m);
+
+                    b.Property<decimal>("Shared12")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("decimal(10, 2)")
+                        .HasDefaultValue(0m);
+
+                    b.Property<decimal>("Shared13")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("decimal(10, 2)")
+                        .HasDefaultValue(0m);
+
+                    b.Property<decimal>("Shared14")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("decimal(10, 2)")
+                        .HasDefaultValue(0m);
+
+                    b.Property<decimal>("Shared15")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("decimal(10, 2)")
+                        .HasDefaultValue(0m);
+
+                    b.Property<Guid?>("TypeLotteryId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TypeLotteryId");
+
+                    b.ToTable("Lottery");
+                });
+
             modelBuilder.Entity("LoteriaFacil.Domain.Models.Person", b =>
                 {
                     b.Property<Guid>("Id")
@@ -85,10 +153,55 @@ namespace LoteriaFacil.Infra.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Persons");
+                    b.ToTable("Person");
                 });
 
-            modelBuilder.Entity("LoteriaFacil.Domain.Models.Type_Lottery", b =>
+            modelBuilder.Entity("LoteriaFacil.Domain.Models.PersonLottery", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("Id");
+
+                    b.Property<int>("Concurse")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Game")
+                        .IsRequired()
+                        .HasColumnType("varchar(200)")
+                        .HasMaxLength(200);
+
+                    b.Property<DateTime?>("Game_Checked")
+                        .HasColumnType("datetime");
+
+                    b.Property<DateTime>("Game_Register")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime")
+                        .HasDefaultValueSql("GETDATE()");
+
+                    b.Property<int>("Hits")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(0);
+
+                    b.Property<Guid?>("LotteryId");
+
+                    b.Property<Guid?>("PersonId");
+
+                    b.Property<decimal>("Ticket_Amount")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("decimal(10, 2)")
+                        .HasDefaultValue(0m);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("LotteryId");
+
+                    b.HasIndex("PersonId");
+
+                    b.ToTable("PersonLottery");
+                });
+
+            modelBuilder.Entity("LoteriaFacil.Domain.Models.TypeLottery", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -114,7 +227,25 @@ namespace LoteriaFacil.Infra.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Type_Lottery");
+                    b.ToTable("TypeLottery");
+                });
+
+            modelBuilder.Entity("LoteriaFacil.Domain.Models.Lottery", b =>
+                {
+                    b.HasOne("LoteriaFacil.Domain.Models.TypeLottery", "TypeLottery")
+                        .WithMany()
+                        .HasForeignKey("TypeLotteryId");
+                });
+
+            modelBuilder.Entity("LoteriaFacil.Domain.Models.PersonLottery", b =>
+                {
+                    b.HasOne("LoteriaFacil.Domain.Models.Lottery", "Lottery")
+                        .WithMany()
+                        .HasForeignKey("LotteryId");
+
+                    b.HasOne("LoteriaFacil.Domain.Models.Person", "Person")
+                        .WithMany()
+                        .HasForeignKey("PersonId");
                 });
 #pragma warning restore 612, 618
         }

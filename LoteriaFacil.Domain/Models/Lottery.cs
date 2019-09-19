@@ -6,7 +6,7 @@ namespace LoteriaFacil.Domain.Models
 {
     public class Lottery : Entity
     {
-        public Lottery(Guid id, int concurse, DateTime dtconcurse, string game, int hit15, int hit14, int hit13, int hit12, int hit11, decimal shared15, decimal shared14, decimal shared13, decimal shared12, decimal shared11, DateTime dtnextconcurse, Type_Lottery type_lottery)
+        public Lottery(Guid id, int concurse, DateTime dtconcurse, string game, int hit15, int hit14, int hit13, int hit12, int hit11, decimal shared15, decimal shared14, decimal shared13, decimal shared12, decimal shared11, DateTime dtnextconcurse, TypeLottery TypeLottery)
         {
             this.Id = id;
             this.Concurse = concurse;
@@ -23,7 +23,7 @@ namespace LoteriaFacil.Domain.Models
             this.Shared12 = shared12;
             this.Shared11 = shared11;
             this.DtNextConcurse = dtnextconcurse;
-            this.Type_Lottery = type_lottery;
+            this.TypeLottery = TypeLottery;
         }
 
         public Lottery()
@@ -100,7 +100,7 @@ namespace LoteriaFacil.Domain.Models
         /// <summary>
         /// Tipo odo jogo ID.
         /// </summary>
-        public Type_Lottery Type_Lottery { get; protected set; }
+        public TypeLottery TypeLottery { get; protected set; }
     }
 }
 

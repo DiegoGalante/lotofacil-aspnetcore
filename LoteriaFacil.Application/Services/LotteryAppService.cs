@@ -22,11 +22,11 @@ namespace LoteriaFacil.Application.Services
         private readonly IEventStoreRepository _eventStoreRepository;
         private readonly IMediatorHandler Bus;
 
-        private readonly IType_LotteryRepository _type_LotteryRepository;
+        private readonly ITypeLotteryRepository _TypeLotteryRepository;
 
         public LotteryAppService(IMapper mapper,
                                  ILotteryRepository lotteryRepository,
-                                 IType_LotteryRepository type_LotteryRepository,
+                                 ITypeLotteryRepository TypeLotteryRepository,
                                  IMediatorHandler bus,
                                  IEventStoreRepository eventStoreRepository)
         {
@@ -35,7 +35,7 @@ namespace LoteriaFacil.Application.Services
             _eventStoreRepository = eventStoreRepository;
             Bus = bus;
 
-            _type_LotteryRepository = type_LotteryRepository;
+            _TypeLotteryRepository = TypeLotteryRepository;
         }
 
         public void Dispose()
@@ -105,7 +105,7 @@ namespace LoteriaFacil.Application.Services
              25 - Valor Rateio 12 Acertos
              26 - Valor Rateio 11 Acertos
              */
-            Type_Lottery tpl = _type_LotteryRepository.GetByName();
+            TypeLottery tpl = _TypeLotteryRepository.GetByName();
 
             if (File.Exists(caminho))
             {
@@ -237,7 +237,7 @@ namespace LoteriaFacil.Application.Services
                                     Shared12 = Acertos.Shared12,
                                     Shared11 = Acertos.Shared11,
                                     DtNextConcurse = dataConcurso.DayOfWeek == DayOfWeek.Friday ? dataConcurso.AddDays(3) : dataConcurso.AddDays(2),
-                                    Type_Lottery = tpl
+                                    TypeLottery = tpl
                                 };
 
                                 jogos.Add(jogo);
@@ -246,7 +246,7 @@ namespace LoteriaFacil.Application.Services
                     }
                 }
 
-                //Register(jogos);
+                Register(jogos);
             }
             #endregion Codigo
         }

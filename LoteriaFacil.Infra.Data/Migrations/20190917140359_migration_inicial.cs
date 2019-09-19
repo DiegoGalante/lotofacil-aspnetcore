@@ -43,7 +43,7 @@ namespace LoteriaFacil.Infra.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Type_Lottery",
+                name: "TypeLottery",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
@@ -55,7 +55,7 @@ namespace LoteriaFacil.Infra.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Type_Lottery", x => x.Id);
+                    table.PrimaryKey("PK_TypeLottery", x => x.Id);
                 });
         }
 
@@ -68,7 +68,7 @@ namespace LoteriaFacil.Infra.Data.Migrations
                 name: "Persons");
 
             migrationBuilder.DropTable(
-                name: "Type_Lottery");
+                name: "TypeLottery");
 
             migrationBuilder.CreateTable(
                 name: "Customers",

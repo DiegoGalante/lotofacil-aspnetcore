@@ -77,6 +77,6 @@ namespace LoteriaFacil.Domain.Commands
         /// <summary>
         /// Tipo odo jogo ID.
         /// </summary>
-        public Type_Lottery Type_Lottery { get; protected set; }
+        public TypeLottery TypeLottery { get; protected set; }
     }
 }

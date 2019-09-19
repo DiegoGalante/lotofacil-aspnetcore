@@ -90,7 +90,7 @@ namespace LoteriaFacil.Infra.Data.Migrations
                     b.ToTable("Persons");
                 });
 
-            modelBuilder.Entity("LoteriaFacil.Domain.Models.Type_Lottery", b =>
+            modelBuilder.Entity("LoteriaFacil.Domain.Models.TypeLottery", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -116,7 +116,7 @@ namespace LoteriaFacil.Infra.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Type_Lottery");
+                    b.ToTable("TypeLottery");
                 });
 #pragma warning restore 612, 618
         }

@@ -36,15 +36,15 @@ namespace LoteriaFacil.Domain.CommandHandlers
                 NotifyValidationErrors(message);
                 return Task.FromResult(false);
             }
-            
+
             var lottery = new Lottery(Guid.NewGuid(),
                                       message.Concurse, message.DtConcurse, message.Game,
                                       message.Hit15, message.Hit14, message.Hit13, message.Hit12, message.Hit11,
                                       message.Shared15, message.Shared14, message.Shared13, message.Shared12, message.Shared11,
-                                      message.DtNextConcurse, message.Type_Lottery);
+                                      message.DtNextConcurse, message.TypeLottery);
 
 
-            if (_lotteryRepository.GetById(lottery.Id) != null && _lotteryRepository.GetByType_LotteryId(lottery.Type_Lottery.Id) != null)
+            if (_lotteryRepository.GetById(lottery.Id) != null && _lotteryRepository.GetByTypeLotteryId(lottery.TypeLottery.Id) != null)
             {
                 Bus.RaiseEvent(new DomainNotification(message.MessageType, "The Lottery ID has already been taken."));
                 return Task.FromResult(false);
@@ -55,9 +55,9 @@ namespace LoteriaFacil.Domain.CommandHandlers
             if (Commit())
             {
                 Bus.RaiseEvent(new LotteryRegisteredEvent(lottery.Id, lottery.Concurse, lottery.DtConcurse, lottery.Game,
-                                                          lottery.Hit15, lottery.Hit14, lottery.Hit13, lottery.Hit12, lottery.Hit11,
-                                                          lottery.Shared15, lottery.Shared14, lottery.Shared13, lottery.Shared12, lottery.Shared11,
-                                                          lottery.DtNextConcurse, lottery.Type_Lottery));
+                                                           lottery.Hit15, lottery.Hit14, lottery.Hit13, lottery.Hit12, lottery.Hit11,
+                                                           lottery.Shared15, lottery.Shared14, lottery.Shared13, lottery.Shared12, lottery.Shared11,
+                                                           lottery.DtNextConcurse, lottery.TypeLottery));
 
             }
 
@@ -76,7 +76,7 @@ namespace LoteriaFacil.Domain.CommandHandlers
                                       message.Concurse, message.DtConcurse, message.Game,
                                       message.Hit15, message.Hit14, message.Hit13, message.Hit12, message.Hit11,
                                       message.Shared15, message.Shared14, message.Shared13, message.Shared12, message.Shared11,
-                                      message.DtNextConcurse, message.Type_Lottery);
+                                      message.DtNextConcurse, message.TypeLottery);
 
             var existingLottery = _lotteryRepository.GetById(lottery.Id);
 
@@ -96,7 +96,7 @@ namespace LoteriaFacil.Domain.CommandHandlers
                 Bus.RaiseEvent(new LotteryUpdatedEvent(lottery.Id, lottery.Concurse, lottery.DtConcurse, lottery.Game,
                                                           lottery.Hit15, lottery.Hit14, lottery.Hit13, lottery.Hit12, lottery.Hit11,
                                                           lottery.Shared15, lottery.Shared14, lottery.Shared13, lottery.Shared12, lottery.Shared11,
-                                                          lottery.DtNextConcurse, lottery.Type_Lottery));
+                                                          lottery.DtNextConcurse, lottery.TypeLottery));
             }
 
             return Task.FromResult(true);

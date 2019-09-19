@@ -6,7 +6,7 @@ namespace LoteriaFacil.Domain.Commands
 {
     public class RegisterNewLotteryCommand : LotteryCommand
     {
-        public RegisterNewLotteryCommand(int concurse, DateTime dtconcurse, string game, int hit15, int hit14, int hit13, int hit12, int hit11, decimal shared15, decimal shared14, decimal shared13, decimal shared12, decimal shared11, DateTime dtnextconcurse, Type_Lottery type_lottery)
+        public RegisterNewLotteryCommand(int concurse, DateTime dtconcurse, string game, int hit15, int hit14, int hit13, int hit12, int hit11, decimal shared15, decimal shared14, decimal shared13, decimal shared12, decimal shared11, DateTime dtnextconcurse, TypeLottery typeLottery)
         {
             Concurse = concurse;
             DtConcurse = dtconcurse;
@@ -22,7 +22,7 @@ namespace LoteriaFacil.Domain.Commands
             Shared12 = shared12;
             Shared11 = shared11;
             DtNextConcurse = dtnextconcurse;
-            Type_Lottery = type_lottery;
+            TypeLottery = typeLottery;
         }
 
         public override bool IsValid()

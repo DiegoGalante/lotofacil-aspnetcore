@@ -7,7 +7,7 @@ namespace LoteriaFacil.Domain.Events
 {
     public class LotteryRegisteredEvent : Event
     {
-        public LotteryRegisteredEvent(Guid id, int concurse, DateTime dtconcurse, string game, int hit15, int hit14, int hit13, int hit12, int hit11, decimal shared15, decimal shared14, decimal shared13, decimal shared12, decimal shared11, DateTime dtnextconcurse, Type_Lottery type_lottery)
+        public LotteryRegisteredEvent(Guid id, int concurse, DateTime dtconcurse, string game, int hit15, int hit14, int hit13, int hit12, int hit11, decimal shared15, decimal shared14, decimal shared13, decimal shared12, decimal shared11, DateTime dtnextconcurse, TypeLottery TypeLottery)
         {
             Id = id;
             Concurse = concurse;
@@ -24,7 +24,7 @@ namespace LoteriaFacil.Domain.Events
             Shared12 = shared12;
             Shared11 = shared11;
             DtNextConcurse = dtnextconcurse;
-            Type_Lottery = type_lottery;
+            TypeLottery = TypeLottery;
             AggregateId = id;
         }
 
@@ -99,6 +99,6 @@ namespace LoteriaFacil.Domain.Events
         /// <summary>
         /// Tipo odo jogo ID.
         /// </summary>
-        public Type_Lottery Type_Lottery { get; private set; }
+        public TypeLottery TypeLottery { get; private set; }
     }
 }

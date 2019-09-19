@@ -114,6 +114,6 @@ namespace LoteriaFacil.Application.ViewModels
         /// </summary>
         [Required(ErrorMessage = "The Tipo do Jogo ID is Required")]
         [DisplayName("Tipo do Jogo ID")]
-        public Type_Lottery Type_Lottery { get;  set; }
+        public TypeLottery TypeLottery { get;  set; }
     }
 }
