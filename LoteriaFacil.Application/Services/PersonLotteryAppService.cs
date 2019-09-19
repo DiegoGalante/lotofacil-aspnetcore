@@ -17,18 +17,21 @@ namespace LoteriaFacil.Application.Services
     {
         private readonly IMapper _mapper;
         private readonly IPersonLotteryRepository _PersonLotteryRepository;
+        private readonly ILotteryRepository _LotteryRepository;
         private readonly IUtilitiesAppService _utilitiesAppService;
         private readonly IEventStoreRepository _eventStoreRepository;
         private readonly IMediatorHandler Bus;
 
         public PersonLotteryAppService(IMapper mapper,
                                         IPersonLotteryRepository PersonLotteryRepository,
+                                        ILotteryRepository lotteryRepository,
                                         IUtilitiesAppService utilitiesAppService,
                                         IEventStoreRepository eventStoreRepository,
                                         IMediatorHandler bus)
         {
             _mapper = mapper;
             _PersonLotteryRepository = PersonLotteryRepository;
+            _LotteryRepository = lotteryRepository;
             _utilitiesAppService = utilitiesAppService;
             _eventStoreRepository = eventStoreRepository;
             Bus = bus;
@@ -64,7 +67,10 @@ namespace LoteriaFacil.Application.Services
 
         public Object GetJsonDashboard(int concurse = 0)
         {
-            //_PersonLotteryRepository.GetFunctionJsonDashBoard(0);
+            if (concurse == 0)
+                concurse = _LotteryRepository.GetLast().Concurse;
+
+            _PersonLotteryRepository.GetFunctionJsonDashBoard(concurse);
 
             //object retorno = new { concurse = _PersonLotteryRepository.GetFunctionJsonDashBoard(concurse), personGame = _PersonLotteryRepository.GetFunctionJogoPessoa(concurse) };
 

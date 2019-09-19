@@ -28,7 +28,8 @@ namespace LoteriaFacil.Infra.Data.Repository
 
         public string GetFunctionJogoPessoa(int concurse)
         {
-            return DbSet.FromSql("SELECT dbo.JogoPessoa", concurse).ToString();
+            string teste =  DbSet.FromSql("SELECT dbo.JogoPessoa", concurse).ToString();
+            return teste;
         }
 
         public string GetFunctionJogoPessoa(Guid personId, int concurse)
@@ -38,7 +39,9 @@ namespace LoteriaFacil.Infra.Data.Repository
 
         public string GetFunctionJsonDashBoard(int concurse = 0)
         {
-            return DbSet.FromSql("SELECT dbo.jsonDashboard", concurse).ToString();
+            var teste = DbSet.FromSql("SELECT dbo.jsonDashboard", concurse);
+
+            return "";
         }
     }
 }

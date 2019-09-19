@@ -33,6 +33,11 @@ namespace LoteriaFacil.Infra.Data.Repository
             return DbSet.FromSql("SELECT dbo.JsonDashboard", concurse).ToString();
         }
 
+        public Lottery GetLast()
+        {
+            return DbSet.FirstOrDefault();
+        }
+
         public void SetProcedureSP_CHECK_GAME(int concurse, Guid TypeLotteryId, Guid personId)
         {
             DbSet.FromSql("SP_SAVE_GAME {0}, {2}, {3}", concurse, TypeLotteryId, personId);
