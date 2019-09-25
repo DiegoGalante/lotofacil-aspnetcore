@@ -36,22 +36,23 @@ RETURN
 	--ELSE
 	-- BEGIN
 
-				SELECT TOP 1 
+			SELECT TOP 1
+				 Id,
 				 Concurse, 
 				 FORMAT(DtConcurse, 'dd/MM/yyyy') as DtConcurse,
 				 --FORMAT(lot_dtConcurse, 'dd/MM/yyyy hh:mm:ss'),
-				 dbo.INITCAP(FORMAT(DtConcurse, 'D')) as 'data_extenso',
+				 dbo.INITCAP(FORMAT(DtConcurse, 'D')) as 'DtExtense',
 				 Game,
 				 Hit15, Shared15, 
-				 (SELECT TOP 1 cast((ISNULL(Shared15, 100)*100/ISNULL((SELECT TOP 1  CASE WHEN Shared15 = 0 THEN 100 ELSE Shared15 END   from Lottery WHERE Concurse = (SELECT TOP 1 Concurse -1 from Lottery order by Concurse desc )	order by Concurse desc), 100) - 100) as decimal(10,2)) from Lottery order by Concurse desc)  as '_15Porcentagem',
+				 (SELECT TOP 1 cast((ISNULL(Shared15, 100)*100/ISNULL((SELECT TOP 1  CASE WHEN Shared15 = 0 THEN 100 ELSE Shared15 END   from Lottery WHERE Concurse = (SELECT TOP 1 Concurse -1 from Lottery order by Concurse desc )	order by Concurse desc), 100) - 100) as decimal(10,2)) from Lottery order by Concurse desc)  as 'Percent15',
 				 Hit14, Shared14,  
-				 (SELECT TOP 1 cast((Shared14*100/(SELECT TOP 1  Shared14 from Lottery 	WHERE Concurse = (SELECT TOP 1 Concurse -1 from Lottery order by Concurse desc )	order by Concurse desc) - 100) as decimal(10,2)) from Lottery order by Concurse desc)  as '_14Porcentagem',
+				 (SELECT TOP 1 cast((Shared14*100/(SELECT TOP 1  Shared14 from Lottery 	WHERE Concurse = (SELECT TOP 1 Concurse -1 from Lottery order by Concurse desc )	order by Concurse desc) - 100) as decimal(10,2)) from Lottery order by Concurse desc)  as 'Percent14',
 				 Hit13, Shared13,  
-				 (SELECT TOP 1 cast((Shared13*100/(SELECT TOP 1  Shared13 from Lottery 	WHERE Concurse = (SELECT TOP 1 Concurse -1 from Lottery order by Concurse desc )	order by Concurse desc) - 100) as decimal(10,2)) from Lottery order by Concurse desc)  as '_13Porcentagem',
+				 (SELECT TOP 1 cast((Shared13*100/(SELECT TOP 1  Shared13 from Lottery 	WHERE Concurse = (SELECT TOP 1 Concurse -1 from Lottery order by Concurse desc )	order by Concurse desc) - 100) as decimal(10,2)) from Lottery order by Concurse desc)  as 'Percent13',
 				 Hit12, Shared12,  
-				 (SELECT TOP 1 cast((Shared12*100/(SELECT TOP 1  Shared12 from Lottery 	WHERE Concurse = (SELECT TOP 1 Concurse -1 from Lottery order by Concurse desc )	order by Concurse desc) - 100) as decimal(10,2)) from Lottery order by Concurse desc)  as '_12Porcentagem',
+				 (SELECT TOP 1 cast((Shared12*100/(SELECT TOP 1  Shared12 from Lottery 	WHERE Concurse = (SELECT TOP 1 Concurse -1 from Lottery order by Concurse desc )	order by Concurse desc) - 100) as decimal(10,2)) from Lottery order by Concurse desc)  as 'Percent12',
 				 Hit11, Shared11,
-				 (SELECT TOP 1 cast((Shared11*100/(SELECT TOP 1  Shared11 from Lottery 	WHERE Concurse = (SELECT TOP 1 Concurse -1 from Lottery order by Concurse desc )	order by Concurse desc) - 100) as decimal(10,2)) from Lottery order by Concurse desc)  as '_11Porcentagem'
+				 (SELECT TOP 1 cast((Shared11*100/(SELECT TOP 1  Shared11 from Lottery 	WHERE Concurse = (SELECT TOP 1 Concurse -1 from Lottery order by Concurse desc )	order by Concurse desc) - 100) as decimal(10,2)) from Lottery order by Concurse desc)  as 'Percent11'
 				FROM Lottery
 				WHERE
 					TypeLotteryId = (select top 1 Id from TypeLottery)

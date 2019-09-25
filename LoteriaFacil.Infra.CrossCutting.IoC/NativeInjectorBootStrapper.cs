@@ -98,6 +98,9 @@ namespace LoteriaFacil.Infra.CrossCutting.IoC
             services.AddScoped<ILotteryRepository, LotteryRepository>(); // - novo #Lottery
             services.AddScoped<IPersonLotteryRepository, PersonLotteryRepository>(); // - novo #PersonLottery
 
+            services.AddScoped<IJsonDashboardRepository, JsonDashboardRepository>(); // - novo #JsonDashboard
+            services.AddScoped<IPersonGameRepository, PersonGameRepository>(); // - novo #GamePerson
+
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<LoteriaFacilContext>();
 

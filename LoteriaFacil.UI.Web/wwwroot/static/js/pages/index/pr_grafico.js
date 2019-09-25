@@ -95,10 +95,15 @@ function carregaPagina(concurse = 0) {
             atualizaPontos(12, data.concurse.hit12, data.concurse.shared12, data.concurse.percent12);
             atualizaPontos(11, data.concurse.hit11, data.concurse.shared11, data.concurse.percent11);
 
-            montaGrafico(data.concurse.game, []);
-            console.log("GRAFICO PRINCIPAL..OK");
+            if (data.personGame != null && data.personGame.length > 0) {
+                montaGrafico(data.concurse.game, data.PersonGame);
+            }
+            else {
+                montaGrafico(data.concurse.game, []);
+                loadGames();
+            }
 
-            loadGames();
+            console.log("GRAFICO PRINCIPAL..OK");
         }),
         error: (function (erro) {
             console.log("ERRO AO CARREGAR GRAFICO PRINCIPAL");
@@ -143,7 +148,7 @@ function loadGames() {
         success: (function (data) {
             data.personGame = data;
             divListaJogosCarregando(false);
-            
+
             if (data.personGame.length == undefined)
                 data.personGame = []
 
@@ -151,7 +156,7 @@ function loadGames() {
             _objPrincipal.personGame = data.personGame;
             _objPrincipal.concurse.amount_tickets = data.amount_tickets;
 
-             //console.log(_objPrincipal.personGame)
+            //console.log(_objPrincipal.personGame)
 
             // data.concurse.amount_tickets = 1000000;
             $("#amount_ticket").prop('style', 'font-size: 25px;');
