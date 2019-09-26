@@ -49,7 +49,7 @@ namespace LoteriaFacil.Domain.CommandHandlers
 
             if (Commit())
             {
-                Bus.RaiseEvent(new PersonRegisteredEvent(person.Id, person.Name, person.Email, person.Password, person.DtRegister, person.Active));
+                //Bus.RaiseEvent(new PersonRegisteredEvent(person.Id, person.Name, person.Email, person.Password, person.DtRegister, person.Active));
             }
 
             return Task.FromResult(true);
