@@ -79,20 +79,29 @@ namespace LoteriaFacil.Application.Services
             if (concurse == 0)
                 concurse = _LotteryRepository.GetLast().Concurse;
 
-            List<PersonGame> gamesPerson = _personGameRepository.GetFunctionJogoPessoa(concurse).ToList();
-            decimal amount = gamesPerson.Sum(x => x.Ticket_Amount);
-
-            return new { concurse = _jsonDashboardRepository.GetFunctionJsonDashBoard(concurse), personGame = gamesPerson, amount_tickets = amount };
+            return new { concurse = _jsonDashboardRepository.GetFunctionJsonDashBoard(concurse), personGame = "", amount_tickets = 0 };
         }
 
         public Object GetPersonGame(Guid personId, int concurse = 0)
         {
-            return _personGameRepository.GetFunctionJogoPessoa(personId, concurse).ToList();
+            if (concurse == 0)
+                concurse = _LotteryRepository.GetLast().Concurse;
+
+            List<PersonGame> _personGame = _personGameRepository.GetFunctionJogoPessoa(personId, concurse).ToList();
+            decimal amount = _personGame.Sum(x => x.Ticket_Amount);
+
+            return new { personGame = _personGame, amount_tickets = amount };
         }
 
         public Object GetPersonGame(int concurse = 0)
         {
-            return _personGameRepository.GetFunctionJogoPessoa(concurse).ToList();
+            if (concurse == 0)
+                concurse = _LotteryRepository.GetLast().Concurse;
+
+            List<PersonGame> _personGame = _personGameRepository.GetFunctionJogoPessoa(concurse).ToList();
+            decimal amount = _personGame.Sum(x => x.Ticket_Amount);
+
+            return new { personGame = _personGame, amount_tickets = amount };
         }
 
         public void Dispose()

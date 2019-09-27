@@ -95,13 +95,9 @@ function carregaPagina(concurse = 0) {
             atualizaPontos(12, data.concurse.hit12, data.concurse.shared12, data.concurse.percent12);
             atualizaPontos(11, data.concurse.hit11, data.concurse.shared11, data.concurse.percent11);
 
-            if (data.personGame != null && data.personGame.length > 0) {
-                montaGrafico(data.concurse.game, data.PersonGame);
-            }
-            else {
-                montaGrafico(data.concurse.game, []);
-                loadGames();
-            }
+            montaGrafico(data.concurse.game, []);
+            divCarregando(false);
+            loadGames();
 
             console.log("GRAFICO PRINCIPAL..OK");
         }),
