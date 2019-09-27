@@ -9,6 +9,7 @@ namespace LoteriaFacil.Domain.Interfaces
     {
         //Lottery GetByTypeLotteryId(int TypeLotteryId);
 
+        Lottery GetLast();
         Lottery GetByTypeLotteryId(Guid TypeLotteryId);
 
         string GetFunctionJsonDashboard(int concurse);

@@ -17,21 +17,33 @@ namespace LoteriaFacil.Application.Services
     {
         private readonly IMapper _mapper;
         private readonly IPersonLotteryRepository _PersonLotteryRepository;
+        private readonly ILotteryRepository _LotteryRepository;
         private readonly IUtilitiesAppService _utilitiesAppService;
         private readonly IEventStoreRepository _eventStoreRepository;
         private readonly IMediatorHandler Bus;
 
+        private readonly IJsonDashboardRepository _jsonDashboardRepository;
+        private readonly IPersonGameRepository _personGameRepository;
+
         public PersonLotteryAppService(IMapper mapper,
                                         IPersonLotteryRepository PersonLotteryRepository,
+                                        ILotteryRepository lotteryRepository,
                                         IUtilitiesAppService utilitiesAppService,
                                         IEventStoreRepository eventStoreRepository,
-                                        IMediatorHandler bus)
+                                        IMediatorHandler bus,
+
+                                        IJsonDashboardRepository jsonDashboardRepository,
+                                        IPersonGameRepository personGameRepository)
         {
             _mapper = mapper;
             _PersonLotteryRepository = PersonLotteryRepository;
+            _LotteryRepository = lotteryRepository;
             _utilitiesAppService = utilitiesAppService;
             _eventStoreRepository = eventStoreRepository;
             Bus = bus;
+
+            _jsonDashboardRepository = jsonDashboardRepository;
+            _personGameRepository = personGameRepository;
         }
 
         public void Register(PersonLotteryViewModel PersonLotteryViewModel)
@@ -64,72 +76,32 @@ namespace LoteriaFacil.Application.Services
 
         public Object GetJsonDashboard(int concurse = 0)
         {
-            //_PersonLotteryRepository.GetFunctionJsonDashBoard(0);
+            if (concurse == 0)
+                concurse = _LotteryRepository.GetLast().Concurse;
 
-            //object retorno = new { concurse = _PersonLotteryRepository.GetFunctionJsonDashBoard(concurse), personGame = _PersonLotteryRepository.GetFunctionJogoPessoa(concurse) };
-
-            object tt = new
-            {
-                concurse = 123,
-                dtConcurse = DateTime.Now.ToShortDateString(),
-                dtExtense = _utilitiesAppService.DataPorExtenso(DateTime.Now),
-                game = "01-02-03-04-05-06-07-08-09-10-11-12-13-14-15",
-                hit15 = 0,
-                shared15 = 0,
-                percent15 = 0,
-
-                hit14 = 0,
-                shared14 = 0,
-                percent14 = -7,
-
-                hit13 = 0,
-                shared13 = 0,
-                percent13 = 3,
-
-                hit12 = 0,
-                shared12 = 0,
-                percent12 = 2,
-
-                hit11 = 0,
-                shared11 = 0,
-                percent11 = 15,
-            };
-
-
-
-            decimal valor = (decimal)7.36;
-
-            object retorno = new { concurse = tt, personGame = "", amount_tickets = valor };
-
-            return retorno;
-
+            return new { concurse = _jsonDashboardRepository.GetFunctionJsonDashBoard(concurse), personGame = "", amount_tickets = 0 };
         }
 
         public Object GetPersonGame(Guid personId, int concurse = 0)
         {
-            return null;
-            return _PersonLotteryRepository.GetFunctionJogoPessoa(personId, concurse);
+            if (concurse == 0)
+                concurse = _LotteryRepository.GetLast().Concurse;
+
+            List<PersonGame> _personGame = _personGameRepository.GetFunctionJogoPessoa(personId, concurse).ToList();
+            decimal amount = _personGame.Sum(x => x.Ticket_Amount);
+
+            return new { personGame = _personGame, amount_tickets = amount };
         }
 
         public Object GetPersonGame(int concurse = 0)
         {
-            //return _PersonLotteryRepository.GetFunctionJogoPessoa(concurse);
+            if (concurse == 0)
+                concurse = _LotteryRepository.GetLast().Concurse;
 
-            object person = new[]
-            {
-               new  { id = 123, name = "Pessoa Teste1", concurse = 123, game = "01-02-03-04-05-19-07-08-09-22-11-12-13-14-15", hits = 13, amount = (decimal)4.68 },
-               new  { id = 321, name = "Pessoa Teste2", concurse = 123, game = "01-02-03-04-05-19-07-21-10-25-11-12-13-14-15", hits = 11, amount = (decimal)2.68 },
-               new  { id = 322, name = "Pessoa Teste3", concurse = 123, game = "01-02-03-04-05-19-07-21-10-25-11-12-13-14-15", hits = 11, amount = (decimal)2.68 },
-               new  { id = 323, name = "Pessoa Teste4", concurse = 123, game = "01-02-03-04-05-19-07-21-10-25-11-12-13-14-15", hits = 11, amount = (decimal)2.68 },
-               new  { id = 324, name = "Pessoa Teste5", concurse = 123, game = "01-02-03-04-05-19-07-21-10-25-11-12-13-14-15", hits = 11, amount = (decimal)2.68 },
-               new  { id = 325, name = "Pessoa Teste6", concurse = 123, game = "01-02-03-04-05-19-07-21-10-25-11-12-13-14-15", hits = 11, amount = (decimal)2.68 },
-               new  { id = 326, name = "Pessoa Teste7", concurse = 123, game = "01-02-03-04-05-17-07-21-10-25-11-12-13-14-15", hits = 11, amount = (decimal)2.68 },
-               new  { id = 327, name = "Pessoa Teste8", concurse = 123, game = "01-02-03-04-05-19-07-21-10-25-11-12-13-14-15", hits = 11, amount = (decimal)2.68 },
-               new  { id = 328, name = "Pessoa Teste9", concurse = 123, game = "01-02-03-04-05-19-07-21-10-25-11-12-13-14-15", hits = 11, amount = (decimal)2.68 },
-               new  { id = 329, name = "Pessoa Teste10", concurse = 123, game = "01-02-03-04-05-19-07-21-10-25-11-12-13-14-15", hits = 11, amount = (decimal)2.68 }
-            };
+            List<PersonGame> _personGame = _personGameRepository.GetFunctionJogoPessoa(concurse).ToList();
+            decimal amount = _personGame.Sum(x => x.Ticket_Amount);
 
-            return person;
+            return new { personGame = _personGame, amount_tickets = amount };
         }
 
         public void Dispose()

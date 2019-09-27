@@ -10,16 +10,14 @@ RETURNS TABLE
 AS  
 RETURN   
 (  
-	select Name from Persons --apenas pra gravar a function
-
-	--SELECT  pl.Id, pl.Concurse, pes.Name, pl.Game, pl.Hits, pl.Ticket_Amount as Ticket_Amount, pes.Id
-	-- FROM Person_Lottery pl
-	--inner join Lottery lot on pl.LotteryId = lot.Id
-	--inner join Persons pes on pl.PersonId = pes.Id
-	--WHERE lot.Type_LotteryId = '738E9B0D-73DE-4BAD-B49E-2B7828AC1C60' 
-	--and Concurse = @concurseID
-	----and pes.pes_id = 1
-	--group by pl.Id, pl.Concurse, pes.Id, pes.Name, pl.Game, pl.Hits, pl.Ticket_Amount 
+	SELECT  pl.Id, pl.Id as 'LotteryId', pl.Concurse, pes.Name as 'Name', pl.Game, pl.Hits, pl.Ticket_Amount as Ticket_Amount, pes.Id as 'PesId'
+	 FROM PersonLottery pl
+	inner join Lottery lot on pl.LotteryId = lot.Id
+	inner join Person pes on pl.PersonId = pes.Id
+	WHERE lot.TypeLotteryId = (select top 1 Id from TypeLottery)
+	and pl.Concurse = @concurseID
+	--and pes.pes_id = 1
+	group by pl.Id, pl.Concurse, pes.Id, pes.Name, pl.Game, pl.Hits, pl.Ticket_Amount
 
 );
 
