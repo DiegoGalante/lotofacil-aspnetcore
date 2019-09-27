@@ -24,11 +24,14 @@ namespace LoteriaFacil.Application.Services
 
         private readonly ITypeLotteryRepository _TypeLotteryRepository;
 
+        private readonly IUtilitiesAppService _utilitiesAppService;
+
         public LotteryAppService(IMapper mapper,
                                  ILotteryRepository lotteryRepository,
                                  ITypeLotteryRepository TypeLotteryRepository,
                                  IMediatorHandler bus,
-                                 IEventStoreRepository eventStoreRepository)
+                                 IEventStoreRepository eventStoreRepository,
+                                 IUtilitiesAppService utilitiesAppService)
         {
             _mapper = mapper;
             _lotteryRepository = lotteryRepository;
@@ -36,6 +39,8 @@ namespace LoteriaFacil.Application.Services
             Bus = bus;
 
             _TypeLotteryRepository = TypeLotteryRepository;
+
+            _utilitiesAppService = utilitiesAppService;
         }
 
         public void Dispose()
@@ -225,7 +230,7 @@ namespace LoteriaFacil.Application.Services
                                     Id = Guid.NewGuid(),
                                     Concurse = int.Parse(concurso),
                                     DtConcurse = dataConcurso,
-                                    Game = dezenas,
+                                    Game = _utilitiesAppService.OrdenaDezenas(dezenas),
                                     Hit15 = Acertos.Hits15,
                                     Hit14 = Acertos.Hits14,
                                     Hit13 = Acertos.Hits13,
