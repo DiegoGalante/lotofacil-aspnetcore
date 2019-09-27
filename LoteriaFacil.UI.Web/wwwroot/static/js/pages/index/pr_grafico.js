@@ -69,6 +69,10 @@ function calcPorcentagem(dezenas) {
 //FUNÇÕES
 function carregaPagina(concurse = 0) {
     $('#gamePerson').text("");
+
+    if (!parseInt(concurse))
+        concurse = 0;
+
     console.log("CARREGANDO GRAFICO PRINCIPAL..");
     $.ajax({
         type: 'POST',
@@ -146,7 +150,7 @@ function loadGames() {
             divListaJogosCarregando(false);
 
             if (data.personGame.length == undefined)
-                data.personGame = []
+                data.personGame = [];
 
             // console.log(data)
             _objPrincipal.personGame = data.personGame;
@@ -167,7 +171,7 @@ function loadGames() {
             }
 
             listaJogos(_objPrincipal.personGame);
-            montaGrafico(_objPrincipal.concurse.game, _objPrincipal.personGame);
+            montaGrafico([], _objPrincipal.personGame);
             console.log("JOGOS DAS PESSOAS..OK");
         }),
         error: (function (erro) {
@@ -195,7 +199,7 @@ function sendEmail() {
 
                 btnEmail.addClass("hide");
                 divEmail.fadeIn(1000);
-                divEmail.val(data.msg)
+                divEmail.val(data.msg);
                 divEmail.removeClass("hide");
 
                 setInterval(function () {
@@ -231,9 +235,11 @@ function divCarregando(mostrar = false) {
 function divListaJogosCarregando(mostrar = false) {
     if (mostrar) {
         $("#divCarregandoJogos").removeClass("hide");
+        $("#noGame").addClass("hide");
     }
     else {
         $("#divCarregandoJogos").addClass("hide");
+        $("#noGame").removeClass("hide");
     }
 }
 
@@ -339,13 +345,13 @@ function atualizaPontos(pontuation, hit, shared, percent) {
 
     switch (hit) {
         case 0:
-            $("#hit" + pontuation).text("Ninguém acertou")
+            $("#hit" + pontuation).text("Ninguém acertou");
             break;
         case 1:
-            $("#hit" + pontuation).text(hit + " Ganhador")
+            $("#hit" + pontuation).text(hit + " Ganhador");
             break;
         default:
-            $("#hit" + pontuation).text(hit + " Ganhadores")
+            $("#hit" + pontuation).text(hit + " Ganhadores");
             break;
     }
     try {
@@ -360,18 +366,18 @@ function atualizaPontos(pontuation, hit, shared, percent) {
 }
 
 function montaGrafico(lot_game, personGame) {
-    $("#divCarregandoGraph").addClass("hide")
-    $("#chart").removeClass("hide")
+    $("#divCarregandoGraph").addClass("hide");
+    $("#chart").removeClass("hide");
 
-    'use strict'
+    'use strict';
 
     var ticksStyle = {
         fontColor: '#495057',
         fontStyle: 'bold'
-    }
+    };
 
-    var mode = 'index'
-    var intersect = true
+    var mode = 'index';
+    var intersect = true;
 
     var dataSetPersonGameChart = [];
 
