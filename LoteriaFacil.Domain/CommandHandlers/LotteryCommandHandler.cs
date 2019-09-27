@@ -41,7 +41,7 @@ namespace LoteriaFacil.Domain.CommandHandlers
                                       message.Concurse, message.DtConcurse, message.Game,
                                       message.Hit15, message.Hit14, message.Hit13, message.Hit12, message.Hit11,
                                       message.Shared15, message.Shared14, message.Shared13, message.Shared12, message.Shared11,
-                                      message.DtNextConcurse, message.TypeLottery);
+                                      message.DtNextConcurse, message.TypeLottery.Id);
 
 
             if (_lotteryRepository.GetById(lottery.Id) != null && _lotteryRepository.GetByTypeLotteryId(lottery.TypeLottery.Id) != null)
@@ -50,14 +50,20 @@ namespace LoteriaFacil.Domain.CommandHandlers
                 return Task.FromResult(false);
             }
 
+            if (_lotteryRepository.GetByConcurse(lottery.Concurse) != null)
+            {
+                Bus.RaiseEvent(new DomainNotification(message.MessageType, "The Lottery Concurse has already been taken."));
+                return Task.FromResult(false);
+            }
+
             _lotteryRepository.Add(lottery);
 
             if (Commit())
             {
-                Bus.RaiseEvent(new LotteryRegisteredEvent(lottery.Id, lottery.Concurse, lottery.DtConcurse, lottery.Game,
-                                                           lottery.Hit15, lottery.Hit14, lottery.Hit13, lottery.Hit12, lottery.Hit11,
-                                                           lottery.Shared15, lottery.Shared14, lottery.Shared13, lottery.Shared12, lottery.Shared11,
-                                                           lottery.DtNextConcurse, lottery.TypeLottery));
+                //Bus.RaiseEvent(new LotteryRegisteredEvent(lottery.Id, lottery.Concurse, lottery.DtConcurse, lottery.Game,
+                //                                           lottery.Hit15, lottery.Hit14, lottery.Hit13, lottery.Hit12, lottery.Hit11,
+                //                                           lottery.Shared15, lottery.Shared14, lottery.Shared13, lottery.Shared12, lottery.Shared11,
+                //                                           lottery.DtNextConcurse, lottery.TypeLottery));
 
             }
 

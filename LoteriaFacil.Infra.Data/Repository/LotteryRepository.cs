@@ -33,9 +33,14 @@ namespace LoteriaFacil.Infra.Data.Repository
             return DbSet.FromSql("SELECT dbo.JsonDashboard", concurse).ToString();
         }
 
+        public Lottery GetByConcurse(int concurse)
+        {
+            return DbSet.AsNoTracking().FirstOrDefault(c => c.Concurse == concurse);
+        }
+
         public Lottery GetLast()
         {
-            return DbSet.FirstOrDefault();
+            return DbSet.AsNoTracking().OrderByDescending(c=>c.Concurse).FirstOrDefault();
         }
 
         public void SetProcedureSP_CHECK_GAME(int concurse, Guid TypeLotteryId, Guid personId)

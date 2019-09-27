@@ -76,30 +76,45 @@ namespace LoteriaFacil.Application.Services
 
         public Object GetJsonDashboard(int concurse = 0)
         {
+            JsonDashboard lottery = new JsonDashboard();
+            if (concurse > 0)
+                lottery = _jsonDashboardRepository.GetFunctionJsonDashBoard(concurse);
+
+            if (lottery == null || lottery.Id.Equals(Guid.Empty))
+                lottery = _jsonDashboardRepository.GetFunctionJsonDashBoard(_LotteryRepository.GetLast().Concurse);
+
+            return new { concurse = lottery, personGame = "", amount_tickets = 0 };
+        }
+
+        internal List<PersonGame> PersonGame(out decimal amount, int concurse = 0, Guid? personId = null)
+        {
+            List<PersonGame> _personGame = new List<PersonGame>();
+
             if (concurse == 0)
                 concurse = _LotteryRepository.GetLast().Concurse;
 
-            return new { concurse = _jsonDashboardRepository.GetFunctionJsonDashBoard(concurse), personGame = "", amount_tickets = 0 };
+            if (personId != null)
+                _personGame = _personGameRepository.GetFunctionJogoPessoa((Guid)personId, concurse).ToList();
+            else
+                _personGame = _personGameRepository.GetFunctionJogoPessoa(concurse).ToList();
+
+            amount = _personGame.Sum(x => x.Ticket_Amount);
+
+            return _personGame;
         }
 
         public Object GetPersonGame(Guid personId, int concurse = 0)
         {
-            if (concurse == 0)
-                concurse = _LotteryRepository.GetLast().Concurse;
-
-            List<PersonGame> _personGame = _personGameRepository.GetFunctionJogoPessoa(personId, concurse).ToList();
-            decimal amount = _personGame.Sum(x => x.Ticket_Amount);
+            decimal amount = 0;
+            List<PersonGame> _personGame = PersonGame(out amount, concurse, personId);
 
             return new { personGame = _personGame, amount_tickets = amount };
         }
 
         public Object GetPersonGame(int concurse = 0)
         {
-            if (concurse == 0)
-                concurse = _LotteryRepository.GetLast().Concurse;
-
-            List<PersonGame> _personGame = _personGameRepository.GetFunctionJogoPessoa(concurse).ToList();
-            decimal amount = _personGame.Sum(x => x.Ticket_Amount);
+            decimal amount = 0;
+            List<PersonGame> _personGame = PersonGame(out amount, concurse);
 
             return new { personGame = _personGame, amount_tickets = amount };
         }

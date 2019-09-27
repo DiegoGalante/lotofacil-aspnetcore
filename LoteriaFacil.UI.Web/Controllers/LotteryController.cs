@@ -27,18 +27,14 @@ namespace LoteriaFacil.UI.Web.Controllers
         [Route("/principal")]
         public IActionResult Index()
         {
-
-            //_lotteryAppService.POPULAEBANCOPRIMEIROACESSO();
-
             return View();
         }
 
         [HttpPost]
-        [Route("/load/{id:guid}")]
-        public ObjectResult Load(Guid? id)
+        [Route("/load/{concurse:int}")]
+        public object Load(int concurse)
         {
-
-            return null;
+            return _PersonLotteryAppService.GetJsonDashboard(concurse);
         }
 
         [HttpPost]

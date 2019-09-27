@@ -9,6 +9,8 @@ namespace LoteriaFacil.Domain.Interfaces
     {
         //Lottery GetByTypeLotteryId(int TypeLotteryId);
 
+        Lottery GetByConcurse(int concurse);
+
         Lottery GetLast();
         Lottery GetByTypeLotteryId(Guid TypeLotteryId);
 

@@ -26,6 +26,26 @@ namespace LoteriaFacil.Domain.Models
             this.TypeLottery = TypeLottery;
         }
 
+        public Lottery(Guid id, int concurse, DateTime dtconcurse, string game, int hit15, int hit14, int hit13, int hit12, int hit11, decimal shared15, decimal shared14, decimal shared13, decimal shared12, decimal shared11, DateTime dtnextconcurse, Guid typeLotteryId)
+        {
+            this.Id = id;
+            this.Concurse = concurse;
+            this.DtConcurse = dtconcurse;
+            this.Game = game;
+            this.Hit15 = hit15;
+            this.Hit14 = hit14;
+            this.Hit13 = hit13;
+            this.Hit12 = hit12;
+            this.Hit11 = hit11;
+            this.Shared15 = shared15;
+            this.Shared14 = shared14;
+            this.Shared13 = shared13;
+            this.Shared12 = shared12;
+            this.Shared11 = shared11;
+            this.DtNextConcurse = dtnextconcurse;
+            this.TypeLotteryId = typeLotteryId;
+        }
+
         public Lottery()
         {
 
@@ -101,6 +121,8 @@ namespace LoteriaFacil.Domain.Models
         /// Tipo odo jogo ID.
         /// </summary>
         public TypeLottery TypeLottery { get; protected set; }
+
+        public Guid TypeLotteryId { get; protected set; }
     }
 }
 
