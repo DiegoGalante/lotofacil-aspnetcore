@@ -11,11 +11,11 @@ namespace LoteriaFacil.Application.ViewModels
         [Key]
         public Guid Id { get; set; }
 
-        public Lottery Lottery { get; private set; }
-        public Person Person { get; private set; }
+        public Lottery Lottery { get; set; }
+        public Person Person { get;  set; }
 
         [DisplayName("Concurso")]
-        public int Concurse { get; private set; }
+        public int Concurse { get;  set; }
 
         /// <summary>
         /// Dezenas do jogo.
@@ -23,19 +23,19 @@ namespace LoteriaFacil.Application.ViewModels
         [MinLength(1)]
         [MaxLength(100)]
         [DisplayName("Dezenas")]
-        public string Game { get; private set; }
+        public string Game { get;  set; }
 
         /// <summary>
         /// Quantidade de acertos.
         /// </summary>
         [DisplayName("Acertos")]
-        public int Hits { get; private set; }
+        public int Hits { get;  set; }
 
         /// <summary>
         /// Valor R$ a receber do bilhete.
         /// </summary>
         [DisplayName("Valor do Bilhete")]
-        public decimal Ticket_Amount { get; private set; }
+        public decimal Ticket_Amount { get;  set; }
 
         /// <summary>
         /// Jogo checado.
@@ -51,6 +51,6 @@ namespace LoteriaFacil.Application.ViewModels
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
         [DataType(DataType.Date, ErrorMessage = "Data em formato inválido")]
         [DisplayName("Jogo Registrado em")]
-        public DateTime Game_Register { get; private set; }
+        public DateTime Game_Register { get;  set; }
     }
 }

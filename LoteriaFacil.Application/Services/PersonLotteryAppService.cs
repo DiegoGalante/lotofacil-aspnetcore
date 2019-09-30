@@ -24,6 +24,7 @@ namespace LoteriaFacil.Application.Services
 
         private readonly IJsonDashboardRepository _jsonDashboardRepository;
         private readonly IPersonGameRepository _personGameRepository;
+        private readonly IPersonRepository _personRepository;
 
         public PersonLotteryAppService(IMapper mapper,
                                         IPersonLotteryRepository PersonLotteryRepository,
@@ -33,7 +34,8 @@ namespace LoteriaFacil.Application.Services
                                         IMediatorHandler bus,
 
                                         IJsonDashboardRepository jsonDashboardRepository,
-                                        IPersonGameRepository personGameRepository)
+                                        IPersonGameRepository personGameRepository,
+                                        IPersonRepository personRepository)
         {
             _mapper = mapper;
             _PersonLotteryRepository = PersonLotteryRepository;
@@ -44,6 +46,7 @@ namespace LoteriaFacil.Application.Services
 
             _jsonDashboardRepository = jsonDashboardRepository;
             _personGameRepository = personGameRepository;
+            _personRepository = personRepository;
         }
 
         public void Register(PersonLotteryViewModel PersonLotteryViewModel)
@@ -93,10 +96,19 @@ namespace LoteriaFacil.Application.Services
             if (concurse == 0)
                 concurse = _LotteryRepository.GetLast().Concurse;
 
+            personId = Guid.Parse("C51FC003-0D7E-4009-ABB5-8E8F8615B0CF");
             if (personId != null)
+            {
+                _LotteryRepository.SetProcedureSP_CHECK_GAME(concurse, (Guid)personId);
+
                 _personGame = _personGameRepository.GetFunctionJogoPessoa((Guid)personId, concurse).ToList();
+            }
             else
+            {
+                _LotteryRepository.SetProcedureSP_CHECK_GAME(concurse);
+
                 _personGame = _personGameRepository.GetFunctionJogoPessoa(concurse).ToList();
+            }
 
             amount = _personGame.Sum(x => x.Ticket_Amount);
 

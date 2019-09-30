@@ -40,12 +40,21 @@ namespace LoteriaFacil.Infra.Data.Repository
 
         public Lottery GetLast()
         {
-            return DbSet.AsNoTracking().OrderByDescending(c=>c.Concurse).FirstOrDefault();
+            return DbSet.AsNoTracking().OrderByDescending(c => c.Concurse).FirstOrDefault();
         }
 
-        public void SetProcedureSP_CHECK_GAME(int concurse, Guid TypeLotteryId, Guid personId)
+        //public void SetProcedureSP_CHECK_GAME(int concurse, Guid TypeLotteryId, Guid personId)
+        //{
+        //    DbSet.FromSql("EXEC SP_SAVE_GAME {0}, {2}, {3}", concurse, TypeLotteryId, personId);
+        //}
+
+        public void SetProcedureSP_CHECK_GAME(int concurse, Guid? personId)
         {
-            DbSet.FromSql("SP_SAVE_GAME {0}, {2}, {3}", concurse, TypeLotteryId, personId);
+            if (personId != null && !personId.Equals(Guid.Empty))
+                Db.Database.ExecuteSqlCommand($"SP_CHECK_GAME @p0, @p1", concurse, personId);
+            else
+                Db.Database.ExecuteSqlCommand($"SP_CHECK_GAME @p0", concurse);
+
         }
 
         public void SetProcedureSP_SAVE_GAME(Guid lotteryId, int concurse, string dtConcurse, string game, int hit15, int hit14, int hit13, int hit12, int hit11, decimal shared15, decimal shared14, decimal shared13, decimal shared12, decimal shared11, string dtNextConcurse, Guid TypeLotteryId)

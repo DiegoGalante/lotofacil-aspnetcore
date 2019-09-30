@@ -32,12 +32,12 @@ namespace LoteriaFacil.Domain.Events
         /// <summary>
         /// Quantidade de acertos.
         /// </summary>
-        public int Hits { get; private set; }
+        public int? Hits { get; private set; }
 
         /// <summary>
         /// Valor R$ a receber do bilhete.
         /// </summary>
-        public decimal Ticket_Amount { get; private set; }
+        public decimal? Ticket_Amount { get; private set; }
 
         /// <summary>
         /// Jogo checado.
@@ -47,6 +47,6 @@ namespace LoteriaFacil.Domain.Events
         /// <summary>
         /// Data do registro do jogo.
         /// </summary>
-        public DateTime Game_Register { get; private set; }
+        public DateTime? Game_Register { get; private set; }
     }
 }

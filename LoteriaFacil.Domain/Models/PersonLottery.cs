@@ -19,6 +19,36 @@ namespace LoteriaFacil.Domain.Models
             this.Person = person;
         }
 
+        public PersonLottery(Guid id, int concurse, string game, int hits, decimal ticket_amount, DateTime? game_checked, DateTime game_register, Guid lotteryId, Guid personId)
+        {
+            this.Id = id;
+            this.Concurse = concurse;
+            this.Game = game;
+            this.Hits = hits;
+            this.Ticket_Amount = ticket_amount;
+            this.Game_Checked = game_checked;
+            this.Game_Register = game_register;
+            this.LotteryId = lotteryId;
+            this.PersonId = personId;
+        }
+
+        public PersonLottery(Guid id, int concurse, string game, Guid lotteryId, Guid personId)
+        {
+            this.Id = id;
+            this.Concurse = concurse;
+            this.Game = game;
+            this.LotteryId = lotteryId;
+            this.PersonId = personId;
+        }
+
+        public PersonLottery(Guid id, int concurse, string game, Guid personId)
+        {
+            this.Id = id;
+            this.Concurse = concurse;
+            this.Game = game;
+            this.PersonId = personId;
+        }
+
         public PersonLottery()
         {
 
@@ -27,6 +57,10 @@ namespace LoteriaFacil.Domain.Models
         public Lottery Lottery { get; private set; }
 
         public Person Person { get; private set; }
+
+        public Guid LotteryId { get; private set; }
+
+        public Guid PersonId { get; private set; }
 
         public int Concurse { get; private set; }
 

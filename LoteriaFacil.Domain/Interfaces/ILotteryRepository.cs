@@ -44,6 +44,7 @@ namespace LoteriaFacil.Domain.Interfaces
                                         , decimal shared15, decimal shared14, decimal shared13, decimal shared12, decimal shared11
                                         , string dtNextConcurse, Guid TypeLotteryId);
 
-        void SetProcedureSP_CHECK_GAME(int concurse, Guid TypeLotteryId, Guid personId);
+        //void SetProcedureSP_CHECK_GAME(int concurse, Guid TypeLotteryId, Guid personId);
+        void SetProcedureSP_CHECK_GAME(int concurse, Guid? personId = null);
     }
 }

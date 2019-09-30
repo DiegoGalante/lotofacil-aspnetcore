@@ -37,15 +37,22 @@ namespace LoteriaFacil.Domain.CommandHandlers
                 return Task.FromResult(false);
             }
 
-            var PersonLottery = new PersonLottery(Guid.NewGuid(),
-                                                    message.Concurse,
-                                                    message.Game,
-                                                    message.Hits,
-                                                    message.Ticket_Amount,
-                                                    message.Game_Checked,
-                                                    DateTime.Now,
-                                                    message.Lottery,
-                                                    message.Person);
+            var PersonLottery = new PersonLottery();
+            if (message.Lottery != null)
+            {
+                PersonLottery = new PersonLottery(Guid.NewGuid(),
+                                                      message.Concurse,
+                                                      message.Game,
+                                                      message.Lottery.Id,
+                                                      message.Person.Id);
+            }
+            else
+            {
+                PersonLottery  = new PersonLottery(Guid.NewGuid(),
+                                      message.Concurse,
+                                      message.Game,
+                                      message.Person.Id);
+            }
 
             if (_PersonLotteryRepository.GetById(PersonLottery.Id) != null)
             {
@@ -78,8 +85,8 @@ namespace LoteriaFacil.Domain.CommandHandlers
                                                     message.Ticket_Amount,
                                                     message.Game_Checked,
                                                     message.Game_Register,
-                                                    message.Lottery,
-                                                    message.Person);
+                                                    message.Lottery.Id,
+                                                    message.Person.Id);
 
             var existingPersonLottery = _PersonLotteryRepository.GetById(PersonLottery.Id);
 
