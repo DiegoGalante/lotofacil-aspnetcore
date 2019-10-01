@@ -154,14 +154,14 @@ function loadGames() {
 
             // console.log(data)
             _objPrincipal.personGame = data.personGame;
-            _objPrincipal.concurse.amount_tickets = data.amount_tickets;
+            _objPrincipal.amount_tickets = data.amount_tickets;
 
             //console.log(_objPrincipal.personGame)
 
             // data.concurse.amount_tickets = 1000000;
             $("#amount_ticket").prop('style', 'font-size: 25px;');
-            if (_objPrincipal.concurse.amount_tickets > 0) {
-                $("#amount_ticket").addClass("text-success")
+            if (_objPrincipal.amount_tickets > 0) {
+                $("#amount_ticket").addClass("text-success");
 
                 $("#amount_ticket").text("R$ " + formatNumber(_objPrincipal.amount_tickets) + " ");
                 $("#amount_ticket").append("<i class='fa fa-thumbs-o-up' title='Parabéns ;)'></i>");
@@ -170,8 +170,8 @@ function loadGames() {
                 $("#amount_ticket").text("R$ " + formatNumber(_objPrincipal.amount_tickets));
             }
 
+            montaGrafico(_objPrincipal.concurse.game, _objPrincipal.personGame);
             listaJogos(_objPrincipal.personGame);
-            montaGrafico([], _objPrincipal.personGame);
             console.log("JOGOS DAS PESSOAS..OK");
         }),
         error: (function (erro) {
@@ -284,7 +284,7 @@ function listaJogos(jogadores) {
             html += divGroup;
 
             if (jogadores[i].hits > 10) {
-                popoverGroup = "<a href='#' title='Autor' data-toggle='popover' data-trigger='hover' data-placement='left' data-content='" + jogadores[i].name + " - R$ " + formatNumber(jogadores[i].amount) + "'>Jogo  #" + (i + 1) + "</a> - <strong>" + jogadores[i].hits + "</strong> dezenas sorteadas!";
+                popoverGroup = "<a href='#' title='Autor' data-toggle='popover' data-trigger='hover' data-placement='left' data-content='" + jogadores[i].name + " - R$ " + formatNumber(jogadores[i].ticket_Amount) + "'>Jogo  #" + (i + 1) + "</a> - <strong>" + jogadores[i].hits + "</strong> dezenas sorteadas!";
             }
             else {
                 popoverGroup = "<a title='Autor' data-toggle='popover' data-trigger='hover' data-placement='left' data-content='" + jogadores[i].name + "'>Jogo  #" + (i + 1) + "</a> - " + jogadores[i].hits + " dezenas sorteadas!";
@@ -315,7 +315,7 @@ function formatNumber(num) {
     return num
         .toFixed(2) // always two decimal digits
         .replace(".", ",") // replace decimal point character with ,
-        .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.") // use . as a separator
+        .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1."); // use . as a separator
 }
 
 function atualizaPontos(pontuation, hit, shared, percent) {
@@ -421,7 +421,7 @@ function montaGrafico(lot_game, personGame) {
             );
         }
     }
-    console.log(dataSetPersonGameChart);
+
     dataSetPersonGameChart.push(
         {
             type: 'line',
@@ -439,7 +439,7 @@ function montaGrafico(lot_game, personGame) {
             // pointHoverBackgroundColor: '_colorDanger15',
             // pointHoverBorderColor    : '_colorDanger15'
         }
-    )
+    );
 
     if (_lotoChart != null) {
         _lotoChart.destroy();

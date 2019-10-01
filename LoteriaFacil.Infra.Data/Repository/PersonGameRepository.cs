@@ -25,9 +25,9 @@ namespace LoteriaFacil.Infra.Data.Repository
         public IEnumerable<PersonGame> GetFunctionJogosConcurso(int concurse, bool calculateTensWithoutHits = false)
         {
             if (calculateTensWithoutHits)
-                return DbSet.FromSql($"SELECT * from dbo.JogosConcurso({concurse})").ToList().OrderBy(c => c.Hits);
+                return DbSet.FromSql($"SELECT * from dbo.JogosConcurso({concurse})").ToList().OrderByDescending(c => c.Hits);
             else
-                return DbSet.FromSql($"SELECT * from dbo.JogosConcurso({concurse})").ToList().Where(c => c.Hits > 10).OrderBy(c => c.Hits);
+                return DbSet.FromSql($"SELECT * from dbo.JogosConcurso({concurse})").ToList().Where(c => c.Hits > 10).OrderByDescending(c => c.Hits);
         }
 
 
