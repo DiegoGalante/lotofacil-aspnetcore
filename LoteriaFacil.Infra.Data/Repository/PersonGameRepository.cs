@@ -19,9 +19,9 @@ namespace LoteriaFacil.Infra.Data.Repository
             return DbSet.FromSql($"SELECT * from dbo.JogoPessoa({concurse}, {personId})").ToList();
         }
 
-        public IEnumerable<PersonGame> GetFunctionJogoPessoa(int concurse)
+        public IEnumerable<PersonGame> GetFunctionJogosConcurso(int concurse)
         {
-            return DbSet.FromSql($"SELECT * from dbo.JogoPessoa({concurse})").ToList();
+            return DbSet.FromSql($"SELECT * from dbo.JogosConcurso({concurse})").ToList();
         }
 
 

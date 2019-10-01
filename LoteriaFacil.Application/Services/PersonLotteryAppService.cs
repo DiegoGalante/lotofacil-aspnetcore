@@ -104,7 +104,7 @@ namespace LoteriaFacil.Application.Services
             else
             {
                 _LotteryRepository.SetProcedureSP_CHECK_GAME(concurse);
-                _personGame = _personGameRepository.GetFunctionJogoPessoa(concurse).ToList();
+                _personGame = _personGameRepository.GetFunctionJogosConcurso(concurse).ToList();
             }
 
             amount = _personGame.Sum(x => x.Ticket_Amount);
