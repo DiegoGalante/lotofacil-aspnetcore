@@ -23,7 +23,7 @@ function carregaConfiguracao() {
             _objConfiguration = data[0];
             _valor_antigo = _objConfiguration.valor_Minimo_Para_Envio_Email;
             console.log("CARREGANDO CONFIGURAÇÃO..");
-           // console.log(_objConfiguration);
+            console.log(_objConfiguration);
 
             $('#CalcularDezenasSemPontuacao').prop('checked', false);
             $('#VerificaJogoOnline').prop('checked', false);
@@ -64,14 +64,14 @@ function carregaConfiguracao() {
 
 function validateConfiguration() {
     try {
-        if (_objConfiguration.check_game_online === true) {
+        if (_objConfiguration.checar_Jogo_Online === true) {
             $('#btn-checkOnline').removeClass('hide');
         }
         else {
             $('#btn-checkOnline').addClass('hide');
         }
 
-        if (_objConfiguration.send_email_manually === true) {
+        if (_objConfiguration.enviar_Email_Manualmente === true) {
             $('#btn-email').removeClass('hide');
         }
         else {
