@@ -96,17 +96,14 @@ namespace LoteriaFacil.Application.Services
             if (concurse == 0)
                 concurse = _LotteryRepository.GetLast().Concurse;
 
-            personId = Guid.Parse("C51FC003-0D7E-4009-ABB5-8E8F8615B0CF");
             if (personId != null)
             {
                 _LotteryRepository.SetProcedureSP_CHECK_GAME(concurse, (Guid)personId);
-
                 _personGame = _personGameRepository.GetFunctionJogoPessoa((Guid)personId, concurse).ToList();
             }
             else
             {
                 _LotteryRepository.SetProcedureSP_CHECK_GAME(concurse);
-
                 _personGame = _personGameRepository.GetFunctionJogoPessoa(concurse).ToList();
             }
 
