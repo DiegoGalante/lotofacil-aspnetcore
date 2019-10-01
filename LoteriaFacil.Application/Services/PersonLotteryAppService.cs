@@ -136,5 +136,28 @@ namespace LoteriaFacil.Application.Services
         {
             GC.SuppressFinalize(this);
         }
+
+        public Object SendEmail(int concurse = 0)
+        {
+            Lottery lottery = new Lottery();
+            List<Person> pessoas = new List<Person>();
+            Configuration configuration = _configurationRepository.GetFirst();
+
+            if (concurse == 0)
+                concurse = lottery.Concurse;
+
+            lottery = _LotteryRepository.GetByConcurse(concurse);
+
+            List<PersonGame> personGame = _personGameRepository.GetFunctionJogosConcurso(concurse, configuration.Calcular_Dezenas_Sem_Pontuacao).ToList();
+            foreach (var pessoa in personGame)
+                pessoas.Add(_personRepository.GetById(pessoa.PesId));
+
+            //PersonLottery personLottery = _PersonLotteryRepository.GetByConcurse(concurse);
+
+            decimal total_bilhetes = personGame.Sum(x => x.Ticket_Amount);
+
+          var retorno =  _utilitiesAppService.MontaHtml(lottery, personGame);
+            return new { ret = true, msg = "" };
+        }
     }
 }

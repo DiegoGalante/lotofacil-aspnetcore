@@ -197,7 +197,7 @@ function sendEmail() {
         success: (function (data) {
             divCarregando(false);
             // console.log(data)
-            if (data.return) {
+            if (data.ret) {
                 var divEmail = $("#divEmail");
                 var btnEmail = $("#btn-email");
 
