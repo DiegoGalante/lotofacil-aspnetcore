@@ -29,12 +29,12 @@ $(document).ready(function () {
             num_concurse = 0;
         }
 
-        checkOnline(num_concurse);
+        alert("Serviço está inativo. API utilizada está inutilizada");
+        //checkOnline(num_concurse);
     });
 
     $("#btn-email").click(function () {
-
-        if (_objPrincipal != null && _objPrincipal.configuration != null && _objPrincipal.configuration.person > 0) {
+        if (_objPrincipal != null && _objConfiguration != null && _objPrincipal.personGame.length > 0) {
             divCarregando(true);
             sendEmail();
         }
@@ -101,7 +101,12 @@ function carregaPagina(concurse = 0) {
 
             montaGrafico(data.concurse.game, []);
             divCarregando(false);
-            loadGames();
+            if (!parseInt(concurse)) {
+                loadGames();
+            }
+            else {
+                loadGames(concurse);
+            }
 
             console.log("GRAFICO PRINCIPAL..OK");
         }),
@@ -136,14 +141,14 @@ function checkOnline(check_game = 0) {
     });
 }
 
-function loadGames() {
+function loadGames(concurse = 0) {
     divListaJogosCarregando(true);
     console.log("CARREGANDO JOGOS DAS PESSOAS..");
     $.ajax({
         type: 'POST',
         contentType: 'application/json',
         async: true,
-        url: '/loadGames',
+        url: parseInt(concurse) === 0 ? '/loadGames' : '/loadGames/' + parseInt(concurse),
         data: JSON.stringify(_objPrincipal),
         success: (function (data) {
             //data.personGame = data;
@@ -235,11 +240,9 @@ function divCarregando(mostrar = false) {
 function divListaJogosCarregando(mostrar = false) {
     if (mostrar) {
         $("#divCarregandoJogos").removeClass("hide");
-        $("#noGame").addClass("hide");
     }
     else {
         $("#divCarregandoJogos").addClass("hide");
-        $("#noGame").removeClass("hide");
     }
 }
 
@@ -308,7 +311,7 @@ function listaJogos(jogadores) {
         $("#hasGame").removeClass("hide");
     }
     // $("#pontuationStats").removeClass("hide");
-    divListaJogosCarregando()
+    divListaJogosCarregando();
 }
 
 function formatNumber(num) {
