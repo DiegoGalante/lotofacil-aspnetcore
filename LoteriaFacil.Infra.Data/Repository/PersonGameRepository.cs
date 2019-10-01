@@ -14,14 +14,20 @@ namespace LoteriaFacil.Infra.Data.Repository
         {
         }
 
-        public IEnumerable<PersonGame> GetFunctionJogoPessoa(Guid personId, int concurse)
+        public IEnumerable<PersonGame> GetFunctionJogoPessoa(Guid personId, int concurse, bool calculateTensWithoutHits = false)
         {
-            return DbSet.FromSql($"SELECT * from dbo.JogoPessoa({concurse}, {personId})").ToList();
+            if (calculateTensWithoutHits)
+                return DbSet.FromSql($"SELECT * from dbo.JogoPessoa({concurse}, {personId})").ToList().OrderBy(c => c.Hits);
+            else
+                return DbSet.FromSql($"SELECT * from dbo.JogoPessoa({concurse}, {personId})").ToList().Where(c => c.Hits > 10).OrderBy(c => c.Hits);
         }
 
-        public IEnumerable<PersonGame> GetFunctionJogosConcurso(int concurse)
+        public IEnumerable<PersonGame> GetFunctionJogosConcurso(int concurse, bool calculateTensWithoutHits = false)
         {
-            return DbSet.FromSql($"SELECT * from dbo.JogosConcurso({concurse})").ToList();
+            if (calculateTensWithoutHits)
+                return DbSet.FromSql($"SELECT * from dbo.JogosConcurso({concurse})").ToList().OrderBy(c => c.Hits);
+            else
+                return DbSet.FromSql($"SELECT * from dbo.JogosConcurso({concurse})").ToList().Where(c => c.Hits > 10).OrderBy(c => c.Hits);
         }
 
 

@@ -19,5 +19,11 @@ namespace LoteriaFacil.Infra.Data.Repository
         {
             return DbSet.AsNoTracking().FirstOrDefault(c => c.Id == id);
         }
+
+
+        public Configuration GetFirst()
+        {
+            return DbSet.AsNoTracking().FirstOrDefault();
+        }
     }
 }

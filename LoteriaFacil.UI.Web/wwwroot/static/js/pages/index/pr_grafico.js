@@ -146,7 +146,7 @@ function loadGames() {
         url: '/loadGames',
         data: JSON.stringify(_objPrincipal),
         success: (function (data) {
-            data.personGame = data;
+            //data.personGame = data;
             divListaJogosCarregando(false);
 
             if (data.personGame.length == undefined)
@@ -284,10 +284,10 @@ function listaJogos(jogadores) {
             html += divGroup;
 
             if (jogadores[i].hits > 10) {
-                popoverGroup = "<a href='#' title='Autor' data-toggle='popover' data-trigger='hover' data-placement='left' data-content='" + jogadores[i].name + " - R$ " + formatNumber(jogadores[i].amount) + "'>Jogo  #" + jogadores[i].id + "</a> - <strong>" + jogadores[i].hits + "</strong> dezenas sorteadas!";
+                popoverGroup = "<a href='#' title='Autor' data-toggle='popover' data-trigger='hover' data-placement='left' data-content='" + jogadores[i].name + " - R$ " + formatNumber(jogadores[i].amount) + "'>Jogo  #" + (i + 1) + "</a> - <strong>" + jogadores[i].hits + "</strong> dezenas sorteadas!";
             }
             else {
-                popoverGroup = "<a title='Autor' data-toggle='popover' data-trigger='hover' data-placement='left' data-content='" + jogadores[i].name + "'>Jogo  #" + jogadores[i].id + "</a> - " + jogadores[i].hits + " dezenas sorteadas!";
+                popoverGroup = "<a title='Autor' data-toggle='popover' data-trigger='hover' data-placement='left' data-content='" + jogadores[i].name + "'>Jogo  #" + (i + 1) + "</a> - " + jogadores[i].hits + " dezenas sorteadas!";
             }
 
             html += popoverGroup;
@@ -404,6 +404,7 @@ function montaGrafico(lot_game, personGame) {
                     colorPersonGame = _colorGray;
                     break;
             }
+
             dataSetPersonGameChart.push(
                 {
                     type: 'line',
@@ -414,13 +415,13 @@ function montaGrafico(lot_game, personGame) {
                     pointBorderColor: colorPersonGame,
                     pointBackgroundColor: colorPersonGame,
                     fill: false,
-                    label: "Jogo #" + personGame[i].id,
+                    label: "Jogo #" + (i + 1),
                     // borderDash: [5, 5],
                 }
             );
         }
     }
-
+    console.log(dataSetPersonGameChart);
     dataSetPersonGameChart.push(
         {
             type: 'line',

@@ -25,6 +25,7 @@ namespace LoteriaFacil.Application.Services
         private readonly IJsonDashboardRepository _jsonDashboardRepository;
         private readonly IPersonGameRepository _personGameRepository;
         private readonly IPersonRepository _personRepository;
+        private readonly IConfigurationRepository _configurationRepository;
 
         public PersonLotteryAppService(IMapper mapper,
                                         IPersonLotteryRepository PersonLotteryRepository,
@@ -35,7 +36,8 @@ namespace LoteriaFacil.Application.Services
 
                                         IJsonDashboardRepository jsonDashboardRepository,
                                         IPersonGameRepository personGameRepository,
-                                        IPersonRepository personRepository)
+                                        IPersonRepository personRepository,
+                                        IConfigurationRepository configurationRepository)
         {
             _mapper = mapper;
             _PersonLotteryRepository = PersonLotteryRepository;
@@ -47,6 +49,7 @@ namespace LoteriaFacil.Application.Services
             _jsonDashboardRepository = jsonDashboardRepository;
             _personGameRepository = personGameRepository;
             _personRepository = personRepository;
+            _configurationRepository = configurationRepository;
         }
 
         public void Register(PersonLotteryViewModel PersonLotteryViewModel)
@@ -92,6 +95,7 @@ namespace LoteriaFacil.Application.Services
         internal List<PersonGame> PersonGame(out decimal amount, int concurse = 0, Guid? personId = null)
         {
             List<PersonGame> _personGame = new List<PersonGame>();
+            Configuration configuration = _configurationRepository.GetFirst();
 
             if (concurse == 0)
                 concurse = _LotteryRepository.GetLast().Concurse;
@@ -99,12 +103,12 @@ namespace LoteriaFacil.Application.Services
             if (personId != null)
             {
                 _LotteryRepository.SetProcedureSP_CHECK_GAME(concurse, (Guid)personId);
-                _personGame = _personGameRepository.GetFunctionJogoPessoa((Guid)personId, concurse).ToList();
+                _personGame = _personGameRepository.GetFunctionJogoPessoa((Guid)personId, concurse, configuration.Calcular_Dezenas_Sem_Pontuacao).ToList();
             }
             else
             {
                 _LotteryRepository.SetProcedureSP_CHECK_GAME(concurse);
-                _personGame = _personGameRepository.GetFunctionJogosConcurso(concurse).ToList();
+                _personGame = _personGameRepository.GetFunctionJogosConcurso(concurse, configuration.Calcular_Dezenas_Sem_Pontuacao).ToList();
             }
 
             amount = _personGame.Sum(x => x.Ticket_Amount);
