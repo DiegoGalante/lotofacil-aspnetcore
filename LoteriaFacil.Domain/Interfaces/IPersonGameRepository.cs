@@ -6,7 +6,8 @@ namespace LoteriaFacil.Domain.Interfaces
 {
     public interface IPersonGameRepository : IRepository<PersonGame>
     {
-        IEnumerable<PersonGame> GetFunctionJogoPessoa(Guid personId, int concurse, bool calculateTensWithoutHits = false);
-        IEnumerable<PersonGame> GetFunctionJogosConcurso(int concurse, bool calculateTensWithoutHits = false);
+        IEnumerable<PersonGame> GetFunctionJogoPessoa(Guid personId, int concurse, bool calculateTensWithoutHits = false, decimal minimunAmountToSentEmail = 0);
+        IEnumerable<PersonGame> GetFunctionJogosConcurso(int concurse, bool calculateTensWithoutHits = false, decimal minimunAmountToSentEmail = 0);
+
     }
 }

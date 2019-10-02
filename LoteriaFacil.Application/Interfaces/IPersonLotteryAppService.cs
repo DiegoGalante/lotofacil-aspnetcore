@@ -17,6 +17,8 @@ namespace LoteriaFacil.Application.Interfaces
 
         Object GetPersonGame(Guid personId, int concurse = 0);
         Object GetPersonGame(int concurse = 0);
+
+        Object SendEmail(int concurse = 0);
         //IList<CustomerHistoryData> GetAllHistory(Guid id);
     }
 }

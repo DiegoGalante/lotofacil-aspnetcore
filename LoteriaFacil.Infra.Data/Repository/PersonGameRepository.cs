@@ -14,20 +14,40 @@ namespace LoteriaFacil.Infra.Data.Repository
         {
         }
 
-        public IEnumerable<PersonGame> GetFunctionJogoPessoa(Guid personId, int concurse, bool calculateTensWithoutHits = false)
+        public IEnumerable<PersonGame> GetFunctionJogoPessoa(Guid personId, int concurse, bool calculateTensWithoutHits = false, decimal minimunAmountToSentEmail = 0)
         {
             if (calculateTensWithoutHits)
-                return DbSet.FromSql($"SELECT * from dbo.JogoPessoa({concurse}, {personId})").ToList().OrderBy(c => c.Hits);
+            {
+                if (minimunAmountToSentEmail > 0)
+                    return DbSet.FromSql($"SELECT * from dbo.JogoPessoa({concurse}, {personId})").ToList().Where(c => c.Ticket_Amount >= minimunAmountToSentEmail).OrderBy(c => c.Hits);
+                else
+                    return DbSet.FromSql($"SELECT * from dbo.JogoPessoa({concurse}, {personId})").ToList().OrderBy(c => c.Hits);
+            }
             else
-                return DbSet.FromSql($"SELECT * from dbo.JogoPessoa({concurse}, {personId})").ToList().Where(c => c.Hits > 10).OrderBy(c => c.Hits);
+            {
+                if (minimunAmountToSentEmail > 0)
+                    return DbSet.FromSql($"SELECT * from dbo.JogoPessoa({concurse}, {personId})").ToList().Where(c => c.Hits > 10 && c.Ticket_Amount >= minimunAmountToSentEmail).OrderBy(c => c.Hits);
+                else
+                    return DbSet.FromSql($"SELECT * from dbo.JogoPessoa({concurse}, {personId})").ToList().Where(c => c.Hits > 10).OrderBy(c => c.Hits);
+            }
         }
 
-        public IEnumerable<PersonGame> GetFunctionJogosConcurso(int concurse, bool calculateTensWithoutHits = false)
+        public IEnumerable<PersonGame> GetFunctionJogosConcurso(int concurse, bool calculateTensWithoutHits = false, decimal minimunAmountToSentEmail = 0)
         {
             if (calculateTensWithoutHits)
-                return DbSet.FromSql($"SELECT * from dbo.JogosConcurso({concurse})").ToList().OrderByDescending(c => c.Hits);
+            {
+                if (minimunAmountToSentEmail > 0)
+                    return DbSet.FromSql($"SELECT * from dbo.JogoPessoa({concurse})").ToList().Where(c => c.Ticket_Amount >= minimunAmountToSentEmail).OrderBy(c => c.Hits);
+                else
+                    return DbSet.FromSql($"SELECT * from dbo.JogosConcurso({concurse})").ToList().OrderByDescending(c => c.Hits);
+            }
             else
-                return DbSet.FromSql($"SELECT * from dbo.JogosConcurso({concurse})").ToList().Where(c => c.Hits > 10).OrderByDescending(c => c.Hits);
+            {
+                if (minimunAmountToSentEmail > 0)
+                    return DbSet.FromSql($"SELECT * from dbo.JogoPessoa({concurse})").ToList().Where(c => c.Hits > 10 && c.Ticket_Amount >= minimunAmountToSentEmail).OrderBy(c => c.Hits);
+                else
+                    return DbSet.FromSql($"SELECT * from dbo.JogosConcurso({concurse})").ToList().Where(c => c.Hits > 10).OrderByDescending(c => c.Hits);
+            }
         }
 
 

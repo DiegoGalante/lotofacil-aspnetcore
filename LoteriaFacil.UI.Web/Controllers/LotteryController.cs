@@ -57,5 +57,20 @@ namespace LoteriaFacil.UI.Web.Controllers
         {
             return _PersonLotteryAppService.GetPersonGame(concurse);
         }
+
+
+        [HttpPost]
+        [Route("/sendEmail")]
+        public object SendEmail()
+        {
+            return _PersonLotteryAppService.SendEmail();
+        }
+
+        [HttpPost]
+        [Route("/sendEmail/{concurse:int}")]
+        public object SendEmail(int concurse)
+        {
+            return _PersonLotteryAppService.SendEmail(concurse);
+        }
     }
 }
