@@ -8,5 +8,6 @@ namespace LoteriaFacil.Domain.Interfaces
     {
         IEnumerable<PersonGame> GetFunctionJogoPessoa(Guid personId, int concurse, bool calculateTensWithoutHits = false);
         IEnumerable<PersonGame> GetFunctionJogosConcurso(int concurse, bool calculateTensWithoutHits = false);
+
     }
 }

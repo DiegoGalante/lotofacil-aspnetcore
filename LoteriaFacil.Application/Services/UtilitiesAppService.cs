@@ -531,6 +531,16 @@ namespace LoteriaFacil.Application.Services
             string abreTR = "";
             string fechaTR = "";
             string htmlFinal = "";
+            int cont = 1;
+
+            string[] headerTeable = new string[] {
+                "#",
+                "ID",
+                "Acertos",
+                "Jogo",
+                "Autor",
+                "Valor Arrecadado"
+            };
 
             abreHtml = @"<!DOCTYPE html>
                         <html>
@@ -568,7 +578,7 @@ namespace LoteriaFacil.Application.Services
             string fechaTD = "</td>";
 
             abreTH = "<th>";
-            colspanNumero = "5";
+            colspanNumero = headerTeable.Count().ToString();
             abreTHColspan = "<th colspan='" + colspanNumero + "'>";
             fechaTH = "</th>";
 
@@ -582,7 +592,7 @@ namespace LoteriaFacil.Application.Services
             //PRIMEIRA LINHA
             htmlFinal += abreTR;
 
-            colspanNumero = "4";
+            colspanNumero = (headerTeable.Count() - 1).ToString();
             abreTHColspan = "<th colspan='" + colspanNumero + "'>";
             htmlFinal += abreTHColspan;
             htmlFinal += string.Format("Concurso: {0}", lottery.Concurse);
@@ -595,20 +605,12 @@ namespace LoteriaFacil.Application.Services
             htmlFinal += fechaTR;
 
             htmlFinal += abreTR;
-            colspanNumero = "5";
+            colspanNumero = headerTeable.Count().ToString();
             abreTHColspan = "<th colspan='" + colspanNumero + "' style='text-align:center;'>";
             htmlFinal += abreTHColspan;
             htmlFinal += lottery.Game;
             htmlFinal += fechaTH;
             htmlFinal += fechaTR;
-
-            string[] headerTeable = {
-                        "ID",
-                        "Acertos",
-                        "Jogo",
-                        "Autor",
-                        "Valor Arrecadado"
-            };
 
             #region HEADER Tabela
             htmlFinal += abreTR;
@@ -630,18 +632,27 @@ namespace LoteriaFacil.Application.Services
                 foreach (var acerto in jogosPessoas)
                 {
                     htmlFinal += abreTR;
+
+                    htmlFinal += "<th style='text-align:center;'>";
+                    htmlFinal += cont++;
+                    htmlFinal += fechaTH;
+
                     htmlFinal += abreTH;
                     htmlFinal += string.Format("{0}", acerto.Id);
                     htmlFinal += fechaTH;
+
                     htmlFinal += "<th style='text-align:center;'>";
                     htmlFinal += string.Format("{0}", acerto.Hits);
                     htmlFinal += fechaTH;
+
                     htmlFinal += abreTH;
                     htmlFinal += DestacaNumero(lottery.Game, acerto.Game);
                     htmlFinal += fechaTH;
+
                     htmlFinal += abreTH;
                     htmlFinal += acerto.Name;
                     htmlFinal += fechaTH;
+
                     htmlFinal += "<th style='text-align:center;'>";
 
                     switch (acerto.Hits)
@@ -685,7 +696,7 @@ namespace LoteriaFacil.Application.Services
 
             #region Footer Tabela
             htmlFinal += abreTR;
-            colspanNumero = "4";
+            colspanNumero = (headerTeable.Count() - 1).ToString();
             abreTHColspan = "<th colspan='" + colspanNumero + "' style='text-align:right;'>";
             htmlFinal += abreTHColspan;
             htmlFinal += "Quantidade a receber dos bilhetes (R$)";

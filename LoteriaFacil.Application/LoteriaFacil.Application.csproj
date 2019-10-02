@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\LoteriaFacil.Domain\LoteriaFacil.Domain.csproj" />
+    <ProjectReference Include="..\LoteriaFacil.Infra.CrossCutting.Identity\LoteriaFacil.Infra.CrossCutting.Identity.csproj" />
     <ProjectReference Include="..\LoteriaFacil.Infra.Data\LoteriaFacil.Infra.Data.csproj" />
   </ItemGroup>
 

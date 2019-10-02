@@ -1,4 +1,6 @@
 ﻿using System.Threading.Tasks;
+using LoteriaFacil.Infra.CrossCutting.Identity.Extensions;
+using LoteriaFacil.Infra.CrossCutting.Identity.Offline;
 
 namespace LoteriaFacil.Infra.CrossCutting.Identity.Services
 {
@@ -8,7 +10,17 @@ namespace LoteriaFacil.Infra.CrossCutting.Identity.Services
         public Task SendEmailAsync(string email, string subject, string message)
         {
             // Plug in your email service here to send an email.
-            return Task.FromResult(0);
+            Email emailEnviar = new Email(Credenciais.EMAIL, email, subject, message);
+            try
+            {
+                emailEnviar.EnviaMensagemEmail();
+                return Task.FromResult(1);
+            }
+            catch (System.Exception ex)
+            {
+                return Task.FromResult(0);
+            }
+            
         }
     }
 

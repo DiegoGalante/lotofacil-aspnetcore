@@ -10,7 +10,11 @@ using LoteriaFacil.Domain.Commands;
 using LoteriaFacil.Domain.Core.Bus;
 using LoteriaFacil.Domain.Interfaces;
 using LoteriaFacil.Domain.Models;
+using LoteriaFacil.Infra.CrossCutting.Identity.Services;
+using LoteriaFacil.Infra.CrossCutting.Identity.Extensions;
 using LoteriaFacil.Infra.Data.Repository.EventSourcing;
+using LoteriaFacil.Infra.CrossCutting.Identity.Offline;
+
 namespace LoteriaFacil.Application.Services
 {
     public class PersonLotteryAppService : IPersonLotteryAppService
@@ -27,6 +31,8 @@ namespace LoteriaFacil.Application.Services
         private readonly IPersonRepository _personRepository;
         private readonly IConfigurationRepository _configurationRepository;
 
+        private readonly IEmailSender _emailSender;
+
         public PersonLotteryAppService(IMapper mapper,
                                         IPersonLotteryRepository PersonLotteryRepository,
                                         ILotteryRepository lotteryRepository,
@@ -37,7 +43,8 @@ namespace LoteriaFacil.Application.Services
                                         IJsonDashboardRepository jsonDashboardRepository,
                                         IPersonGameRepository personGameRepository,
                                         IPersonRepository personRepository,
-                                        IConfigurationRepository configurationRepository)
+                                        IConfigurationRepository configurationRepository,
+                                        IEmailSender emailSender)
         {
             _mapper = mapper;
             _PersonLotteryRepository = PersonLotteryRepository;
@@ -50,6 +57,8 @@ namespace LoteriaFacil.Application.Services
             _personGameRepository = personGameRepository;
             _personRepository = personRepository;
             _configurationRepository = configurationRepository;
+
+            _emailSender = emailSender;
         }
 
         public void Register(PersonLotteryViewModel PersonLotteryViewModel)
@@ -149,14 +158,48 @@ namespace LoteriaFacil.Application.Services
             lottery = _LotteryRepository.GetByConcurse(concurse);
 
             List<PersonGame> personGame = _personGameRepository.GetFunctionJogosConcurso(concurse, configuration.Calcular_Dezenas_Sem_Pontuacao).ToList();
-            foreach (var pessoa in personGame)
-                pessoas.Add(_personRepository.GetById(pessoa.PesId));
+            foreach (var pes in personGame)
+            {
+                Person pessoa = _personRepository.GetById(pes.PesId);
+                if (!pessoas.Contains(pessoa))
+                    pessoas.Add(pessoa);
+            }
 
-            //PersonLottery personLottery = _PersonLotteryRepository.GetByConcurse(concurse);
+            var assunto = "Lotofácil - Diego Galante";
+            var corpoEmail = "";
+            decimal total_bilhetes = 0;
+            //Configuração de enviar email exclusivo para pessoa
+            if (true)
+            {
+                foreach (var pessoa in pessoas)
+                {
+                    total_bilhetes = personGame.Where(x => x.PesId == pessoa.Id).Sum(x => x.Ticket_Amount);
 
-            decimal total_bilhetes = personGame.Sum(x => x.Ticket_Amount);
+                    List<PersonGame> pesGame = _personGameRepository.GetFunctionJogoPessoa(pessoa.Id, lottery.Concurse, configuration.Calcular_Dezenas_Sem_Pontuacao).ToList();
+                    corpoEmail = _utilitiesAppService.MontaHtml(lottery, pesGame);
+                    _emailSender.SendEmailJogosPessoa(pessoa.Email, corpoEmail, assunto);
 
-          var retorno =  _utilitiesAppService.MontaHtml(lottery, personGame);
+                    total_bilhetes = 0;
+                    corpoEmail = string.Empty;
+                }
+            }
+            else
+            {
+                //Basicamente aqui todo mundo que registrou jogo recebe o email com os nomes, apostas e acertos de todos.
+                //Não vou manter isso aqui, só mesmo pra teste e debug ;D
+                total_bilhetes = personGame.Sum(x => x.Ticket_Amount);
+                corpoEmail = _utilitiesAppService.MontaHtml(lottery, personGame);
+                foreach (var pessoa in pessoas)
+                    _emailSender.SendEmailJogosPessoa(Credenciais.EMAIL_ADM, corpoEmail, assunto);
+                //_emailSender.SendEmailJogosPessoa(pessoa.Email, corpoEmail, assunto);
+
+                total_bilhetes = 0;
+                corpoEmail = string.Empty;
+            }
+
+
+
+
             return new { ret = true, msg = "" };
         }
     }
