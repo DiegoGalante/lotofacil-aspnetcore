@@ -589,7 +589,7 @@ namespace LoteriaFacil.Application.Services
             htmlFinal += fechaTH;
 
             htmlFinal += abreTH;
-            htmlFinal +=
+            htmlFinal += lottery.DtConcurse.ToShortDateString();
             htmlFinal += fechaTH;
 
             htmlFinal += fechaTR;
@@ -644,34 +644,29 @@ namespace LoteriaFacil.Application.Services
                     htmlFinal += fechaTH;
                     htmlFinal += "<th style='text-align:center;'>";
 
+                    switch (acerto.Hits)
+                    {
+                        case 11:
+                            htmlFinal += lottery.Shared11.ToString("N");
+                            break;
+                        case 12:
+                            htmlFinal += lottery.Shared12.ToString("N");
+                            break;
+                        case 13:
+                            htmlFinal += lottery.Shared13.ToString("N");
+                            break;
+                        case 14:
+                            htmlFinal += lottery.Shared14.ToString("N");
+                            break;
+                        case 15:
+                            htmlFinal += lottery.Shared15.ToString("N");
+                            break;
+                        default:
+                            htmlFinal += 0.ToString("N");
+                            break;
+                    }
 
-                    if (acerto.Hits == 11)
-                    {
-                        htmlFinal += lottery.Shared11.ToString("N");
-                        valorBilhetes += acerto.Ticket_Amount;
-                    }
-                    else if (acerto.Hits == 12)
-                    {
-                        htmlFinal += lottery.Shared12.ToString("N");
-                        valorBilhetes += acerto.Ticket_Amount;
-                    }
-                    else if (acerto.Hits == 13)
-                    {
-                        htmlFinal += lottery.Shared13.ToString("N");
-                        valorBilhetes += acerto.Ticket_Amount;
-                    }
-                    else if (acerto.Hits == 14)
-                    {
-                        htmlFinal += lottery.Shared14.ToString("N");
-                        valorBilhetes += acerto.Ticket_Amount;
-                    }
-                    else if (acerto.Hits == 15)
-                    {
-                        htmlFinal += lottery.Shared15.ToString("N");
-                        valorBilhetes += acerto.Ticket_Amount;
-                    }
-                    else
-                        htmlFinal += 0.ToString("N");
+                    valorBilhetes += acerto.Ticket_Amount;
 
                     htmlFinal += fechaTH;
                     htmlFinal += fechaTR;

@@ -144,7 +144,7 @@ namespace LoteriaFacil.Application.Services
             Configuration configuration = _configurationRepository.GetFirst();
 
             if (concurse == 0)
-                concurse = lottery.Concurse;
+                concurse = _LotteryRepository.GetLast().Concurse;
 
             lottery = _LotteryRepository.GetByConcurse(concurse);
 
