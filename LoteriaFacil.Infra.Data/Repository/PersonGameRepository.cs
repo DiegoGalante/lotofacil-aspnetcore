@@ -37,14 +37,15 @@ namespace LoteriaFacil.Infra.Data.Repository
             if (calculateTensWithoutHits)
             {
                 if (minimunAmountToSentEmail > 0)
-                    return DbSet.FromSql($"SELECT * from dbo.JogoPessoa({concurse})").ToList().Where(c => c.Ticket_Amount >= minimunAmountToSentEmail).OrderBy(c => c.Hits);
+                    return DbSet.FromSql($"SELECT * from dbo.JogosConcurso({concurse})").ToList().OrderBy(c => c.Hits).Where(c => c.Ticket_Amount >= minimunAmountToSentEmail);
+                    
                 else
                     return DbSet.FromSql($"SELECT * from dbo.JogosConcurso({concurse})").ToList().OrderByDescending(c => c.Hits);
             }
             else
             {
                 if (minimunAmountToSentEmail > 0)
-                    return DbSet.FromSql($"SELECT * from dbo.JogoPessoa({concurse})").ToList().Where(c => c.Hits > 10 && c.Ticket_Amount >= minimunAmountToSentEmail).OrderBy(c => c.Hits);
+                    return DbSet.FromSql($"SELECT * from dbo.JogosConcurso({concurse})").ToList().Where(c => c.Hits > 10 && c.Ticket_Amount >= minimunAmountToSentEmail).OrderBy(c => c.Hits);
                 else
                     return DbSet.FromSql($"SELECT * from dbo.JogosConcurso({concurse})").ToList().Where(c => c.Hits > 10).OrderByDescending(c => c.Hits);
             }

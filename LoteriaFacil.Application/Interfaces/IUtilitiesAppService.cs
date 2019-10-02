@@ -57,8 +57,6 @@ namespace LoteriaFacil.Application.Interfaces
 
         string FormataDezena(string dezenaString);
 
-        string MontaHtml(Dictionary<PersonLottery, byte> acertosDicionario, List<Person> pessoas, PersonLottery jsonData, decimal qtdeTotalARecolher);
-
         string MontaHtml(Lottery lottery, List<PersonGame> jogosPessoas);
 
         string DestacaNumero(string jogoSorteado, string jogoGerado);
