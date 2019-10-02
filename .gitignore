@@ -330,4 +330,4 @@ ASALocalRun/
 .mfractor/
 
 #Credenciais
-~/lotofacil-aspnetcore/LoteriaFacil.Application/Offline
+/Offline/*
