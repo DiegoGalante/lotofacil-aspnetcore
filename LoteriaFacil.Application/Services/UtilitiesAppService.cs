@@ -329,208 +329,21 @@ namespace LoteriaFacil.Application.Services
             GC.SuppressFinalize(this);
         }
 
-        public string MontaHtml(Dictionary<PersonLottery, byte> acertosDicionario, List<Person> pessoas, PersonLottery jsonData, decimal qtdeTotalARecolher)
-        {
-            //throw new NotImplementedException();
-
-            Lottery lottery = _lotteryRepository.GetByConcurse(jsonData.Concurse);
-
-            #region Terminar
-            string abreHtml = string.Empty, fechaHtml = string.Empty;
-            string abreBody = string.Empty, fechaBody = string.Empty;
-            string abreTable = string.Empty, fechaTable = string.Empty;
-            string abreTH = string.Empty, abreTHColspan = string.Empty, fechaTH = string.Empty;
-            string colspanNumero = string.Empty;
-            string abreTD = string.Empty, fechaTD = string.Empty;
-            string abreTR = string.Empty, fechaTR = string.Empty;
-            string htmlFinal = string.Empty;
-            int cont = 1;
-
-            string[] headerTeable = new string[] {
-                "#",
-                "ID",
-                "Acertos",
-                "Jogo",
-                "Autor",
-                "Valor Arrecadado"
-            };
-
-            abreHtml = @"<!DOCTYPE html>
-                        <html>
-                        <head>
-                        <style>
-                        table {
-                            border: 1px solid black;
-                            border-collapse: collapse;
-                            width: 100%;
-                        }
-                        th, td {
-                            border: 1px solid grey;
-                            border-collapse: collapse;
-                            padding: 5px;
-                            text-align: justify;    
-                        }
-                        tr:nth-child(even) {
-                            background-color: #dddddd;
-                        }
-                        </style>
-                        </head>";
-
-            fechaHtml = "</html>";
-
-            abreBody = "<body>";
-            fechaBody = "</body>";
-
-            abreTable = "<table>";
-            fechaTable = "</table>";
-
-            abreTR = "<tr>";
-            fechaTR = "</tr>";
-
-            abreTD = "<td>";
-            fechaTD = "</td>";
-
-            abreTH = "<th>";
-            colspanNumero = headerTeable.Count().ToString();
-            abreTHColspan = "<th colspan='" + colspanNumero + "'>";
-            fechaTH = "</th>";
-
-            //INICIA O HTML
-            htmlFinal += abreHtml;
-            htmlFinal += abreBody;
-
-            //INICIA A TABELA
-            htmlFinal += abreTable;
-
-            //PRIMEIRA LINHA
-            htmlFinal += abreTR;
-
-            colspanNumero = (headerTeable.Count() - 1).ToString();
-            abreTHColspan = "<th colspan='" + colspanNumero + "'>";
-            htmlFinal += abreTHColspan;
-            htmlFinal += "Concurso: " + jsonData.Concurse;
-            htmlFinal += fechaTH;
-
-            htmlFinal += abreTH;
-            htmlFinal += lottery.DtConcurse;
-            htmlFinal += fechaTH;
-
-            htmlFinal += fechaTR;
-
-            htmlFinal += abreTR;
-            colspanNumero = headerTeable.Count().ToString();
-            abreTHColspan = "<th colspan='" + colspanNumero + "' style='text-align:center;'>";
-            htmlFinal += abreTHColspan;
-            htmlFinal += lottery.Game;
-            htmlFinal += fechaTH;
-            htmlFinal += fechaTR;
-
-
-
-            // HEADER Tabela
-            htmlFinal += abreTR;
-            foreach (var coluna in headerTeable)
-            {
-                htmlFinal += abreTH;
-                htmlFinal += coluna;
-                htmlFinal += fechaTH;
-            }
-            htmlFinal += fechaTR;
-            // FIM HEADER Tabela
-
-
-            //MIOLODATABELA
-            foreach (var acerto in acertosDicionario)
-            {
-                htmlFinal += abreTR;
-
-                htmlFinal += "<th style='text-align:center;'>";
-                htmlFinal += cont++;
-                htmlFinal += fechaTH;
-
-                htmlFinal += abreTH;
-                htmlFinal += acerto.Key.Concurse;
-                htmlFinal += fechaTH;
-
-                htmlFinal += "<th style='text-align:center;'>";
-                htmlFinal += acerto.Value;
-                htmlFinal += fechaTH;
-
-                htmlFinal += abreTH;
-                htmlFinal += DestacaNumero(lottery.Game, acerto.Key.Game);
-                htmlFinal += fechaTH;
-
-                htmlFinal += abreTH;
-                htmlFinal += acerto.Key.Person.Name;
-                htmlFinal += fechaTH;
-
-                htmlFinal += "<th style='text-align:center;'>";
-                switch (acerto.Value)
-                {
-                    case 11:
-                        htmlFinal += Convert.ToDecimal(jsonData.Ticket_Amount).ToString("N");
-                        break;
-                    case 12:
-                        htmlFinal += Convert.ToDecimal(jsonData.Ticket_Amount).ToString("N");
-                        break;
-                    case 13:
-                        htmlFinal += Convert.ToDecimal(jsonData.Ticket_Amount).ToString("N");
-                        break;
-                    case 14:
-                        htmlFinal += Convert.ToDecimal(jsonData.Ticket_Amount).ToString("N");
-                        break;
-                    case 15:
-                        htmlFinal += Convert.ToDecimal(jsonData.Ticket_Amount).ToString("N");
-                        break;
-                    default:
-                        htmlFinal += "0,00";
-                        break;
-                }
-                htmlFinal += fechaTH;
-
-                htmlFinal += fechaTR;
-            }
-            //FIM MIOLODATABELA
-
-
-            //Footer Tabela
-            htmlFinal += abreTR;
-            colspanNumero = (headerTeable.Count() - 1).ToString();
-            abreTHColspan = "<th colspan='" + colspanNumero + "' style='text-align:right;'>";
-            htmlFinal += abreTHColspan;
-            htmlFinal += "Quantidade a receber dos bilhetes (R$)";
-            htmlFinal += fechaTH;
-
-            htmlFinal += "<th style='text-align:center; font-size:19px;'>";
-            htmlFinal += qtdeTotalARecolher > 0 ? qtdeTotalARecolher.ToString("N") : "0,00";
-            htmlFinal += fechaTH;
-            htmlFinal += fechaTR;
-            // FIM Footer Tabela
-
-            htmlFinal += fechaTable;
-            htmlFinal += fechaBody;
-            htmlFinal += fechaHtml;
-
-
-            return htmlFinal;
-            #endregion Terminar
-        }
-
         public string MontaHtml(Lottery lottery, List<PersonGame> jogosPessoas)
         {
-            string abreHtml = "";
-            string fechaHtml = "";
-            string abreBody = "";
-            string fechaBody = "";
-            string abreTable = "";
-            string fechaTable = "";
-            string abreTH = "";
-            string abreTHColspan = "";
-            string fechaTH = "";
-            string colspanNumero = "";
-            string abreTR = "";
-            string fechaTR = "";
-            string htmlFinal = "";
+            string abreHtml = string.Empty;
+            string fechaHtml = string.Empty;
+            string abreBody = string.Empty;
+            string fechaBody = string.Empty;
+            string abreTable = string.Empty;
+            string fechaTable = string.Empty;
+            string abreTH = string.Empty;
+            string abreTHColspan = string.Empty;
+            string fechaTH = string.Empty;
+            string colspanNumero = string.Empty;
+            string abreTR = string.Empty;
+            string fechaTR = string.Empty;
+            string htmlFinal = string.Empty;
             int cont = 1;
 
             string[] headerTeable = new string[] {
@@ -703,7 +516,6 @@ namespace LoteriaFacil.Application.Services
             htmlFinal += fechaTH;
 
             htmlFinal += "<th style='text-align:center; font-size:18px;'>";
-            //htmlFinal += qtdeTotalARecolher > 0 ? qtdeTotalARecolher.To("N") : "0,00";
 
             htmlFinal += valorBilhetes.ToString("N");
             htmlFinal += fechaTH;
@@ -758,7 +570,6 @@ namespace LoteriaFacil.Application.Services
 
             return retorno;
         }
-
 
     }
 }

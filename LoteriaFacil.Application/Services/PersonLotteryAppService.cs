@@ -157,7 +157,7 @@ namespace LoteriaFacil.Application.Services
 
             lottery = _LotteryRepository.GetByConcurse(concurse);
 
-            List<PersonGame> personGame = _personGameRepository.GetFunctionJogosConcurso(concurse, configuration.Calcular_Dezenas_Sem_Pontuacao).ToList();
+            List<PersonGame> personGame = _personGameRepository.GetFunctionJogosConcurso(concurse, configuration.Calcular_Dezenas_Sem_Pontuacao, configuration.Valor_Minimo_Para_Envio_Email).ToList();
             foreach (var pes in personGame)
             {
                 Person pessoa = _personRepository.GetById(pes.PesId);
@@ -168,6 +168,7 @@ namespace LoteriaFacil.Application.Services
             var assunto = "Lotofácil - Diego Galante";
             var corpoEmail = "";
             decimal total_bilhetes = 0;
+
             //Configuração de enviar email exclusivo para pessoa
             if (true)
             {
@@ -175,7 +176,7 @@ namespace LoteriaFacil.Application.Services
                 {
                     total_bilhetes = personGame.Where(x => x.PesId == pessoa.Id).Sum(x => x.Ticket_Amount);
 
-                    List<PersonGame> pesGame = _personGameRepository.GetFunctionJogoPessoa(pessoa.Id, lottery.Concurse, configuration.Calcular_Dezenas_Sem_Pontuacao).ToList();
+                    List<PersonGame> pesGame = _personGameRepository.GetFunctionJogoPessoa(pessoa.Id, lottery.Concurse, configuration.Calcular_Dezenas_Sem_Pontuacao, configuration.Valor_Minimo_Para_Envio_Email).ToList();
                     corpoEmail = _utilitiesAppService.MontaHtml(lottery, pesGame);
                     _emailSender.SendEmailJogosPessoa(pessoa.Email, corpoEmail, assunto);
 

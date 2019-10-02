@@ -10,7 +10,7 @@ namespace LoteriaFacil.Infra.CrossCutting.Identity.Services
         public Task SendEmailAsync(string email, string subject, string message)
         {
             // Plug in your email service here to send an email.
-            Email emailEnviar = new Email(Credenciais.EMAIL, email, subject, message);
+            Email emailEnviar = new Email(Credenciais.EMAIL_REMETENTE, email, subject, message);
             try
             {
                 emailEnviar.EnviaMensagemEmail();
