@@ -18,7 +18,6 @@ namespace LoteriaFacil.UI.Web.Controllers
             _configurationAppService = configurationAppService;
         }
 
-
         [HttpPost]
         [Route("/saveConfiguration")]
         public IActionResult Index([FromBody]object config)
@@ -35,7 +34,7 @@ namespace LoteriaFacil.UI.Web.Controllers
 
             HttpContext.Response.StatusCode = 200;
 
-            return View();
+            return RedirectToAction("Load", "Lottery");
         }
 
         [HttpPost]
