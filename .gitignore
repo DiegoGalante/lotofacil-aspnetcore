@@ -331,3 +331,7 @@ ASALocalRun/
 
 #Credenciais
 /LoteriaFacil.Application/Offline/*
+!/LoteriaFacil.Application/Offline/*
+/Offline/*
+Offline/*
+/Offline/
