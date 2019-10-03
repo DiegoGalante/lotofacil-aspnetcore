@@ -24,11 +24,11 @@ namespace LoteriaFacil.Domain.Models
 
         public Configuration() { }
 
-        public bool Calcular_Dezenas_Sem_Pontuacao { get; protected set; }
-        public bool Enviar_Email_Manualmente { get; protected set; }
-        public bool Enviar_Email_Automaticamente { get; protected set; }
-        public bool Checar_Jogo_Online { get; protected set; }
-        public decimal Valor_Minimo_Para_Envio_Email { get; protected set; }
+        public bool Calcular_Dezenas_Sem_Pontuacao { get; set; }
+        public bool Enviar_Email_Manualmente { get; set; }
+        public bool Enviar_Email_Automaticamente { get; set; }
+        public bool Checar_Jogo_Online { get; set; }
+        public decimal Valor_Minimo_Para_Envio_Email { get; set; }
 
         //public Guid PesId { get; protected set; }
     }
