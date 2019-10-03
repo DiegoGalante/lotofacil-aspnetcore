@@ -8,22 +8,10 @@ namespace LoteriaFacil.Infra.Data.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "Persons");
+
+            migrationBuilder.DropTable(
                 name: "PersonLottery");
-
-            migrationBuilder.AlterColumn<string>(
-                name: "Name",
-                table: "Type_Lottery",
-                nullable: true,
-                oldClrType: typeof(string),
-                oldType: "varchar(120)");
-
-            migrationBuilder.AlterColumn<decimal>(
-                name: "Bet_Min",
-                table: "Type_Lottery",
-                nullable: false,
-                oldClrType: typeof(decimal),
-                oldType: "decimal(10, 2)",
-                oldDefaultValue: 0m);
 
             migrationBuilder.AlterColumn<decimal>(
                 name: "Shared15",
@@ -89,22 +77,6 @@ namespace LoteriaFacil.Infra.Data.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AlterColumn<string>(
-                name: "Name",
-                table: "Type_Lottery",
-                type: "varchar(120)",
-                nullable: false,
-                oldClrType: typeof(string),
-                oldNullable: true);
-
-            migrationBuilder.AlterColumn<decimal>(
-                name: "Bet_Min",
-                table: "Type_Lottery",
-                type: "decimal(10, 2)",
-                nullable: false,
-                defaultValue: 0m,
-                oldClrType: typeof(decimal));
-
             migrationBuilder.AlterColumn<decimal>(
                 name: "Shared15",
                 table: "Lottery",

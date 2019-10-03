@@ -22,7 +22,6 @@ namespace LoteriaFacil.Infra.Data.Context
         public DbSet<Lottery> Lottery { get; set; } //novo #Lottery
         public DbSet<PersonLottery> PersonLottery { get; set; } //novo #PersonLottery
 
-
         public DbSet<JsonDashboard> JsonDashboard { get; set; } //novo #JsonDashboard
 
         public DbSet<PersonGame> PersonGame { get; set; } //novo #GamePerson

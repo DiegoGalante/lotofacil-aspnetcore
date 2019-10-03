@@ -93,7 +93,9 @@ namespace LoteriaFacil.Application.Services
                 lottery = _jsonDashboardRepository.GetFunctionJsonDashBoard(concurse);
 
             if (lottery == null || lottery.Id.Equals(Guid.Empty))
+            {
                 lottery = _jsonDashboardRepository.GetFunctionJsonDashBoard(_LotteryRepository.GetLast().Concurse);
+            }
 
             return new { concurse = lottery, personGame = "", amount_tickets = 0 };
         }

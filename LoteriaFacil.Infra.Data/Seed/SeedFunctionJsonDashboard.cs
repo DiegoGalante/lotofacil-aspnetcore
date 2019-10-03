@@ -67,7 +67,15 @@ namespace LoteriaFacil.Infra.Data.Seed
                                             --END
                                             )";
 
-            loteriaFacilContext.Database.ExecuteSqlCommand(functionJsonDashBoard);
+            try
+            {
+                loteriaFacilContext.Database.ExecuteSqlCommand(functionJsonDashBoard);
+            }
+            catch (Exception ex)
+            {
+
+
+            }
         }
     }
 }

@@ -54,75 +54,75 @@ namespace LoteriaFacil.Domain.Models
         /// <summary>
         /// Número do concurso.
         /// </summary>
-        public int Concurse { get; protected set; }
+        public int Concurse { get;  set; }
 
         /// <summary>
         /// Data do concurso.
         /// </summary>
-        public DateTime DtConcurse { get; protected set; }
+        public DateTime DtConcurse { get;  set; }
 
         /// <summary>
         /// Dezenas do jogo.
         /// </summary>
-        public string Game { get; protected set; }
+        public string Game { get;  set; }
 
         /// <summary>
         /// Quantidades de acetos das 15 dezenas do concurso.
         /// </summary>
-        public int Hit15 { get; protected set; }
+        public int Hit15 { get;  set; }
         /// <summary>
         /// Quantidades de acetos das 14 dezenas do concurso.
         /// </summary>
-        public int Hit14 { get; protected set; }
+        public int Hit14 { get;  set; }
         /// <summary>
         /// Quantidades de acetos das 13 dezenas do concurso.
         /// </summary>
-        public int Hit13 { get; protected set; }
+        public int Hit13 { get;  set; }
         /// <summary>
         /// Quantidades de acetos das 12 dezenas do concurso.
         /// </summary>
-        public int Hit12 { get; protected set; }
+        public int Hit12 { get;  set; }
         /// <summary>
         /// Quantidades de acetos das 11 dezenas do concurso.
         /// </summary>
-        public int Hit11 { get; protected set; }
+        public int Hit11 { get;  set; }
 
         /// <summary>
         /// Valor do rateio  das 15 dezenas.
         /// </summary>
-        public decimal Shared15 { get; protected set; }
+        public decimal Shared15 { get;  set; }
 
         /// <summary>
         /// Valor do rateio  das 14 dezenas.
         /// </summary>
-        public decimal Shared14 { get; protected set; }
+        public decimal Shared14 { get;  set; }
 
         /// <summary>
         /// Valor do rateio  das 13 dezenas.
         /// </summary>
-        public decimal Shared13 { get; protected set; }
+        public decimal Shared13 { get;  set; }
 
         /// <summary>
         /// Valor do rateio  das 12 dezenas.
         /// </summary>
-        public decimal Shared12 { get; protected set; }
+        public decimal Shared12 { get;  set; }
 
         /// <summary>
         /// Valor do rateio  das 11 dezenas.
         /// </summary>
-        public decimal Shared11 { get; protected set; }
+        public decimal Shared11 { get;  set; }
 
         /// <summary>
         /// Data do próximo concurso.
         /// </summary>
-        public DateTime DtNextConcurse { get; protected set; }
+        public DateTime DtNextConcurse { get;  set; }
 
         /// <summary>
         /// Tipo odo jogo ID.
         /// </summary>
-        public TypeLottery TypeLottery { get; protected set; }
+        public TypeLottery TypeLottery { get;  set; }
 
-        public Guid TypeLotteryId { get; protected set; }
+        public Guid TypeLotteryId { get;  set; }
     }
 }
 

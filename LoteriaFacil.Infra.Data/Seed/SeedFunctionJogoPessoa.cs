@@ -26,7 +26,14 @@ namespace LoteriaFacil.Infra.Data.Seed
 	
                                         );";
 
-            loteriaFacilContext.Database.ExecuteSqlCommand(functionJogoPessoa);
+            try
+            {
+                loteriaFacilContext.Database.ExecuteSqlCommand(functionJogoPessoa);
+            }
+            catch (Exception ex)
+            {
+
+            }
         }
     }
 }

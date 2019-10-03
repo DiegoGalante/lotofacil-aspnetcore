@@ -227,8 +227,15 @@ namespace LoteriaFacil.Infra.Data.Seed
                                     --DEALLOCATE statement - Destroys the cursor
 
                                     END";
+            try
+            {
+                loteriaFacilContext.Database.ExecuteSqlCommand(procSP_CHECK_GAME);
+            }
+            catch (System.Exception ex)
+            {
 
-            loteriaFacilContext.Database.ExecuteSqlCommand(procSP_CHECK_GAME);
+                
+            }
         }
     }
 }

@@ -25,7 +25,14 @@ namespace LoteriaFacil.Infra.Data.Seed
 	
                                         );";
 
-            loteriaFacilContext.Database.ExecuteSqlCommand(functionJogoConcurso);
+            try
+            {
+                loteriaFacilContext.Database.ExecuteSqlCommand(functionJogoConcurso);
+            }
+            catch (Exception ex)
+            {
+
+            }
         }
     }
 }

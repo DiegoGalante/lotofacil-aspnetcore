@@ -46,8 +46,15 @@ namespace LoteriaFacil.Infra.Data.Seed
  
                                        RETURN @outStr;		   
                                       END";
+            try
+            {
+                loteriaFacilContext.Database.ExecuteSqlCommand(functionInitCap);
+            }
+            catch (Exception ex)
+            {
 
-            loteriaFacilContext.Database.ExecuteSqlCommand(functionInitCap);
+            }
+
         }
     }
 }
