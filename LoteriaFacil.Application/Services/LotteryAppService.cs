@@ -10,6 +10,7 @@ using LoteriaFacil.Domain.Commands;
 using LoteriaFacil.Domain.Core.Bus;
 using LoteriaFacil.Domain.Interfaces;
 using LoteriaFacil.Domain.Models;
+using LoteriaFacil.Infra.CrossCutting.Util;
 using LoteriaFacil.Infra.Data.Repository.EventSourcing;
 
 namespace LoteriaFacil.Application.Services
@@ -24,14 +25,11 @@ namespace LoteriaFacil.Application.Services
 
         private readonly ITypeLotteryRepository _TypeLotteryRepository;
 
-        private readonly IUtilitiesAppService _utilitiesAppService;
-
         public LotteryAppService(IMapper mapper,
                                  ILotteryRepository lotteryRepository,
                                  ITypeLotteryRepository TypeLotteryRepository,
                                  IMediatorHandler bus,
-                                 IEventStoreRepository eventStoreRepository,
-                                 IUtilitiesAppService utilitiesAppService)
+                                 IEventStoreRepository eventStoreRepository)
         {
             _mapper = mapper;
             _lotteryRepository = lotteryRepository;
@@ -39,8 +37,6 @@ namespace LoteriaFacil.Application.Services
             Bus = bus;
 
             _TypeLotteryRepository = TypeLotteryRepository;
-
-            _utilitiesAppService = utilitiesAppService;
         }
 
         public void Dispose()
@@ -86,7 +82,7 @@ namespace LoteriaFacil.Application.Services
             Bus.SendCommand(updateCommand);
         }
 
-        public void POPULAEBANCOPRIMEIROACESSO()
+        public void POPULAEBANCOPRIMEIROACESSO(bool gerarArquivo = false)
         {
             #region Codigo
             string lotofacil = @"C:\Users\bibos\Desktop\Dev\Loteriav2\Loteriav2\Arquivos\lotofacilDados.txt";
@@ -230,7 +226,7 @@ namespace LoteriaFacil.Application.Services
                                     Id = Guid.NewGuid(),
                                     Concurse = int.Parse(concurso),
                                     DtConcurse = dataConcurso,
-                                    Game = _utilitiesAppService.OrdenaDezenas(dezenas),
+                                    Game = Util.OrdenaDezenas(dezenas),
                                     Hit15 = Acertos.Hits15,
                                     Hit14 = Acertos.Hits14,
                                     Hit13 = Acertos.Hits13,
@@ -250,8 +246,28 @@ namespace LoteriaFacil.Application.Services
                         }
                     }
                 }
+                if (!gerarArquivo)
+                    Register(jogos);
+                else
+                {
+                    var caminho_padrao = System.IO.Directory.GetCurrentDirectory();
+                    caminho = string.Empty;
 
-                Register(jogos);
+                    caminho = caminho_padrao + @"\ArquivoInsertLottery.txt";
+
+                    var texto = string.Empty;
+                    foreach (var jogo in jogos)
+                    {
+                        texto = $"INSERT INTO LOTTERY(Id, Concurse, DtConcurse, Game, Hit15, Hit14, Hit13, Hit12, Hit11, Shared15, Shared14, Shared13, Shared12, Shared11, DtNextConcurse, TypeLotteryId) VALUES('{jogo.Id}', '{jogo.Concurse}', '{jogo.DtConcurse}', '{jogo.Game}', '{jogo.Hit15}', '{jogo.Hit14}', '{jogo.Hit13}', '{jogo.Hit12}', '{jogo.Hit11}', '{jogo.Shared15}', '{jogo.Shared14}', '{jogo.Shared13}', '{jogo.Shared12}', '{jogo.Shared11}', '{jogo.DtNextConcurse}, '{jogo.TypeLottery.Id}');";
+                        using (System.IO.StreamWriter fileWriterAlterado = new System.IO.StreamWriter(caminho, true, System.Text.Encoding.UTF8))
+                        {
+                            fileWriterAlterado.WriteLine(texto);
+                            fileWriterAlterado.Close();
+                            fileWriterAlterado.Dispose();
+                        }
+                        texto = string.Empty;
+                    }
+                }
             }
             #endregion Codigo
         }

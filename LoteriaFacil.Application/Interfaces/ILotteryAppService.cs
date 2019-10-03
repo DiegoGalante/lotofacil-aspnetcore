@@ -13,6 +13,6 @@ namespace LoteriaFacil.Application.Interfaces
         void Update(LotteryViewModel lotteryViewModel);
         void Remove(Guid id);
 
-        void POPULAEBANCOPRIMEIROACESSO();
+        void POPULAEBANCOPRIMEIROACESSO(bool gerarArquivo = false);
     }
 }

@@ -29,6 +29,7 @@
     <Compile Remove="Migrations\20190919195920_Add_Nova_TypeLottery.Designer.cs" />
     <Compile Remove="Migrations\20190919200201_Add_Nova_TypeLottery.cs" />
     <Compile Remove="Migrations\20190919200201_Add_Nova_TypeLottery.Designer.cs" />
+    <Compile Remove="Seed\SeedLoteriaFacilData.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -44,6 +45,10 @@
 
   <ItemGroup>
     <ProjectReference Include="..\LoteriaFacil.Domain\LoteriaFacil.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Seed\" />
   </ItemGroup>
 
 </Project>

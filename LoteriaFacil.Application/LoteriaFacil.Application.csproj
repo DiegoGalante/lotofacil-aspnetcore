@@ -9,7 +9,6 @@
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="9.0.0" />
-    <PackageReference Include="HtmlAgilityPack" Version="1.11.12" />
     <PackageReference Include="System.ComponentModel.Annotations" Version="4.5.0" />
     <PackageReference Include="System.ComponentModel.Primitives" Version="4.3.0" />
   </ItemGroup>
@@ -17,6 +16,7 @@
   <ItemGroup>
     <ProjectReference Include="..\LoteriaFacil.Domain\LoteriaFacil.Domain.csproj" />
     <ProjectReference Include="..\LoteriaFacil.Infra.CrossCutting.Identity\LoteriaFacil.Infra.CrossCutting.Identity.csproj" />
+    <ProjectReference Include="..\LoteriaFacil.Infra.CrossCutting.Util\LoteriaFacil.Infra.CrossCutting.Util.csproj" />
     <ProjectReference Include="..\LoteriaFacil.Infra.Data\LoteriaFacil.Infra.Data.csproj" />
   </ItemGroup>
 

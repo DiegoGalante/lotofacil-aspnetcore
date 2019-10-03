@@ -22,7 +22,6 @@ namespace LoteriaFacil.Application.Services
         private readonly IMapper _mapper;
         private readonly IPersonLotteryRepository _PersonLotteryRepository;
         private readonly ILotteryRepository _LotteryRepository;
-        private readonly IUtilitiesAppService _utilitiesAppService;
         private readonly IEventStoreRepository _eventStoreRepository;
         private readonly IMediatorHandler Bus;
 
@@ -36,7 +35,6 @@ namespace LoteriaFacil.Application.Services
         public PersonLotteryAppService(IMapper mapper,
                                         IPersonLotteryRepository PersonLotteryRepository,
                                         ILotteryRepository lotteryRepository,
-                                        IUtilitiesAppService utilitiesAppService,
                                         IEventStoreRepository eventStoreRepository,
                                         IMediatorHandler bus,
 
@@ -49,7 +47,6 @@ namespace LoteriaFacil.Application.Services
             _mapper = mapper;
             _PersonLotteryRepository = PersonLotteryRepository;
             _LotteryRepository = lotteryRepository;
-            _utilitiesAppService = utilitiesAppService;
             _eventStoreRepository = eventStoreRepository;
             Bus = bus;
 
@@ -177,9 +174,9 @@ namespace LoteriaFacil.Application.Services
                     total_bilhetes = personGame.Where(x => x.PesId == pessoa.Id).Sum(x => x.Ticket_Amount);
 
                     List<PersonGame> pesGame = _personGameRepository.GetFunctionJogoPessoa(pessoa.Id, lottery.Concurse, configuration.Calcular_Dezenas_Sem_Pontuacao, configuration.Valor_Minimo_Para_Envio_Email).ToList();
-                    corpoEmail = _utilitiesAppService.MontaHtml(lottery, pesGame);
+                    corpoEmail = MontaHtml(lottery, pesGame);
                     _emailSender.SendEmailJogosPessoa(pessoa.Email, corpoEmail, assunto);
-
+                    
                     total_bilhetes = 0;
                     corpoEmail = string.Empty;
                 }
@@ -189,7 +186,7 @@ namespace LoteriaFacil.Application.Services
                 //Basicamente aqui todo mundo que registrou jogo recebe o email com os nomes, apostas e acertos de todos.
                 //Não vou manter isso aqui, só mesmo pra teste e debug ;D
                 total_bilhetes = personGame.Sum(x => x.Ticket_Amount);
-                corpoEmail = _utilitiesAppService.MontaHtml(lottery, personGame);
+                corpoEmail = MontaHtml(lottery, personGame);
                 foreach (var pessoa in pessoas)
                     _emailSender.SendEmailJogosPessoa(Credenciais.EMAIL_ADM, corpoEmail, assunto);
                 //_emailSender.SendEmailJogosPessoa(pessoa.Email, corpoEmail, assunto);
@@ -198,10 +195,250 @@ namespace LoteriaFacil.Application.Services
                 corpoEmail = string.Empty;
             }
 
-
-
-
             return new { ret = true, msg = "" };
+        }
+
+
+        internal string MontaHtml(Lottery lottery, List<PersonGame> jogosPessoas)
+        {
+            string abreHtml = string.Empty;
+            string fechaHtml = string.Empty;
+            string abreBody = string.Empty;
+            string fechaBody = string.Empty;
+            string abreTable = string.Empty;
+            string fechaTable = string.Empty;
+            string abreTH = string.Empty;
+            string abreTHColspan = string.Empty;
+            string fechaTH = string.Empty;
+            string colspanNumero = string.Empty;
+            string abreTR = string.Empty;
+            string fechaTR = string.Empty;
+            string htmlFinal = string.Empty;
+            int cont = 1;
+
+            string[] headerTeable = new string[] {
+                "#",
+                "ID",
+                "Acertos",
+                "Jogo",
+                "Autor",
+                "Valor Arrecadado"
+            };
+
+            abreHtml = @"<!DOCTYPE html>
+                        <html>
+                        <head>
+                        <style>
+                            table {
+                            border: 1px solid black;
+                            border - collapse: collapse;
+                            width: 100 %;
+                            }
+                            th, td {
+                                border: 1px solid grey;
+                                border - collapse: collapse;
+                                padding: 5px;
+                                text - align: justify;
+                            }
+                            /*tr:nth-child(even) {
+                                background-color: #dddddd;
+                            }*/
+                        </style>
+                        </head> ";
+
+            fechaHtml = "</html>";
+
+            abreBody = "<body>";
+            fechaBody = "</body>";
+
+            abreTable = "<table>";
+            fechaTable = "</table>";
+
+            abreTR = "<tr>";
+            fechaTR = "</tr>";
+
+            string abreTD = "<td>";
+            string fechaTD = "</td>";
+
+            abreTH = "<th>";
+            colspanNumero = headerTeable.Count().ToString();
+            abreTHColspan = "<th colspan='" + colspanNumero + "'>";
+            fechaTH = "</th>";
+
+            //INICIA O HTML
+            htmlFinal += abreHtml;
+            htmlFinal += abreBody;
+
+            //INICIA A TABELA
+            htmlFinal += abreTable;
+
+            //PRIMEIRA LINHA
+            htmlFinal += abreTR;
+
+            colspanNumero = (headerTeable.Count() - 1).ToString();
+            abreTHColspan = "<th colspan='" + colspanNumero + "'>";
+            htmlFinal += abreTHColspan;
+            htmlFinal += string.Format("Concurso: {0}", lottery.Concurse);
+            htmlFinal += fechaTH;
+
+            htmlFinal += abreTH;
+            htmlFinal += lottery.DtConcurse.ToShortDateString();
+            htmlFinal += fechaTH;
+
+            htmlFinal += fechaTR;
+
+            htmlFinal += abreTR;
+            colspanNumero = headerTeable.Count().ToString();
+            abreTHColspan = "<th colspan='" + colspanNumero + "' style='text-align:center;'>";
+            htmlFinal += abreTHColspan;
+            htmlFinal += lottery.Game;
+            htmlFinal += fechaTH;
+            htmlFinal += fechaTR;
+
+            #region HEADER Tabela
+            htmlFinal += abreTR;
+            foreach (var coluna in headerTeable)
+            {
+                htmlFinal += abreTH;
+                htmlFinal += coluna;
+                htmlFinal += fechaTH;
+            }
+
+            htmlFinal += fechaTR;
+            #endregion FIM HEADER Tabela
+
+
+            #region MIOLODATABELA
+            decimal valorBilhetes = 0;
+            if (jogosPessoas.Count > 0)
+            {
+                foreach (var acerto in jogosPessoas)
+                {
+                    htmlFinal += abreTR;
+
+                    htmlFinal += "<th style='text-align:center;'>";
+                    htmlFinal += cont++;
+                    htmlFinal += fechaTH;
+
+                    htmlFinal += abreTH;
+                    htmlFinal += string.Format("{0}", acerto.Id);
+                    htmlFinal += fechaTH;
+
+                    htmlFinal += "<th style='text-align:center;'>";
+                    htmlFinal += string.Format("{0}", acerto.Hits);
+                    htmlFinal += fechaTH;
+
+                    htmlFinal += abreTH;
+                    htmlFinal += DestacaNumero(lottery.Game, acerto.Game);
+                    htmlFinal += fechaTH;
+
+                    htmlFinal += abreTH;
+                    htmlFinal += acerto.Name;
+                    htmlFinal += fechaTH;
+
+                    htmlFinal += "<th style='text-align:center;'>";
+
+                    switch (acerto.Hits)
+                    {
+                        case 11:
+                            htmlFinal += lottery.Shared11.ToString("N");
+                            break;
+                        case 12:
+                            htmlFinal += lottery.Shared12.ToString("N");
+                            break;
+                        case 13:
+                            htmlFinal += lottery.Shared13.ToString("N");
+                            break;
+                        case 14:
+                            htmlFinal += lottery.Shared14.ToString("N");
+                            break;
+                        case 15:
+                            htmlFinal += lottery.Shared15.ToString("N");
+                            break;
+                        default:
+                            htmlFinal += 0.ToString("N");
+                            break;
+                    }
+
+                    valorBilhetes += acerto.Ticket_Amount;
+
+                    htmlFinal += fechaTH;
+                    htmlFinal += fechaTR;
+                }
+            }
+            #endregion FIM MIOLODATABELA
+            else
+            {
+                htmlFinal += abreTR;
+                colspanNumero = "5";
+                abreTHColspan = "<th colspan='" + colspanNumero + "' style='text-align:center;'>";
+                htmlFinal += abreTHColspan;
+                htmlFinal += "Não há jogos válidos de acordo com sua configuração. <br/> <span style='text-decoration: underline;'> Verifique a configuração: <span style='color:red;'>\"Valor mínimo do bilhete para o envio de e-mail\"</span>, para carregar os jogos no e-mail. </span>";
+                htmlFinal += fechaTH;
+            }
+
+            #region Footer Tabela
+            htmlFinal += abreTR;
+            colspanNumero = (headerTeable.Count() - 1).ToString();
+            abreTHColspan = "<th colspan='" + colspanNumero + "' style='text-align:right;'>";
+            htmlFinal += abreTHColspan;
+            htmlFinal += "Quantidade a receber dos bilhetes (R$)";
+            htmlFinal += fechaTH;
+
+            htmlFinal += "<th style='text-align:center; font-size:18px;'>";
+
+            htmlFinal += valorBilhetes.ToString("N");
+            htmlFinal += fechaTH;
+            htmlFinal += fechaTR;
+            #endregion FIM Footer Tabela
+
+            htmlFinal += fechaTable;
+            htmlFinal += fechaBody;
+            htmlFinal += fechaHtml;
+
+            return htmlFinal;
+        }
+
+        internal string DestacaNumero(string jogoSorteado, string jogoGerado)
+        {
+            string abreIns = string.Empty, fechaIns = string.Empty;
+            string colorRed = "red";
+            string retorno = string.Empty;
+
+            abreIns = "<ins style='color:" + colorRed + "'>";
+            fechaIns = "</ins>";
+            bool achou = false;
+
+            string[] jogoGeradoSpit = jogoGerado.Split('-');
+
+            string[] jogoSorteadoSplit = jogoSorteado.Split('-');
+
+            for (int j = 0; j < jogoGeradoSpit.Length; j++)
+            {
+                for (int i = 0; i < jogoSorteadoSplit.Length; i++)
+                {
+                    achou = false;
+                    if (jogoGeradoSpit[j] == jogoSorteadoSplit[i])
+                    {
+                        achou = true;
+                        if (j < jogoGeradoSpit.Length - 1)
+                            retorno += abreIns + jogoGeradoSpit[j] + fechaIns + "-";
+                        else
+                            retorno += abreIns + jogoGeradoSpit[j] + fechaIns;
+                        break;
+                    }
+                }
+
+                if (!achou)
+                {
+                    if (j < jogoSorteadoSplit.Length - 1)
+                        retorno += jogoGeradoSpit[j] + "-";
+                    else
+                        retorno += jogoGeradoSpit[j];
+                }
+            }
+
+            return retorno;
         }
     }
 }
