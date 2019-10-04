@@ -23,7 +23,7 @@ function carregaConfiguracao() {
             _objConfiguration = data[0];
             _valor_antigo = _objConfiguration.valor_Minimo_Para_Envio_Email;
             console.log("CARREGANDO CONFIGURAÇÃO..");
-            console.log(_objConfiguration);
+            //console.log(_objConfiguration);
 
             $('#CalcularDezenasSemPontuacao').prop('checked', false);
             $('#VerificaJogoOnline').prop('checked', false);

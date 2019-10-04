@@ -157,6 +157,9 @@
     <!-- REQUIRED SCRIPTS -->
     <!-- Google Font: Source Sans Pro -->
     <!-- jQuery -->
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    @RenderSection("scripts", required: false)
+
     <script src="~/static/js/jquery3.3.1.js"></script>
 
     <script src="~/static/js/pages/config_/config_.js"></script>
@@ -175,9 +178,7 @@
     <script src="../static/js/table/bootstrap-table-locale-all.min.js"></script>
     <link rel="stylesheet" href="../static/js/table/bootstrap-table.min.css">
 
-
-
-    <script src="~/static/js/pages/players/players.js"></script>
+    @*<script src="~/static/js/pages/players/players.js"></script>*@
 
     <script src="~/static/js/pages/index/pr_grafico.js"></script>
 </body>

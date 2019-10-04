@@ -27,6 +27,30 @@ namespace LoteriaFacil.UI.Web.Controllers
         public IActionResult Index()
         {
             return View();
+
+            //_personAppService.GetAll();
+        }
+
+        [HttpGet]
+        [Route("/Create")]
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        [Route("/Create")]
+        public IActionResult Create(PersonViewModel personViewModel)
+        {
+            if (!ModelState.IsValid)
+                return View(personViewModel);
+
+            _personAppService.Register(personViewModel);
+
+            if (IsValidOperation())
+                ViewBag.Sucesso = "Cadastro realizado com sucesso!";
+
+            return View();
         }
 
         [HttpPost]
@@ -52,9 +76,9 @@ namespace LoteriaFacil.UI.Web.Controllers
         }
 
         [HttpPost]
-        public ObjectResult ListAll()
+        public System.Collections.Generic.IEnumerable<PersonViewModel> ListAll()
         {
-            return new ObjectResult(_personAppService.GetAll());
+            return _personAppService.GetAll();
         }
 
     }

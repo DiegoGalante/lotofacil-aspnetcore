@@ -110,7 +110,7 @@ function carregaPlayers(player = 0) {
         success: (function (data) {
             //console.log(data);
             console.log("CARREGANDO PLAYERS..");
-            $('#tbPlayers').bootstrapTable('load', data);
+            //$('#tbPlayers').bootstrapTable('load', data);
             divCarregando(false);
         }),
         error: (function (erro) {
