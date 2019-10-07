@@ -1,4 +1,5 @@
-﻿@{
+﻿@model Guid
+@{
     ViewData["Title"] = "Cadastro Pessoa";
     Layout = "~/Views/Shared/_LayoutLoteria.cshtml";
 }
@@ -14,18 +15,27 @@
 
                         <!-- /.card-header -->
                         <div class="card-body">
-
-                            @*@Html.Partial("_CadPerson.cshtml");*@
-
                             <div class="row">
+
+                                @if (string.IsNullOrEmpty(ViewBag.Sucesso))
+                                {
+                                    <h2>ViewBag.Sucesso</h2>
+                                }
+
                                 <!--DADOS PESSOA-->
-                                @Html.Partial("_CreateNewPerson.cshtml")
+                                @if (Model.Equals(Guid.Empty))
+                                {
+                                    @Html.Partial("_CreateNewPerson.cshtml")
+                                }
+                                else
+                                {
+                                    @Html.Partial("_UpdatePerson.cshtml")
+                                }
 
                                 <!--TABELA-->
-                                @Html.Partial("_TabelaPessoasPartial.cshtml")
-                            </div>
-                            <!-- /.row -->
-                            <div>
+                                <div class="col-md-8" id="partialTable">
+
+                                </div>
                             </div>
                         </div>
                         <!-- ./card-body -->
@@ -47,35 +57,67 @@
 </div>
 
 
+
 @section Scripts {
     <script type="text/javascript">
+
         $(document).ready(function () {
 
-            divCarregando(true);
-            $.ajax({
-                type: 'POST',
-                async: true,
-                url: '/person/ListAll',
-                success: (function (data) {
-                    console.log(data);
-                    $('#tbPlayers').bootstrapTable('load', data);
-                    divCarregando(false);
-                }),
-                error: (function (erro) {
-                    console.log("ERRO carregaPlayers:" + erro);
-                    //console.log(erro);
-                })
-            });
+            carregaTabelaJogadores();
 
         });
 
-        function divCarregando(mostrar = false) {
+
+        function carregaTabelaJogadores() {
+            divCarregandoTabela(true);
+
+            $.ajax({
+                type: 'POST',
+                async: false,
+                url: '@Url.Action("ListAll", "Person")',
+                success: (function (data) {
+
+                    $('#partialTable').html(data);
+
+                    divCarregandoTabela(false);
+                }),
+                error: (function (erro) {
+                    console.log("ERRO carregaPlayers:" + erro);
+                    divCarregandoTabela(false);
+                })
+            });
+        }
+
+        function divCarregandoTabela(mostrar = false) {
             if (mostrar) {
                 $("#divCarregando").removeClass("hide");
             }
             else {
                 $("#divCarregando").addClass("hide");
             }
+        }
+
+        function formataData(value, row, index) {
+            return dataAtualFormatada(row.dtRegister);
+        }
+
+        function dataAtualFormatada(data) {
+            var d = new Date(data);
+            return d.toLocaleDateString();
+        }
+
+        function actionFormatter(value, row, index) {
+            return [
+                '<div style="text-align:center;">',
+                '<span class="edit text-info" style="cursor: pointer; margin:10px;" title="Edit">',
+                '<i class="fa fa-edit"></i>',
+                '</span>',
+                '<span class="remove text-danger" style="cursor: pointer; margin:10px;" title="Remove">',
+                '<i class="fa fa-trash-o"></i>',
+                '</span>',
+
+                '</div>'
+            ].join('');
         }
     </script>
 }

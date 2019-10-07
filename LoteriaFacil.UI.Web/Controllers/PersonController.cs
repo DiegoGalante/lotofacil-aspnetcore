@@ -5,6 +5,7 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 
 namespace LoteriaFacil.UI.Web.Controllers
 {
@@ -27,58 +28,92 @@ namespace LoteriaFacil.UI.Web.Controllers
         public IActionResult Index()
         {
             return View();
-
-            //_personAppService.GetAll();
         }
 
         [HttpGet]
-        [Route("/Create")]
+        [Route("register-new")]
         public IActionResult Create()
         {
             return View();
         }
 
-        [HttpGet]
-        [Route("/Create")]
+        [HttpPost]
+        [Route("register-new")]
+        [ValidateAntiForgeryToken]
         public IActionResult Create(PersonViewModel personViewModel)
         {
             if (!ModelState.IsValid)
-                return View(personViewModel);
+            {
+                return RedirectToAction("Index", personViewModel.Id);
+            }
 
             _personAppService.Register(personViewModel);
 
             if (IsValidOperation())
                 ViewBag.Sucesso = "Cadastro realizado com sucesso!";
 
-            return View();
+            return RedirectToAction("Index");
         }
 
         [HttpPost]
-        //[Authorize(Policy = "CanWritePersonData")] ?
-        //[Route("customer-management/edit-customer/{id:guid}")]
-        [Route("saveplayer")]
-        public IActionResult Index([FromBody]object player)
+        [Route("edit-person/{id:guid}")]
+        public IActionResult Edit(Guid? id)
         {
-            PersonViewModel personViewModel = JsonConvert.DeserializeObject<PersonViewModel>(player.ToString());
+            if (id == null)
+            {
+                return NotFound();
+            }
 
+            var personViewModel = _personAppService.GetById(id.Value);
+
+            if (personViewModel == null)
+            {
+                return NotFound();
+            }
+
+            return View(personViewModel);
+        }
+
+        [HttpPost]
+        [Route("edit-person/{id:guid}")]
+        [ValidateAntiForgeryToken]
+        public IActionResult Edit(PersonViewModel personViewModel)
+        {
             if (!ModelState.IsValid) return View(personViewModel);
 
-            if (personViewModel.Id.Equals(Guid.Empty))
-                _personAppService.Register(personViewModel);
-            else
-                _personAppService.Update(personViewModel);
-
+            _personAppService.Update(personViewModel);
 
             if (IsValidOperation())
-                ViewBag.Sucesso = "Atualizado com sucesso!";
+                ViewBag.Sucesso = "Atualziado com sucesso!";
 
-            return View();
+            return View(personViewModel);
         }
 
+
+        //[HttpPost]
+        //[Route("saveplayer")]
+        //public IActionResult Index([FromBody]object player)
+        //{
+        //    PersonViewModel personViewModel = JsonConvert.DeserializeObject<PersonViewModel>(player.ToString());
+
+        //    if (!ModelState.IsValid) return View(personViewModel);
+
+        //    if (personViewModel.Id.Equals(Guid.Empty))
+        //        _personAppService.Register(personViewModel);
+        //    else
+        //        _personAppService.Update(personViewModel);
+
+
+        //    if (IsValidOperation())
+        //        ViewBag.Sucesso = "Atualizado com sucesso!";
+
+        //    return View();
+        //}
+
         [HttpPost]
-        public System.Collections.Generic.IEnumerable<PersonViewModel> ListAll()
+        public IActionResult ListAll()
         {
-            return _personAppService.GetAll();
+            return PartialView("_TabelaPessoasPartial", _personAppService.GetAll());
         }
 
     }

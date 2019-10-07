@@ -10,7 +10,7 @@ namespace LoteriaFacil.Domain.Models
             this.Id = id;
             this.Name = name;
             this.Email = email;
-            this.Password = password;
+            this.Password = password == null ? string.Empty : password;
             this.DtRegister = dtRegister;
             this.Active = active;
         }

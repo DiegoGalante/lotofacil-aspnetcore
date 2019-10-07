@@ -3,13 +3,15 @@
 <div class="col-md-4 border-right">
     <div class="card">
         <div class="card-header">
-            <h3 class="card-title">Cadastro Jogadores</h3>
+            <h3 class="card-title">Atualizar Dados</h3>
         </div>
         <div class="card-body">
 
-            <form role="form" asp-action="Create" asp-controller="Person" method="post">
-                <div class="card-body">
+            <form asp-action="_UpdatePerson" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="Id" />
 
+                <div class="card-body">
                     <div class="form-group">
                         <label asp-for="Name"></label>
                         <div class="input-group">
@@ -49,9 +51,8 @@
                     </div>
 
                 </div>
-
-                <div class="card-footer">
-                    <button type="submit" class="btn btn-primary">Salvar</button>
+                <div class="card-footer" id="btns">
+                    <button type="button" class="btn btn-primary">Salvar</button>
                     <a class="btn btn-danger" asp-action="Index" asp-controller="Person">Cancelar</a>
                 </div>
             </form>

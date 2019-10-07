@@ -109,7 +109,7 @@ function carregaPlayers(player = 0) {
         url: parseInt(player) === 0 ? '/person/listall' : '/person/' + parseInt(player),
         success: (function (data) {
             //console.log(data);
-            console.log("CARREGANDO PLAYERS..");
+            //console.log("CARREGANDO PLAYERS..");
             //$('#tbPlayers').bootstrapTable('load', data);
             divCarregando(false);
         }),
