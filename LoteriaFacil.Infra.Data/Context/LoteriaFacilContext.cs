@@ -3,16 +3,19 @@ using LoteriaFacil.Infra.Data.Mappings;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace LoteriaFacil.Infra.Data.Context
 {
     public class LoteriaFacilContext : DbContext
     {
         private readonly IHostingEnvironment _env;
+        public IConfiguration _Configuration { get; }
 
-        public LoteriaFacilContext(IHostingEnvironment env)
+        public LoteriaFacilContext(IHostingEnvironment env, IConfiguration configuration)
         {
             _env = env;
+            _Configuration = configuration;
         }
 
 
@@ -46,11 +49,12 @@ namespace LoteriaFacil.Infra.Data.Context
             // get the configuration from the app settings
             var config = new ConfigurationBuilder()
                 .SetBasePath(_env.ContentRootPath)
-                .AddJsonFile("appsettings.json")
+                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                .AddJsonFile($"appsettings.{_env.EnvironmentName}.json", optional: true)
                 .Build();
 
             // define the database to use
-            optionsBuilder.UseSqlServer(config.GetConnectionString("DefaultConnection"));
+            optionsBuilder.UseSqlServer(_Configuration["ConnectionStrings:DefaultConnection"]);
         }
     }
 }
