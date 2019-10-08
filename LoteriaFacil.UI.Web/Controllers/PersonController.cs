@@ -21,8 +21,6 @@ namespace LoteriaFacil.UI.Web.Controllers
         }
 
         [HttpGet]
-        //[AllowAnonymous]
-        //[Route("person-management/list-all")]
         [Route("/jogadores")]
         [Route("/players")]
         public IActionResult Index()
@@ -43,16 +41,14 @@ namespace LoteriaFacil.UI.Web.Controllers
         public IActionResult Create(PersonViewModel personViewModel)
         {
             if (!ModelState.IsValid)
-            {
-                return RedirectToAction("Index", personViewModel.Id);
-            }
+                //TempData["Erro"] = "Formulário inválido!";
+                return View(personViewModel);
 
             _personAppService.Register(personViewModel);
-
             if (IsValidOperation())
                 ViewBag.Sucesso = "Cadastro realizado com sucesso!";
 
-            return RedirectToAction("Index");
+            return View(personViewModel);
         }
 
         [HttpPost]
@@ -88,27 +84,6 @@ namespace LoteriaFacil.UI.Web.Controllers
 
             return View(personViewModel);
         }
-
-
-        //[HttpPost]
-        //[Route("saveplayer")]
-        //public IActionResult Index([FromBody]object player)
-        //{
-        //    PersonViewModel personViewModel = JsonConvert.DeserializeObject<PersonViewModel>(player.ToString());
-
-        //    if (!ModelState.IsValid) return View(personViewModel);
-
-        //    if (personViewModel.Id.Equals(Guid.Empty))
-        //        _personAppService.Register(personViewModel);
-        //    else
-        //        _personAppService.Update(personViewModel);
-
-
-        //    if (IsValidOperation())
-        //        ViewBag.Sucesso = "Atualizado com sucesso!";
-
-        //    return View();
-        //}
 
         [HttpPost]
         public IActionResult ListAll()

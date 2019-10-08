@@ -16,12 +16,6 @@
                         <!-- /.card-header -->
                         <div class="card-body">
                             <div class="row">
-
-                                @if (string.IsNullOrEmpty(ViewBag.Sucesso))
-                                {
-                                    <h2>ViewBag.Sucesso</h2>
-                                }
-
                                 <!--DADOS PESSOA-->
                                 @if (Model.Equals(Guid.Empty))
                                 {
@@ -33,9 +27,18 @@
                                 }
 
                                 <!--TABELA-->
-                                <div class="col-md-8" id="partialTable">
+                                    <div class="card col-md-8">
+                                        <div class="card-header">
+                                            <h3 class="card-title">Jogadores</h3>
+                                        </div>
+                                        <div class="card-body" id="divTable">
+                                            <div class="overlay hide" id="divCarregando">
+                                                <i class="fa fa-refresh fa-spin"></i>
+                                            </div>
+                                        </div>
+                                        <!-- /.card-body -->
+                                    </div>
 
-                                </div>
                             </div>
                         </div>
                         <!-- ./card-body -->
@@ -77,7 +80,7 @@
                 url: '@Url.Action("ListAll", "Person")',
                 success: (function (data) {
 
-                    $('#partialTable').html(data);
+                    $('#divTable').html(data);
 
                     divCarregandoTabela(false);
                 }),
