@@ -1,0 +1,86 @@
+﻿@model PersonViewModel
+
+@{
+    ViewData["Title"] = "Editar Dados";
+    Layout = "~/Views/Shared/_LayoutLoteria.cshtml";
+}
+
+<div class="content-wrapper" style="margin-left: 0;">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <!-- /.card-header -->
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-12 pull-left">
+                                    <h3>@ViewData["Title"]</h3>
+                                    <hr />
+                                </div>
+                            </div>
+                            @if (ViewBag.Sucesso != null)
+                            {
+                                <div class="row callout callout-success" id="divSucesso">
+
+                                </div>
+                            }
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <form asp-action="Edit">
+                                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                        <div class="form-group">
+                                            <label asp-for="Name" class="control-label"></label>
+                                            <input asp-for="Name" class="form-control" />
+                                            <span asp-validation-for="Name" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label asp-for="Email" class="control-label"></label>
+                                            <input asp-for="Email" class="form-control" />
+                                            <span asp-validation-for="Email" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-group form-check">
+                                            <label class="form-check-label">
+                                                <input class="form-check-input" asp-for="Active" /> @Html.DisplayNameFor(model => model.Active)
+                                            </label>
+                                        </div>
+                                        <input type="hidden" asp-for="Id" />
+                                        <div class="form-group">
+                                            <input type="submit" value="Save" class="btn btn-primary" />
+                                            <a asp-action="Index" class="btn btn-info pull-right">Voltar</a>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    @if (ViewBag.Sucesso != null)
+    {
+        <script type="text/javascript">
+            var divSucesso = $("#divSucesso");
+            divSucesso.fadeIn(1000);
+            divSucesso.html("Atualizado com sucesso!");
+            divSucesso.removeClass("hide");
+
+            setInterval(function () {
+                divSucesso.hide(1250, function () {
+                    divSucesso.addClass("hide");
+                    divSucesso.get(0).style.display = '';
+                });
+            }, 3100);
+
+        </script>
+    }
+
+}

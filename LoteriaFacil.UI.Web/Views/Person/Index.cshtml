@@ -1,6 +1,7 @@
 ﻿@model Guid
+
 @{
-    ViewData["Title"] = "Cadastro Pessoa";
+    ViewData["Title"] = "Pessoas";
     Layout = "~/Views/Shared/_LayoutLoteria.cshtml";
 }
 
@@ -16,28 +17,26 @@
                         <!-- /.card-header -->
                         <div class="card-body">
                             <div class="row">
-                                <!--DADOS PESSOA-->
-                                @if (Model.Equals(Guid.Empty))
-                                {
-                                    @Html.Partial("_CreateNewPerson.cshtml")
-                                }
-                                else
-                                {
-                                    @Html.Partial("_UpdatePerson.cshtml")
-                                }
-
+                                <div class="col-md-12 pull-left">
+                                    <a asp-action="Create" class="btn btn-success">
+                                        <i class="fa fa-plus-circle"></i> <span title="Novo" class="glyphicon glyphicon-plus-sign"></span> Novo
+                                    </a>
+                                    <hr />
+                                </div>
+                            </div>
+                            <div class="row">
                                 <!--TABELA-->
-                                    <div class="card col-md-8">
-                                        <div class="card-header">
-                                            <h3 class="card-title">Jogadores</h3>
-                                        </div>
-                                        <div class="card-body" id="divTable">
-                                            <div class="overlay hide" id="divCarregando">
-                                                <i class="fa fa-refresh fa-spin"></i>
-                                            </div>
-                                        </div>
-                                        <!-- /.card-body -->
+                                <div class="card col-md-12">
+                                    <div class="card-header">
+                                        <h3 class="card-title">Jogadores</h3>
                                     </div>
+                                    <div class="card-body" id="divTable">
+                                        <div class="overlay hide" id="divCarregando">
+                                            <i class="fa fa-refresh fa-spin"></i>
+                                        </div>
+                                    </div>
+                                    <!-- /.card-body -->
+                                </div>
 
                             </div>
                         </div>
@@ -109,18 +108,5 @@
             return d.toLocaleDateString();
         }
 
-        function actionFormatter(value, row, index) {
-            return [
-                '<div style="text-align:center;">',
-                '<span class="edit text-info" style="cursor: pointer; margin:10px;" title="Edit">',
-                '<i class="fa fa-edit"></i>',
-                '</span>',
-                '<span class="remove text-danger" style="cursor: pointer; margin:10px;" title="Remove">',
-                '<i class="fa fa-trash-o"></i>',
-                '</span>',
-
-                '</div>'
-            ].join('');
-        }
     </script>
 }

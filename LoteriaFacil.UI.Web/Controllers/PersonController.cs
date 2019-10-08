@@ -29,19 +29,18 @@ namespace LoteriaFacil.UI.Web.Controllers
         }
 
         [HttpGet]
-        [Route("register-new")]
+        [Route("/register-new")]
         public IActionResult Create()
         {
             return View();
         }
 
         [HttpPost]
-        [Route("register-new")]
+        [Route("/register-new")]
         [ValidateAntiForgeryToken]
         public IActionResult Create(PersonViewModel personViewModel)
         {
-            if (!ModelState.IsValid)
-                //TempData["Erro"] = "Formulário inválido!";
+           if (!ModelState.IsValid)
                 return View(personViewModel);
 
             _personAppService.Register(personViewModel);
@@ -51,7 +50,7 @@ namespace LoteriaFacil.UI.Web.Controllers
             return View(personViewModel);
         }
 
-        [HttpPost]
+        [HttpGet]
         [Route("edit-person/{id:guid}")]
         public IActionResult Edit(Guid? id)
         {
@@ -80,7 +79,7 @@ namespace LoteriaFacil.UI.Web.Controllers
             _personAppService.Update(personViewModel);
 
             if (IsValidOperation())
-                ViewBag.Sucesso = "Atualziado com sucesso!";
+                ViewBag.Sucesso = "Atualizado com sucesso!";
 
             return View(personViewModel);
         }

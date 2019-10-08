@@ -46,7 +46,7 @@ data-show-export="true" -->
                         <th data-field="email" data-width="50" data-sortable="true"> @Html.DisplayNameFor(model => model.Email)</th>
                         <th data-field="dtRegister" data-width="90" data-formatter="formataData" data-sortable="true"> @Html.DisplayNameFor(model => model.DtRegister)</th>
                         <th data-field="active" data-width="70" data-sortable="true">@Html.DisplayNameFor(model => model.Active)</th>
-                        <th data-field="action" data-formatter="actionFormatter" data-events="actionEvents">Ação</th>
+                        <th data-field="action">Ação</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -72,15 +72,10 @@ data-show-export="true" -->
                             </td>
                             <td>
                                 <div style="text-align:center;">
-                                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>
-                                    <a href="/Person/item.Id">
-                                        <span class="edit text-info" style="cursor: pointer; margin:10px;" title="Edit">
-                                            <i class="fa fa-edit"></i>
-                                        </span>
-                                    </a>
-                                    <span class="remove text-danger" style="cursor: pointer; margin:10px;" title="Remove">
+                                    <a asp-action="Edit" asp-route-id="@item.Id" class="edit text-info" style="cursor: pointer; margin:10px;"><i class="fa fa-edit"></i></a>
+                                    @*<span class="remove text-danger" style="cursor: pointer; margin:10px;" title="Remove (INATIVO)">
                                         <i class="fa fa-trash-o"></i>
-                                    </span>
+                                    </span>*@
                                 </div>
                             </td>
                         </tr>

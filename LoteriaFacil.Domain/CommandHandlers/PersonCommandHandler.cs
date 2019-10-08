@@ -76,11 +76,12 @@ namespace LoteriaFacil.Domain.CommandHandlers
                 }
             }
 
+            person = new Person(message.Id, message.Name, message.Email, message.Password, existingPerson.DtRegister, message.Active);
             _personRepository.Update(person);
 
             if (Commit())
             {
-                Bus.RaiseEvent(new PersonUpdatedEvent(person.Id, person.Name, person.Email, person.Password, person.DtRegister, person.Active));
+                //Bus.RaiseEvent(new PersonUpdatedEvent(person.Id, person.Name, person.Email, person.Password, person.DtRegister, person.Active));
             }
 
             return Task.FromResult(true);
