@@ -24,18 +24,12 @@
                 <!-- Left navbar links -->
                 <ul class="navbar-nav">
                     <li class="nav-item d-none d-sm-inline-block">
-                        @*<a href="{{ url_for('index')}}" class="nav-link"><i class="fa fa-bar-chart-o"></i> Principal</a>*@
-                        @*<a href="/" class="nav-link"><i class="fa fa-bar-chart-o"></i> Principal</a>*@
                         <a asp-area="" asp-controller="lottery" asp-action="index" class="nav-link"><i class="fa fa-bar-chart-o"></i> Principal</a>
                     </li>
                     <li class="nav-item d-none d-sm-inline-block">
-                        @*<a href="{{ url_for('players')}}" class="nav-link"><i class="fa fa-users"></i> Jogadores</a>*@
                         <a asp-area="" asp-controller="Person" asp-action="Index" class="nav-link"><i class="fa fa-users"></i> Jogadores</a>
 
                     </li>
-                    <!-- <li class="nav-item d-none d-sm-inline-block">
-                      <a href="{{ url_for('games')}}" class="nav-link">Jogos</a>
-                    </li> -->
                     <li class="nav-item d-none d-sm-inline-block">
                         <a href="#" class="nav-link" data-toggle="modal" data-target="#modalConfiguracao"><i class="fa fa-gears"></i> Configurações</a>
                     </li>
@@ -79,11 +73,11 @@
                                             <div class="tab-pane active" id="tab_1">
                                                 <div class="form-check">
                                                     <input type="checkbox" class="form-check-input" id="VerificaJogoOnline" />
-                                                    <label class="form-check-label" for="VerificaJogoOnline">Pesquisar jogo online<label>
+                                                    <label class="form-check-label" for="VerificaJogoOnline">Pesquisar jogo online</label>
                                                 </div>
                                                 <div class="form-check">
                                                     <input type="checkbox" class="form-check-input" id="CalcularDezenasSemPontuacao" />
-                                                    <label class="form-check-label" for="CalcularDezenasSemPontuacao">Calcular dezenas que não marcaram pontos<label>
+                                                    <label class="form-check-label" for="CalcularDezenasSemPontuacao">Calcular dezenas que não marcaram pontos</label>
                                                 </div>
                                             </div>
                                             <!-- /.tab-pane -->
@@ -117,11 +111,11 @@
                                                 </p> -->
                                                 <div class="form-check">
                                                     <input type="checkbox" class="form-check-input" id="EmailManual" />
-                                                    <label class="form-check-label" for="EmailManual">Envio de e-mail manual<label>
+                                                    <label class="form-check-label" for="EmailManual">Envio de e-mail manual</label>
                                                 </div>
                                                 <div class="form-check">
                                                     <input type="checkbox" class="form-check-input" id="EmailAutomatico" />
-                                                    <label class="form-check-label" for="EmailAutomatico">Envio de e-mail automático<label>
+                                                    <label class="form-check-label" for="EmailAutomatico">Envio de e-mail automático</label>
                                                 </div>
                                             </div>
                                             <!-- /.tab-pane -->
@@ -180,6 +174,5 @@
 
     @*<script src="~/static/js/pages/players/players.js"></script>*@
 
-    <script src="~/static/js/pages/index/pr_grafico.js"></script>
 </body>
 </html>
