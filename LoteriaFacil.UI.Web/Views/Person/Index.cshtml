@@ -1,4 +1,4 @@
-﻿@model Guid
+﻿@model IEnumerable<PersonViewModel>
 
 @{
     ViewData["Title"] = "Pessoas";
@@ -30,10 +30,71 @@
                                     <div class="card-header">
                                         <h3 class="card-title">Jogadores</h3>
                                     </div>
-                                    <div class="card-body" id="divTable">
-                                        <div class="overlay hide" id="divCarregando">
-                                            <i class="fa fa-refresh fa-spin"></i>
-                                        </div>
+                                    <div class="overlay" id="divCarregando">
+                                        <i class="fa fa-refresh fa-spin"></i>
+                                    </div>
+                                    <div class="card-body hide" id="divTable">
+                                        @if (Model == null || Model.Count() == 0)
+                                        {
+                                            <div>
+                                                <p><i class="icon fa fa-warning"></i> Não há jogadores cadastrados!</p>
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div>
+                                                <table id="tbPlayers"
+                                                       data-locale="pt-BR"
+                                                       data-toolbar="#toolbar" data-toggle="table"
+                                                       data-id-field="id" data-page-list="[10, 25, 50, 100, ALL]" data-pagination="true"
+                                                       data-search="true"
+                                                       data-search-align="left" data-buttons-align="right" data-toolbar-align="right"
+                                                       data-striped="true"
+                                                       data-single-select="true"
+                                                       class="table table-hover" style="margin-top: 0px;  text-align: center;">
+                                                    <thead>
+                                                        <tr>
+                                                            <th data-field="Nome" data-sortable="true" data-width="150"> @Html.DisplayNameFor(model => model.Name)</th>
+                                                            <th data-field="Email" data-width="50" data-sortable="true"> @Html.DisplayNameFor(model => model.Email)</th>
+                                                            <th data-field="DtRegister" data-width="90" data-formatter="formataData" data-sortable="true"> @Html.DisplayNameFor(model => model.DtRegister)</th>
+                                                            <th data-field="Active" data-width="70" data-sortable="true">@Html.DisplayNameFor(model => model.Active)</th>
+                                                            <th data-field="action" data-width="140">Ação</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @foreach (var item in Model)
+                                                        {
+                                                            <tr>
+                                                                <td>@Html.DisplayFor(m => item.Name)</td>
+                                                                <td>@Html.DisplayTextFor(m => item.Email)</td>
+                                                                <td>@Html.DisplayFor(m => item.DtRegister)</td>
+                                                                <td>
+                                                                    @if (item.Active == true)
+                                                                    {
+                                                                        <span class="text-success" title="Ativo">
+                                                                            <i class="fa fa-thumbs-o-up"></i>
+                                                                        </span>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <span class="text-danger" title="Inativo">
+                                                                            <i class="fa  fa-times"></i>
+                                                                        </span>
+                                                                    }
+                                                                </td>
+                                                                <td>
+                                                                    <div style="text-align:center;">
+                                                                        <a asp-action="Edit" asp-route-id="@item.Id" class="edit text-info" style="cursor: pointer; margin:10px;"><i class="fa fa-edit"></i></a>
+                                                                        <a asp-action="Delete" asp-route-id="@item.Id" class="remove text-danger" style="cursor: pointer; margin:10px;"><i class="fa fa-trash-o"></i></a>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        }
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        }
+
                                     </div>
                                     <!-- /.card-body -->
                                 </div>
@@ -59,15 +120,23 @@
 </div>
 
 
-
 @section Scripts {
+
     <script type="text/javascript">
 
         $(document).ready(function () {
 
-            carregaTabelaJogadores();
+            //if (!$('#divTable').html().trim() == "") {
+            //    divCarregandoTabela(false);
+            //    $('#divTable').removeClass("hide");
+            //}
 
+            if ($('#tbPlayers tbody tr').length > 0) {
+                    divCarregandoTabela(false);
+                $('#divTable').removeClass("hide");
+            }
         });
+
 
 
         function carregaTabelaJogadores() {
@@ -100,7 +169,7 @@
         }
 
         function formataData(value, row, index) {
-            return dataAtualFormatada(row.dtRegister);
+            return dataAtualFormatada(row.DtRegister);
         }
 
         function dataAtualFormatada(data) {

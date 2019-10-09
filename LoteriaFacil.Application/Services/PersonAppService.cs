@@ -113,7 +113,8 @@ namespace LoteriaFacil.Application.Services
 
         public void Remove(Guid id)
         {
-            throw new NotImplementedException();
+            var removeCommand = new RemovePersonCommand(id);
+            Bus.SendCommand(removeCommand);
         }
     }
 }

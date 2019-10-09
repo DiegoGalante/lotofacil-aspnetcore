@@ -99,7 +99,7 @@ namespace LoteriaFacil.Domain.CommandHandlers
 
             if (Commit())
             {
-                Bus.RaiseEvent(new PersonRemovedEvent(message.Id));
+               // Bus.RaiseEvent(new PersonRemovedEvent(message.Id));
             }
 
             return Task.FromResult(true);

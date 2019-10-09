@@ -25,7 +25,7 @@ namespace LoteriaFacil.UI.Web.Controllers
         [Route("/players")]
         public IActionResult Index()
         {
-            return View();
+            return View(_personAppService.GetAll());
         }
 
         [HttpGet]
@@ -40,7 +40,7 @@ namespace LoteriaFacil.UI.Web.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Create(PersonViewModel personViewModel)
         {
-           if (!ModelState.IsValid)
+            if (!ModelState.IsValid)
                 return View(personViewModel);
 
             _personAppService.Register(personViewModel);
@@ -82,6 +82,38 @@ namespace LoteriaFacil.UI.Web.Controllers
                 ViewBag.Sucesso = "Atualizado com sucesso!";
 
             return View(personViewModel);
+        }
+
+        [HttpGet]
+        [Route("remove-person/{id:guid}")]
+        public IActionResult Delete(Guid? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var personViewModel = _personAppService.GetById(id.Value);
+
+            if (personViewModel == null)
+            {
+                return NotFound();
+            }
+
+            return View(personViewModel);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        [Route("remove-person/{id:guid}")]
+        [ValidateAntiForgeryToken]
+        public IActionResult DeleteConfirmed(Guid id)
+        {
+            _personAppService.Remove(id);
+
+            if (!IsValidOperation()) return View(_personAppService.GetById(id));
+
+            ViewBag.Sucesso = "Dados removido com sucesso!!";
+            return RedirectToAction("Index");
         }
 
         [HttpPost]
