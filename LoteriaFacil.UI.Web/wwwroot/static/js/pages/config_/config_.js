@@ -22,8 +22,11 @@ function carregaConfiguracao() {
         success: (function (data) {
             _objConfiguration = data[0];
             _valor_antigo = _objConfiguration.valor_Minimo_Para_Envio_Email;
+<<<<<<< HEAD
             console.log("CARREGANDO CONFIGURAÇÃO..");
             //console.log(_objConfiguration);
+=======
+>>>>>>> bb62a41bc85e88da28e7beb1e178c80831789707
 
             $('#CalcularDezenasSemPontuacao').prop('checked', false);
             $('#VerificaJogoOnline').prop('checked', false);
@@ -101,14 +104,12 @@ function saveConfig(config) {
         }),
         error: (function (erro) {
             console.log(erro);
-            // TrataErroAjax(erro);
         })
     });
 }
 
 function limpaObjetoNovaCofiguracao() {
     _objSaveConfiguration.Id = 0;
-    //_objSaveConfiguration.pes_id = 0;
     _objSaveConfiguration.valor_campo = 0;
     _objSaveConfiguration.enum_config = 0;
 }
@@ -117,7 +118,6 @@ function limpaObjetoNovaCofiguracao() {
 $("#minAmountToSentEmail").keydown(function (e) {
 
     if (e.currentTarget.value.length >= 2 && e.currentTarget.value[0] == 0) {
-        // console.log(e.currentTarget.value)
         e.currentTarget.value = e.currentTarget.value.slice(1, e.currentTarget.value.length);
         $("#minAmountToSentEmail").val(e.currentTarget.value);
     }
@@ -142,23 +142,9 @@ $("#minAmountToSentEmail").keydown(function (e) {
 
 $("#minAmountToSentEmail").blur(function () {
 
-    //novo_valor = Number(parseFloat($("#minAmountToSentEmail").val())).toFixed(2);
-
-    //$("#minAmountToSentEmail").val(novo_valor);
-
-    //_objSaveConfiguration.Id = _objConfiguration.Id;
-    //_objSaveConfiguration.pes_id = _objConfiguration.person;
-    //_objSaveConfiguration.valor_campo = parseFloat(novo_valor);
-    //_objSaveConfiguration.valor_antigo = _valor_antigo;
-    //_objSaveConfiguration.enum_config = enumConfiguracao.ValorMinimoParaEnviarEmail;
-
-
     novo_valor = parseFloat($("#minAmountToSentEmail").val()).toFixed(2);
 
-    //    novo_valor = parseFloat($("#minAmountToSentEmail").val()).toFixed(2);
-    //$("#minAmountToSentEmail").val(currencyFormat(novo_valor));
     $("#minAmountToSentEmail").val(novo_valor);
-    //_objSaveConfiguration.valor_campo = parseFloat(novo_valor);
 
     _objConfiguration.Id = _objConfiguration.Id;
     _objConfiguration.calcular_Dezenas_Sem_Pontuacao = _objConfiguration.calcular_Dezenas_Sem_Pontuacao;
@@ -176,10 +162,6 @@ function currencyFormat(num) {
 }
 
 $('#CalcularDezenasSemPontuacao').click(function () {
-    //_objSaveConfiguration.pes_id = _objConfiguration.person
-    //_objSaveConfiguration.valor_campo = $('#CalcularDezenasSemPontuacao')[0].checked;
-    //_objSaveConfiguration.enum_config = enumConfiguracao.CalcularDezenasSemPontuacao;
-
 
     _objConfiguration.Id = _objConfiguration.Id;
     _objConfiguration.calcular_Dezenas_Sem_Pontuacao = $('#CalcularDezenasSemPontuacao')[0].checked;
@@ -188,17 +170,11 @@ $('#CalcularDezenasSemPontuacao').click(function () {
     _objConfiguration.enviar_Email_Manualmente = _objConfiguration.enviar_Email_Manualmente;
     _objConfiguration.valor_Minimo_Para_Envio_Email = _objConfiguration.valor_Minimo_Para_Envio_Email;
 
-    //console.log(_objConfiguration);
     saveConfig(_objConfiguration);
     carregaPagina();
 });
 
 $('#VerificaJogoOnline').click(function () {
-    //_objSaveConfiguration.pes_id = _objConfiguration.person
-    //_objSaveConfiguration.valor_campo = $('#VerificaJogoOnline')[0].checked;
-    //_objSaveConfiguration.enum_config = enumConfiguracao.VerificaJogoOnline;
-
-
 
     _objConfiguration.Id = _objConfiguration.Id;
     _objConfiguration.calcular_Dezenas_Sem_Pontuacao = _objConfiguration.calcular_Dezenas_Sem_Pontuacao;
@@ -207,15 +183,10 @@ $('#VerificaJogoOnline').click(function () {
     _objConfiguration.enviar_Email_Manualmente = _objConfiguration.enviar_Email_Manualmente;
     _objConfiguration.valor_Minimo_Para_Envio_Email = _objConfiguration.valor_Minimo_Para_Envio_Email;
 
-    // console.log(_objSaveConfiguration)
     saveConfig(_objConfiguration);
 });
 
 $('#EmailAutomatico').click(function () {
-    //_objSaveConfiguration.Id = _objConfiguration.Id;
-    //_objSaveConfiguration.pes_id = _objConfiguration.person
-    //_objSaveConfiguration.valor_campo = $('#EmailAutomatico')[0].checked;
-    //_objSaveConfiguration.enum_config = enumConfiguracao.EmailAutomatico;
 
     _objConfiguration.Id = _objConfiguration.Id;
     _objConfiguration.calcular_Dezenas_Sem_Pontuacao = _objConfiguration.calcular_Dezenas_Sem_Pontuacao;
@@ -228,11 +199,6 @@ $('#EmailAutomatico').click(function () {
 });
 
 $('#EmailManual').click(function () {
-    //_objSaveConfiguration.Id = _objConfiguration.Id;
-    //_objSaveConfiguration.pes_id = _objConfiguration.person
-    //_objSaveConfiguration.valor_campo = $('#EmailManual')[0].checked;
-    //_objSaveConfiguration.enum_config = enumConfiguracao.EmailManual;
-
 
     _objConfiguration.Id = _objConfiguration.Id;
     _objConfiguration.calcular_Dezenas_Sem_Pontuacao = _objConfiguration.calcular_Dezenas_Sem_Pontuacao;
