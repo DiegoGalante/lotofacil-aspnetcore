@@ -32,45 +32,45 @@ namespace LoteriaFacil.UI.Web.Controllers
 
         [HttpPost]
         [Route("/load/{concurse:int}")]
-        public object Load(int concurse)
+        public IActionResult Load(int concurse)
         {
-            return _PersonLotteryAppService.GetJsonDashboard(concurse);
+            return new ObjectResult(_PersonLotteryAppService.GetJsonDashboard(concurse));
         }
 
         [HttpPost]
         [Route("/load")]
-        public object Load()
+        public IActionResult Load()
         {
-            return _PersonLotteryAppService.GetJsonDashboard();
+            return new ObjectResult(_PersonLotteryAppService.GetJsonDashboard());
         }
 
         [HttpPost]
         [Route("/loadGames")]
-        public object LoadGames()
+        public IActionResult LoadGames()
         {
-            return _PersonLotteryAppService.GetPersonGame();
+            return new ObjectResult(_PersonLotteryAppService.GetPersonGame());
         }
 
         [HttpPost]
         [Route("/loadGames/{concurse:int}")]
-        public object LoadGames(int concurse)
+        public IActionResult LoadGames(int concurse)
         {
-            return _PersonLotteryAppService.GetPersonGame(concurse);
+            return new ObjectResult(_PersonLotteryAppService.GetPersonGame(concurse));
         }
 
 
         [HttpPost]
         [Route("/sendEmail")]
-        public object SendEmail()
+        public IActionResult SendEmail()
         {
-            return _PersonLotteryAppService.SendEmail();
+            return new ObjectResult(_PersonLotteryAppService.SendEmail());
         }
 
         [HttpPost]
         [Route("/sendEmail/{concurse:int}")]
-        public object SendEmail(int concurse)
+        public IActionResult SendEmail(int concurse)
         {
-            return _PersonLotteryAppService.SendEmail(concurse);
+            return new ObjectResult(_PersonLotteryAppService.SendEmail(concurse));
         }
     }
 }

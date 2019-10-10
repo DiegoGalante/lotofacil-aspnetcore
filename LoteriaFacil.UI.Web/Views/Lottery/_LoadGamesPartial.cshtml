@@ -1,0 +1,76 @@
+﻿
+<div class="col-md-4">
+    <p class="text-center hide" id="pontuationStats" style="font-size:18px;">
+        <strong>Pontuação</strong>
+        <a href="#">
+            <i class="fa fa-info-circle text-primary" id="pontuacaoPopover" title="Legenda - Cores" data-toggle="popover" data-placement="bottom" data-html="true" data-trigger="hover"
+               data-content="
+                             <div style='display:block;'>
+    <p class='d-flex text-left border-bottom' style='display:inline-flex;'>
+        <span class='info-box-icon badge bg-danger' style='width:24px; height:24px; margin:0 7px 5px 0;'> </span>
+        <span class='description-header'>  <strong> 15 Pontos</strong></span>
+    </p>
+
+    <p class='d-flex text-left border-bottom' style='display:inline-flex;'>
+        <span class='info-box-icon badge bg-success' style='width:24px; height:24px; margin:0 7px 5px 0;'> </span>
+        <span class='description-header'>  <strong> 14 Pontos</strong></span>
+    </p>
+
+    <p class='d-flex text-left border-bottom' style='display:inline-flex;'>
+        <span class='info-box-icon badge bg-warning' style='width:24px; height:24px; margin:0 7px 5px 0;'> </span>
+        <span class='description-header'>  <strong> 13 Pontos</strong></span>
+    </p>
+
+    <p class='d-flex text-left border-bottom' style='display:inline-flex;'>
+        <span class='info-box-icon badge bg-info' style='width:24px; height:24px; margin:0 7px 5px 0;'> </span>
+        <span class='description-header'>  <strong> 12 Pontos</strong></span>
+    </p>
+
+    <p class='d-flex text-left border-bottom' style='display:inline-flex;'>
+        <span class='info-box-icon badge bg-info' style='width:24px; height:24px; margin:0 7px 5px 0;'> </span>
+        <span class='description-header'>  <strong> 11 Pontos</strong></span>
+    </p>
+
+    <p class='d-flex text-left border-bottom' style='display:inline-flex;'>
+        <span class='info-box-icon badge bg-gray' style='width:24px; height:24px; margin:0 7px 5px 0;'> </span>
+        <span class='description-header'>  <strong> Sem Pontuação</strong></span>
+    </p>
+</div>">
+             </i>
+        </a>
+     </p>
+
+
+<div class="overlay hide" id="divCarregandoJogos" style="margin:0 auto; text-align:center; height: 200px;">
+    <h3>Processando os jogos..</h3>
+    <i class="fa fa-refresh fa-spin"></i>
+</div>
+
+<div id="noGame" class="hide text-center">
+    <h5>Não há jogo(s) para este concurso!</h5>
+</div>
+
+<div id="hasGame" class="hide">
+
+    <div id="gamePerson" style="max-height: 50%; overflow-x: auto; margin:0 auto; text-align:center; width: 90%;">
+        <!-- SÓ UM EXEMPLO ESTÁTICO: <div class="progress-group">
+            <a title="Autor" data-toggle="popover" data-trigger="hover" data-placement="top" data-content="Nome Pessoa">Jogo  77</a> - 10 dezenas sorteadas!
+            <span class="float-right"><b><span class="badge bg-gray">10</span></b> / <span class="badge bg-danger">15</span></span>
+            <div class="progress progress-sm active">
+              <div class="progress-bar bg-gray progress-bar-striped" role="progressbar" aria-valuenow="11" aria-valuemin="0" aria-valuemax="15" id="progressBar4">
+              </div>
+            </div>
+          </div> -->
+        <!-- /.progress-group -->
+    </div>
+
+    <div class="col-sm-12 col-12">
+        <div class="description-block">
+            <p class="text-center" style="font-size:18px;">
+                <strong>Quantia a Recolher dos Bilhetes</strong>
+            </p>
+            <h5 class="description-header" id="amount_ticket">R$ 4,00 </h5>
+            <!-- <h5 class="description-header text-gray">R$ 0,00</h5> -->
+        </div>
+        <!-- /.description-block -->
+    </div>
