@@ -22,11 +22,6 @@ function carregaConfiguracao() {
         success: (function (data) {
             _objConfiguration = data[0];
             _valor_antigo = _objConfiguration.valor_Minimo_Para_Envio_Email;
-<<<<<<< HEAD
-            console.log("CARREGANDO CONFIGURAÇÃO..");
-            //console.log(_objConfiguration);
-=======
->>>>>>> bb62a41bc85e88da28e7beb1e178c80831789707
 
             $('#CalcularDezenasSemPontuacao').prop('checked', false);
             $('#VerificaJogoOnline').prop('checked', false);
