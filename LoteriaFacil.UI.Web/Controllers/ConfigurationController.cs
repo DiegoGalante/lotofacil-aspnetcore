@@ -34,7 +34,7 @@ namespace LoteriaFacil.UI.Web.Controllers
 
             HttpContext.Response.StatusCode = 200;
 
-            return RedirectToAction("Load", "Lottery");
+            return RedirectToAction("Index", "Lottery");
         }
 
         [HttpPost]
