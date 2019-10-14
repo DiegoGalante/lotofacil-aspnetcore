@@ -28,13 +28,12 @@
                     </li>
                     <li class="nav-item d-none d-sm-inline-block">
                         <a asp-area="" asp-controller="Person" asp-action="Index" class="nav-link"><i class="fa fa-users"></i> Jogadores</a>
-
                     </li>
                     <li class="nav-item d-none d-sm-inline-block">
                         <a href="#" class="nav-link" data-toggle="modal" data-target="#modalConfiguracao"><i class="fa fa-gears"></i> Configurações</a>
                     </li>
                 </ul>
-
+                @await Html.PartialAsync("_LoginPartial")
             </nav>
         </div>
 
