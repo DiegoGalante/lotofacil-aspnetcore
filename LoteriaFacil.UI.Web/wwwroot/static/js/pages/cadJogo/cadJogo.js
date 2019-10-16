@@ -38,6 +38,9 @@ var Btn1 = $('#btn1'), Btn2 = $('#btn2'), Btn3 = $('#btn3'),
     Btn25 = $('#btn25');
 
 var btnSalvarJogos = $('#btnSalvarJogos');
+var btnGerarJogo = $('#btnGerarJogo');
+var btnGerarJogoAutomatico = $('#btnSalvarJogos');
+var btnLimpar = $('#btnLimpar');
 
 
 $(document).ready(function () {

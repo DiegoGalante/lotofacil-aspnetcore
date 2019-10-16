@@ -10,6 +10,8 @@ namespace LoteriaFacil.UI.Web.Controllers
     public class NewGameController : Controller
     {
         // GET: NewGame
+        [HttpGet]
+        [Route("/novo-jogo")]
         public ActionResult Index()
         {
             return View();

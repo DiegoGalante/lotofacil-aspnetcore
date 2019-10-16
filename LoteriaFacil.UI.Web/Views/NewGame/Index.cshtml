@@ -1,0 +1,207 @@
+﻿
+@{
+    ViewData["Title"] = "Novo Jogo";
+    Layout = "~/Views/Shared/_LayoutLoteria.cshtml";
+}
+
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div>
+                                <div class="d-inline-block p-2">
+                                    <button id="btn1" type="button" class="btn btn-block btn-default" style="width:55px; height:55px">1</button>
+                                </div>
+                                <div class="d-inline-block p-2">
+                                    <button id="btn2" type="button" class="btn btn-block btn-default" style="width:55px; height:55px">2</button>
+                                </div>
+                                <div class="d-inline-block p-2">
+                                    <button id="btn3" type="button" class="btn btn-block btn-default" style="width:55px; height:55px">3</button>
+                                </div>
+                                <div class="d-inline-block p-2">
+                                    <button id="btn4" type="button" class="btn btn-block btn-default" style="width:55px; height:55px">4</button>
+                                </div>
+                                <div class="d-inline-block p-2">
+                                    <button id="btn5" type="button" class="btn btn-block btn-default" style="width:55px; height:55px">5</button>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="d-inline-block p-2">
+                                    <button id="btn6" type="button" class="btn btn-block btn-default" style="width:55px; height:55px">6</button>
+                                </div>
+                                <div class="d-inline-block p-2">
+                                    <button id="btn7" type="button" class="btn btn-block btn-default" style="width:55px; height:55px">7</button>
+                                </div>
+                                <div class="d-inline-block p-2">
+                                    <button id="btn8" type="button" class="btn btn-block btn-default" style="width:55px; height:55px">8</button>
+                                </div>
+                                <div class="d-inline-block p-2">
+                                    <button id="btn9" type="button" class="btn btn-block btn-default" style="width:55px; height:55px">9</button>
+                                </div>
+                                <div class="d-inline-block p-2">
+                                    <button id="btn10" type="button" class="btn btn-block btn-default" style="width:55px; height:55px">10</button>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="d-inline-block p-2">
+                                    <button id="btn11" type="button" class="btn btn-block btn-default" style="width:55px; height:55px">11</button>
+                                </div>
+                                <div class="d-inline-block p-2">
+                                    <button id="btn12" type="button" class="btn btn-block btn-default" style="width:55px; height:55px">12</button>
+                                </div>
+                                <div class="d-inline-block p-2">
+                                    <button id="btn13" type="button" class="btn btn-block btn-default" style="width:55px; height:55px">13</button>
+                                </div>
+                                <div class="d-inline-block p-2">
+                                    <button id="btn14" type="button" class="btn btn-block btn-default" style="width:55px; height:55px">14</button>
+                                </div>
+                                <div class="d-inline-block p-2">
+                                    <button id="btn15" type="button" class="btn btn-block btn-default" style="width:55px; height:55px">15</button>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="d-inline-block p-2">
+                                    <button id="btn16" type="button" class="btn btn-block btn-default" style="width:55px; height:55px">16</button>
+                                </div>
+                                <div class="d-inline-block p-2">
+                                    <button id="btn17" type="button" class="btn btn-block btn-default" style="width:55px; height:55px">17</button>
+                                </div>
+                                <div class="d-inline-block p-2">
+                                    <button id="btn18" type="button" class="btn btn-block btn-default" style="width:55px; height:55px">18</button>
+                                </div>
+                                <div class="d-inline-block p-2">
+                                    <button id="btn19" type="button" class="btn btn-block btn-default" style="width:55px; height:55px">19</button>
+                                </div>
+                                <div class="d-inline-block p-2">
+                                    <button id="btn20" type="button" class="btn btn-block btn-default" style="width:55px; height:55px">20</button>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="d-inline-block p-2">
+                                    <button id="btn21" type="button" class="btn btn-block btn-default" style="width:55px; height:55px">21</button>
+                                </div>
+                                <div class="d-inline-block p-2">
+                                    <button id="btn22" type="button" class="btn btn-block btn-default" style="width:55px; height:55px">22</button>
+                                </div>
+                                <div class="d-inline-block p-2">
+                                    <button id="btn23" type="button" class="btn btn-block btn-default" style="width:55px; height:55px">23</button>
+                                </div>
+                                <div class="d-inline-block p-2">
+                                    <button id="btn24" type="button" class="btn btn-block btn-default" style="width:55px; height:55px">24</button>
+                                </div>
+                                <div class="d-inline-block p-2">
+                                    <button id="btn25" type="button" class="btn btn-block btn-default" style="width:55px; height:55px">25</button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="card-body">
+                                    <table id="tbGrupos"
+                                           data-locale="pt-BR"
+                                           data-toolbar="#toolbar" data-toggle="table"
+                                           data-id-field="id" data-page-list="[10, 25, 50, 100, ALL]" data-pagination="true"
+                                           data-search="true"
+                                           data-search-align="left" data-buttons-align="right" data-toolbar-align="right"
+                                           data-striped="true"
+                                           data-single-select="true"
+                                           class="table table-hover" style="margin-top: 0px;  text-align: center;">
+                                        <thead>
+                                            <tr>
+                                                <th data-field="grupo" data-sortable="true" data-width="150"> Grupo</th>
+                                                <th data-field="primeiro" data-width="50" data-sortable="true"> 1º Número</th>
+                                                <th data-field="segundo" data-width="90" data-formatter="formataData" data-sortable="true"> 2º Número</th>
+                                                <th data-field="action" data-width="140">Ação</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="card-header">
+                                    <div class="box-title">
+                                        <div class="pull-left">
+                                            <h3>Dezenas Fixas</h3>
+                                        </div>
+                                        <div class="pull-right">
+                                            <div class="d-inline-block">
+                                                <div class="margin btn-group">
+                                                    <button id="btnGerarJogo" type="button" class="btn btn-block btn-primary">Gerar Jogo</button>
+                                                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                                                        <span class="caret"></span>
+                                                        <span class="sr-only">Toggle Dropdown</span>
+                                                    </button>
+                                                    <ul class="dropdown-menu" role="menu">
+                                                        <li><a href="#" id="btnGerarJogoAutomatico" class="p-0">Gerar Jogo Automático</a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div class="d-inline-block">
+                                                <button id="btnLimpar" type="button" class="btn btn-warning hide">Limpar</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <h4>00-00-00-00-00-00-00-00-00-00-00</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <label class="justify-content-center">Jogos Gerados</label>
+                                    </div>
+                                    <div class="card-body">
+                                        <table id="tbJogosGerados"
+                                               data-locale="pt-BR"
+                                               data-toolbar="#toolbar" data-toggle="table"
+                                               data-id-field="id" data-page-list="[10, 25, 50, 100, ALL]" data-pagination="true"
+                                               data-search="true"
+                                               data-search-align="left" data-buttons-align="right" data-toolbar-align="right"
+                                               data-striped="true"
+                                               data-single-select="true"
+                                               class="table table-hover" style="margin-top: 0px;  text-align: center;">
+                                            <thead>
+                                                <tr>
+                                                    <th data-field="grupo" data-width="120" data-sortable="true"> Nº Jogo</th>
+                                                    <th data-field="primeiro" data-sortable="true"> Dezenas</th>
+                                                    <th data-field="action" data-width="140">Ação</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
