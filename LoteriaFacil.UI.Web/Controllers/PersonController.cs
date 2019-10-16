@@ -3,9 +3,8 @@ using LoteriaFacil.Application.ViewModels;
 using LoteriaFacil.Domain.Core.Notifications;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace LoteriaFacil.UI.Web.Controllers
 {
@@ -23,9 +22,9 @@ namespace LoteriaFacil.UI.Web.Controllers
         [HttpGet]
         [Route("/jogadores")]
         [Route("/players")]
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View(_personAppService.GetAll());
+            return View(await _personAppService.GetAll());
         }
 
         [HttpGet]
@@ -38,12 +37,12 @@ namespace LoteriaFacil.UI.Web.Controllers
         [HttpPost]
         [Route("/register-new")]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(PersonViewModel personViewModel)
+        public async Task<IActionResult> Create(PersonViewModel personViewModel)
         {
             if (!ModelState.IsValid)
                 return View(personViewModel);
 
-            _personAppService.Register(personViewModel);
+            await _personAppService.Register(personViewModel);
             if (IsValidOperation())
                 ViewBag.Sucesso = "Cadastro realizado com sucesso!";
 
@@ -52,14 +51,14 @@ namespace LoteriaFacil.UI.Web.Controllers
 
         [HttpGet]
         [Route("edit-person/{id:guid}")]
-        public IActionResult Edit(Guid? id)
+        public async Task<IActionResult> Edit(Guid? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var personViewModel = _personAppService.GetById(id.Value);
+            var personViewModel = await _personAppService.GetById(id.Value);
 
             if (personViewModel == null)
             {
@@ -72,11 +71,11 @@ namespace LoteriaFacil.UI.Web.Controllers
         [HttpPost]
         [Route("edit-person/{id:guid}")]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(PersonViewModel personViewModel)
+        public async Task<IActionResult> Edit(PersonViewModel personViewModel)
         {
             if (!ModelState.IsValid) return View(personViewModel);
 
-            _personAppService.Update(personViewModel);
+            await _personAppService.Update(personViewModel);
 
             if (IsValidOperation())
                 ViewBag.Sucesso = "Atualizado com sucesso!";
@@ -86,14 +85,14 @@ namespace LoteriaFacil.UI.Web.Controllers
 
         [HttpGet]
         [Route("remove-person/{id:guid}")]
-        public IActionResult Delete(Guid? id)
+        public async Task<IActionResult> Delete(Guid? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var personViewModel = _personAppService.GetById(id.Value);
+            var personViewModel = await _personAppService.GetById(id.Value);
 
             if (personViewModel == null)
             {
@@ -106,9 +105,9 @@ namespace LoteriaFacil.UI.Web.Controllers
         [HttpPost, ActionName("Delete")]
         [Route("remove-person/{id:guid}")]
         [ValidateAntiForgeryToken]
-        public IActionResult DeleteConfirmed(Guid id)
+        public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            _personAppService.Remove(id);
+            await _personAppService.Remove(id);
 
             if (!IsValidOperation()) return View(_personAppService.GetById(id));
 
@@ -117,9 +116,9 @@ namespace LoteriaFacil.UI.Web.Controllers
         }
 
         [HttpPost]
-        public IActionResult ListAll()
+        public async Task<IActionResult> ListAll()
         {
-            return PartialView("_TabelaPessoasPartial", _personAppService.GetAll());
+            return PartialView("_TabelaPessoasPartial", await _personAppService.GetAll());
         }
 
     }

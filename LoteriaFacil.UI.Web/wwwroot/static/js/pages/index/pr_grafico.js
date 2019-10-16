@@ -93,12 +93,6 @@ function carregaPagina(concurse = 0) {
             $("#concurseHeader").text("Concurso " + data.concurse.concurse + " - " + data.concurse.dtConcurse);
             $("#concurseHeader").attr('title', data.concurse.dtExtense);
 
-            atualizaPontos(15, data.concurse.hit15, data.concurse.shared15, data.concurse.percent15);
-            atualizaPontos(14, data.concurse.hit14, data.concurse.shared14, data.concurse.percent14);
-            atualizaPontos(13, data.concurse.hit13, data.concurse.shared13, data.concurse.percent13);
-            atualizaPontos(12, data.concurse.hit12, data.concurse.shared12, data.concurse.percent12);
-            atualizaPontos(11, data.concurse.hit11, data.concurse.shared11, data.concurse.percent11);
-
             montaGrafico(data.concurse.game, []);
             divCarregando(false);
             if (!parseInt(concurse)) {
@@ -107,6 +101,12 @@ function carregaPagina(concurse = 0) {
             else {
                 loadGames(concurse);
             }
+
+            atualizaPontos(15, data.concurse.hit15, data.concurse.shared15, data.concurse.percent15);
+            atualizaPontos(14, data.concurse.hit14, data.concurse.shared14, data.concurse.percent14);
+            atualizaPontos(13, data.concurse.hit13, data.concurse.shared13, data.concurse.percent13);
+            atualizaPontos(12, data.concurse.hit12, data.concurse.shared12, data.concurse.percent12);
+            atualizaPontos(11, data.concurse.hit11, data.concurse.shared11, data.concurse.percent11);
 
             console.log("GRAFICO PRINCIPAL..OK");
         }),

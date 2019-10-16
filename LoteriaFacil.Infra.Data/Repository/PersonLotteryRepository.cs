@@ -22,7 +22,7 @@ namespace LoteriaFacil.Infra.Data.Repository
 
         public IEnumerable<PersonLottery> GetByTypeLottery(Guid lotteryId, Guid personId)
         {
-            //return DbSet.AsNoTracking(). (c => c.Lottery.Id == lotteryId and c.Person.Id = personId);
+            //return DbSet.AsNoTracking().FirstOrDefault(c => c.Lottery.Id == lotteryId c.Person.Id = personId);
             return null;
         }
     }

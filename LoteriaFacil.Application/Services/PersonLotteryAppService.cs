@@ -14,6 +14,7 @@ using LoteriaFacil.Infra.CrossCutting.Identity.Services;
 using LoteriaFacil.Infra.CrossCutting.Identity.Extensions;
 using LoteriaFacil.Infra.Data.Repository.EventSourcing;
 using LoteriaFacil.Infra.CrossCutting.Identity.Offline;
+using System.Threading.Tasks;
 
 namespace LoteriaFacil.Application.Services
 {
@@ -86,15 +87,15 @@ namespace LoteriaFacil.Application.Services
             Bus.SendCommand(removeCommand);
         }
 
-        public Object GetJsonDashboard(int concurse = 0)
+        public async Task<Object> GetJsonDashboard(int concurse = 0)
         {
             JsonDashboard lottery = new JsonDashboard();
             if (concurse > 0)
-                lottery = _jsonDashboardRepository.GetFunctionJsonDashBoard(concurse);
+                lottery = await Task.Run(() => _jsonDashboardRepository.GetFunctionJsonDashBoard(concurse));
 
             if (lottery == null || lottery.Id.Equals(Guid.Empty))
             {
-                lottery = _jsonDashboardRepository.GetFunctionJsonDashBoard(_LotteryRepository.GetLast().Concurse);
+                lottery = await Task.Run(() => _jsonDashboardRepository.GetFunctionJsonDashBoard(_LotteryRepository.GetLast().Concurse));
             }
 
             return new { concurse = lottery, personGame = "", amount_tickets = 0 };
@@ -124,18 +125,18 @@ namespace LoteriaFacil.Application.Services
             return _personGame;
         }
 
-        public Object GetPersonGame(Guid personId, int concurse = 0)
+        public async Task<Object> GetPersonGame(Guid personId, int concurse = 0)
         {
             decimal amount = 0;
-            List<PersonGame> _personGame = PersonGame(out amount, concurse, personId);
+            List<PersonGame> _personGame = await Task.Run(() => PersonGame(out amount, concurse, personId));
 
             return new { personGame = _personGame, amount_tickets = amount };
         }
 
-        public Object GetPersonGame(int concurse = 0)
+        public async Task<Object> GetPersonGame(int concurse = 0)
         {
             decimal amount = 0;
-            List<PersonGame> _personGame = PersonGame(out amount, concurse);
+            List<PersonGame> _personGame = await Task.Run(() => PersonGame(out amount, concurse));
 
             return new { personGame = _personGame, amount_tickets = amount };
         }
@@ -178,7 +179,7 @@ namespace LoteriaFacil.Application.Services
                     List<PersonGame> pesGame = _personGameRepository.GetFunctionJogoPessoa(pessoa.Id, lottery.Concurse, configuration.Calcular_Dezenas_Sem_Pontuacao, configuration.Valor_Minimo_Para_Envio_Email).ToList();
                     corpoEmail = MontaHtml(lottery, pesGame);
                     _emailSender.SendEmailJogosPessoa(pessoa.Email, corpoEmail, assunto);
-                    
+
                     total_bilhetes = 0;
                     corpoEmail = string.Empty;
                 }

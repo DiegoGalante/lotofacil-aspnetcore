@@ -8,7 +8,8 @@ using LoteriaFacil.Domain.Interfaces;
 using LoteriaFacil.Infra.Data.Repository.EventSourcing;
 using System;
 using System.Collections.Generic;
-
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace LoteriaFacil.Application.Services
 {
@@ -30,9 +31,9 @@ namespace LoteriaFacil.Application.Services
             this._eventStoreRepository = eventStoreRepository;
         }
 
-        public IEnumerable<PersonViewModel> GetAll()
+        public async Task<IEnumerable<PersonViewModel>> GetAll()
         {
-            return _personRepository.GetAll().ProjectTo<PersonViewModel>(_mapper.ConfigurationProvider);
+            return await Task.Run(() => _personRepository.GetAll().ProjectTo<PersonViewModel>(_mapper.ConfigurationProvider));
         }
 
         internal void Gerar_ScriptInsertPerson()
@@ -40,70 +41,70 @@ namespace LoteriaFacil.Application.Services
             List<Guid> listGuid = new List<Guid>();
 
             PersonViewModel person = new PersonViewModel();
-            for (int i = 0; i < 100000000; i++)
-            {
-                var cont = i + 1;
-                Guid guidId = Guid.NewGuid();
 
-                while (listGuid.Contains(guidId))
-                {
-                    guidId = Guid.NewGuid();
-                }
+            List<int> integerList = Enumerable.Range(1, 200000).ToList();
 
-                person = new PersonViewModel
-                {
-                    Name = $"Pessoa Teste {cont}",
-                    Active = false,
-                    Email = $"teste_{cont}@teste.com",
-                    Password = "",
-                    DtRegister = DateTime.Now,
-                    Id = guidId
-                };
+            var option = new ParallelOptions() { MaxDegreeOfParallelism = 2 };
 
-                listGuid.Add(guidId);
+            Parallel.ForEach<int>(integerList, option, (i) =>
+             {
+                 var cont = i;
+                 Guid guidId = Guid.NewGuid();
 
-                var caminho_padrao = System.IO.Directory.GetCurrentDirectory();
-                var caminho = string.Empty;
+                 while (listGuid.Contains(guidId))
+                     guidId = Guid.NewGuid();
 
-                if (cont <= 50000)
-                    caminho = caminho_padrao + @"\ArquivoInsertPerson_1a50k.txt";
-                else if (cont >= 50000 && cont <= 100000)
-                    caminho = caminho_padrao + @"\ArquivoInsertPerson_50ka100k.txt";
-                else if (cont >= 100000 && cont <= 150000)
-                    caminho = caminho_padrao + @"\ArquivoInsertPerson_100a150k.txt";
-                else if (cont >= 150000 && cont <= 200000)
-                    caminho = caminho_padrao + @"\ArquivoInsertPerson_150a200k.txt";
+                 person = new PersonViewModel
+                 {
+                     Name = $"Pessoa Teste {cont}",
+                     Active = false,
+                     Email = $"teste_{cont}@teste.com",
+                     Password = "",
+                     DtRegister = DateTime.Now,
+                     Id = guidId
+                 };
 
-                var texto = $"INSERT INTO PERSON(Id, Name, Email, Password, DtRegister, Active) VALUES('{person.Id}', '{person.Name}', '{person.Email}', '{person.Password}', '{person.DtRegister.ToString()}', {(person.Active ? 1 : 0)});";
-                using (System.IO.StreamWriter fileWriterAlterado = new System.IO.StreamWriter(caminho, true, System.Text.Encoding.UTF8))
-                {
-                    fileWriterAlterado.WriteLine(texto);
-                    fileWriterAlterado.Close();
-                    fileWriterAlterado.Dispose();
-                }
-                person = new PersonViewModel();
+                 listGuid.Add(guidId);
 
-                if (cont == 200000)
-                    break;
-            }
+                 var caminho_padrao = System.IO.Directory.GetCurrentDirectory();
+                 var caminho = string.Empty;
 
+                 if (cont <= 50000)
+                     caminho = caminho_padrao + @"\ArquivoInsertPerson_1a50k.txt";
+                 else if (cont >= 50000 && cont <= 100000)
+                     caminho = caminho_padrao + @"\ArquivoInsertPerson_50ka100k.txt";
+                 else if (cont >= 100000 && cont <= 150000)
+                     caminho = caminho_padrao + @"\ArquivoInsertPerson_100a150k.txt";
+                 else if (cont >= 150000 && cont <= 200000)
+                     caminho = caminho_padrao + @"\ArquivoInsertPerson_150a200k.txt";
+
+                 var texto = $"INSERT INTO PERSON(Id, Name, Email, Password, DtRegister, Active) VALUES('{person.Id}', '{person.Name}', '{person.Email}', '{person.Password}', '{person.DtRegister.ToString()}', {(person.Active ? 1 : 0)});";
+                 using (System.IO.StreamWriter fileWriterAlterado = new System.IO.StreamWriter(caminho, true, System.Text.Encoding.UTF8))
+                 {
+                     fileWriterAlterado.WriteLine(texto);
+                     fileWriterAlterado.Close();
+                     fileWriterAlterado.Dispose();
+                 }
+                 person = new PersonViewModel();
+
+             });
         }
 
-        public PersonViewModel GetById(Guid id)
+        public async Task<PersonViewModel> GetById(Guid id)
         {
-            return _mapper.Map<PersonViewModel>(_personRepository.GetById(id));
+            return await Task.Run(() => _mapper.Map<PersonViewModel>(_personRepository.GetById(id)));
         }
 
-        public void Register(PersonViewModel personViewModel)
+        public async Task Register(PersonViewModel personViewModel)
         {
             var registerCommand = _mapper.Map<RegisterNewPersonCommand>(personViewModel);
-            Bus.SendCommand(registerCommand);
+            await Bus.SendCommand(registerCommand);
         }
 
-        public void Update(PersonViewModel personViewModel)
+        public async Task Update(PersonViewModel personViewModel)
         {
             var updateCommand = _mapper.Map<UpdatePersonCommand>(personViewModel);
-            Bus.SendCommand(updateCommand);
+            await Bus.SendCommand(updateCommand);
         }
 
         public void Dispose()
@@ -111,10 +112,17 @@ namespace LoteriaFacil.Application.Services
             GC.SuppressFinalize(this);
         }
 
-        public void Remove(Guid id)
+        public async Task Remove(Guid id)
         {
             var removeCommand = new RemovePersonCommand(id);
-            Bus.SendCommand(removeCommand);
+            await Bus.SendCommand(removeCommand);
+        }
+
+        public async Task<IEnumerable<PersonViewModel>> GetByDemand(int start = 0, int end = 0)
+        {
+            return null;
+            //return _mapper.Map<PersonViewModel>(_personRepository.GetByDemand(start, end).ToAsyncEnumerable(PersonViewModel));
+            //return await Task.Run(() => _mapper.Map<PersonViewModel>(_personRepository.GetByDemand(start, end))).ToAsyncEnumerable<PersonViewModel>;
         }
     }
 }

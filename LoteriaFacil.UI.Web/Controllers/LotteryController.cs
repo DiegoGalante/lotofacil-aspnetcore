@@ -3,6 +3,7 @@ using LoteriaFacil.Domain.Core.Notifications;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Threading.Tasks;
 
 namespace LoteriaFacil.UI.Web.Controllers
 {
@@ -32,30 +33,30 @@ namespace LoteriaFacil.UI.Web.Controllers
 
         [HttpPost]
         [Route("/load/{concurse:int}")]
-        public IActionResult Load(int concurse)
+        public async Task<IActionResult> Load(int concurse)
         {
-            return new ObjectResult(_PersonLotteryAppService.GetJsonDashboard(concurse));
+            return new ObjectResult(await _PersonLotteryAppService.GetJsonDashboard(concurse));
         }
 
         [HttpPost]
         [Route("/load")]
-        public IActionResult Load()
+        public async Task<IActionResult> Load()
         {
-            return new ObjectResult(_PersonLotteryAppService.GetJsonDashboard());
+            return new ObjectResult(await _PersonLotteryAppService.GetJsonDashboard());
         }
 
         [HttpPost]
         [Route("/loadGames")]
-        public IActionResult LoadGames()
+        public async Task<IActionResult> LoadGames()
         {
-            return new ObjectResult(_PersonLotteryAppService.GetPersonGame());
+            return new ObjectResult(await _PersonLotteryAppService.GetPersonGame());
         }
 
         [HttpPost]
         [Route("/loadGames/{concurse:int}")]
-        public IActionResult LoadGames(int concurse)
+        public async Task<IActionResult> LoadGames(int concurse)
         {
-            return new ObjectResult(_PersonLotteryAppService.GetPersonGame(concurse));
+            return new ObjectResult(await _PersonLotteryAppService.GetPersonGame(concurse));
         }
 
 
