@@ -51,7 +51,7 @@ namespace LoteriaFacil.Services.Api
                 options.OutputFormatters.Remove(new XmlDataContractSerializerOutputFormatter());
                 options.UseCentralRoutePrefix(new RouteAttribute("api/v{version}"));
             })
-            .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             services.AddAutoMapperSetup();
 

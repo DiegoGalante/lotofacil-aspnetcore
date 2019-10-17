@@ -10,10 +10,12 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System.Text.Json;
+using Newtonsoft.Json.Serialization;
 
 namespace LoteriaFacil.UI.Web
 {
@@ -46,17 +48,17 @@ namespace LoteriaFacil.UI.Web
                 {
                     o.LoginPath = new PathString("/login");
                     o.AccessDeniedPath = new PathString("/home/access-denied");
-                })
-                .AddFacebook(o =>
-                {
-                    o.AppId = Configuration["Authentication:Facebook:AppId"];
-                    o.AppSecret = Configuration["Authentication:Facebook:AppSecret"];
-                })
-                .AddGoogle(googleOptions =>
-                {
-                    googleOptions.ClientId = Configuration["Authentication:Google:ClientId"];
-                    googleOptions.ClientSecret = Configuration["Authentication:Google:ClientSecret"];
                 });
+                //.AddFacebook(o =>
+                //{
+                //    o.AppId = Configuration["Authentication:Facebook:AppId"];
+                //    o.AppSecret = Configuration["Authentication:Facebook:AppSecret"];
+                //})
+                //.AddGoogle(googleOptions =>
+                //{
+                //    googleOptions.ClientId = Configuration["Authentication:Google:ClientId"];
+                //    googleOptions.ClientSecret = Configuration["Authentication:Google:ClientSecret"];
+                //});
 
             services.Configure<CookiePolicyOptions>(options =>
             {
@@ -66,7 +68,12 @@ namespace LoteriaFacil.UI.Web
             });
 
             services.AddAutoMapperSetup();
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddRazorPages();
+
+            services.AddMvc(options =>
+                            options.SuppressAsyncSuffixInActionNames = false)
+                    .AddNewtonsoftJson(options =>
+                                       options.SerializerSettings.ContractResolver =  new CamelCasePropertyNamesContractResolver());
 
             services.AddAuthorization(options =>
             {
@@ -85,14 +92,14 @@ namespace LoteriaFacil.UI.Web
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, LoteriaFacilContext loteriaFacilContext)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, LoteriaFacilContext loteriaFacilContext)
         {
             loteriaFacilContext.Database.Migrate();
 
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseDatabaseErrorPage();
+                //app.UseDatabaseErrorPage();
 
             }
             else
@@ -102,16 +109,23 @@ namespace LoteriaFacil.UI.Web
             }
 
             app.UseHttpsRedirection();
-            app.UseStaticFiles();
             app.UseCookiePolicy();
-            app.UseAuthentication();
 
-            app.UseMvc(routes =>
+            app.UseStaticFiles();
+
+            app.UseRouting();
+            app.UseCors();
+
+            app.UseAuthentication();
+            app.UseAuthorization();
+
+            app.UseEndpoints(endpoints =>
             {
-                routes.MapRoute(
-                    name: "default",
-                    template: "{controller=Lottery}/{action=Index}/{id?}");
+                endpoints.MapControllers();
+                //endpoints.MapRazorPages(); //SE o aplicativo usar razor pages!
+                endpoints.MapControllerRoute("default", "{controller=Lottery}/{action=Index}/{id?}");
             });
+
         }
 
 

@@ -11,7 +11,7 @@ namespace LoteriaFacil.Services.Api.Configurations
         {
             if (services == null) throw new ArgumentNullException(nameof(services));
 
-            services.AddAutoMapper();
+            services.AddAutoMapperSetup();
 
             // Registering Mappings automatically only works if the 
             // Automapper Profile classes are in ASP.NET project
