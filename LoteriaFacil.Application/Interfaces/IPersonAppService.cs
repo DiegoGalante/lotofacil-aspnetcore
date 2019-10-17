@@ -14,7 +14,6 @@ namespace LoteriaFacil.Application.Interfaces
         Task Update(PersonViewModel personViewModel);
         Task Remove(Guid id);
 
-        Task<IEnumerable<PersonViewModel>> GetByDemand(int start = 0, int end = 0);
         //IList<PersonHistoryData> GetAllHistory(Guid id);
 
     }

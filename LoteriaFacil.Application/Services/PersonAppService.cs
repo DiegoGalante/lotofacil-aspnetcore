@@ -118,11 +118,5 @@ namespace LoteriaFacil.Application.Services
             await Bus.SendCommand(removeCommand);
         }
 
-        public async Task<IEnumerable<PersonViewModel>> GetByDemand(int start = 0, int end = 0)
-        {
-            return null;
-            //return _mapper.Map<PersonViewModel>(_personRepository.GetByDemand(start, end).ToAsyncEnumerable(PersonViewModel));
-            //return await Task.Run(() => _mapper.Map<PersonViewModel>(_personRepository.GetByDemand(start, end))).ToAsyncEnumerable<PersonViewModel>;
-        }
     }
 }
