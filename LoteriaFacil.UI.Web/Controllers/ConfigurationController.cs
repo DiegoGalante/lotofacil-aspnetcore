@@ -5,6 +5,7 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System;
+using System.Threading.Tasks;
 
 namespace LoteriaFacil.UI.Web.Controllers
 {
@@ -20,14 +21,14 @@ namespace LoteriaFacil.UI.Web.Controllers
 
         [HttpPost]
         [Route("/saveConfiguration")]
-        public IActionResult Index([FromBody]object config)
+        public async Task<IActionResult> Index([FromBody]object config)
         {
             ConfigurationViewModel configurationViewModel = JsonConvert.DeserializeObject<ConfigurationViewModel>(config.ToString());
 
             if (!ModelState.IsValid) return View(configurationViewModel);
 
             if (!configurationViewModel.Id.Equals(Guid.Empty))
-                _configurationAppService.Update(configurationViewModel);
+               await _configurationAppService.Update(configurationViewModel);
 
             if (IsValidOperation())
                 ViewBag.Sucesso = "Atualizado com sucesso!";
@@ -39,9 +40,9 @@ namespace LoteriaFacil.UI.Web.Controllers
 
         [HttpPost]
         [Route("/loadConfiguration")]
-        public ObjectResult CarregaConfig()
+        public async Task<IActionResult> CarregaConfig()
         {
-            return new ObjectResult(_configurationAppService.GetAll());
+            return new ObjectResult(await _configurationAppService.GetAll());
         }
     }
 }

@@ -1,8 +1,8 @@
-﻿using System.Linq;
-using LoteriaFacil.Domain.Interfaces;
+﻿using LoteriaFacil.Domain.Interfaces;
 using LoteriaFacil.Domain.Models;
 using LoteriaFacil.Infra.Data.Context;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace LoteriaFacil.Infra.Data.Repository
 {
@@ -17,6 +17,5 @@ namespace LoteriaFacil.Infra.Data.Repository
         {
             return DbSet.AsNoTracking().FirstOrDefault(c => c.Email == email);
         }
-
     }
 }

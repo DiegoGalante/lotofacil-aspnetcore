@@ -1,6 +1,5 @@
 ﻿using LoteriaFacil.Domain.Models;
 using System;
-using System.Collections.Generic;
 using System.Text;
 
 namespace LoteriaFacil.Domain.Interfaces

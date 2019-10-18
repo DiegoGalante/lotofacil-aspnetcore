@@ -8,6 +8,7 @@ using LoteriaFacil.Domain.Interfaces;
 using LoteriaFacil.Infra.Data.Repository.EventSourcing;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace LoteriaFacil.Application.Services
 {
@@ -29,26 +30,26 @@ namespace LoteriaFacil.Application.Services
             this._eventStoreRepository = eventStoreRepository;
         }
 
-        public IEnumerable<ConfigurationViewModel> GetAll()
+        public async Task<IEnumerable<ConfigurationViewModel>> GetAll()
         {
-            return _configurationRepository.GetAll().ProjectTo<ConfigurationViewModel>(_mapper.ConfigurationProvider);
+            return await Task.Run(() => _configurationRepository.GetAll().ProjectTo<ConfigurationViewModel>(_mapper.ConfigurationProvider));
         }
 
-        public ConfigurationViewModel GetById(Guid id)
+        public async Task<ConfigurationViewModel> GetById(Guid id)
         {
-            return _mapper.Map<ConfigurationViewModel>(_configurationRepository.GetById(id));
+            return await Task.Run(() => _mapper.Map<ConfigurationViewModel>(_configurationRepository.GetById(id)));
         }
 
-        public void Register(ConfigurationViewModel configurationViewModel)
+        public async Task Register(ConfigurationViewModel configurationViewModel)
         {
             var registerCommand = _mapper.Map<RegisterNewConfigurationCommand>(configurationViewModel);
-            Bus.SendCommand(registerCommand);
+            await Bus.SendCommand(registerCommand);
         }
 
-        public void Update(ConfigurationViewModel configurationViewModel)
+        public async Task Update(ConfigurationViewModel configurationViewModel)
         {
             var updateCommand = _mapper.Map<UpdateConfigurationCommand>(configurationViewModel);
-            Bus.SendCommand(updateCommand);
+            await Bus.SendCommand(updateCommand);
         }
 
         public void Dispose()
