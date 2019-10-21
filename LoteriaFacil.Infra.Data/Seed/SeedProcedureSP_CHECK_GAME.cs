@@ -18,173 +18,181 @@ namespace LoteriaFacil.Infra.Data.Seed
 	
 	                                    print(CONCAT('PES_ID: ', @pes_id))
 
-	                                    DECLARE @tpj_id uniqueidentifier;
-	                                    SELECT TOP 1 @tpj_id = Id from TypeLottery --loto fácil
+	                                   DECLARE @tpj_id uniqueidentifier;
+SELECT TOP 1 @tpj_id = Id from TypeLottery --loto fácil
 
-                                    -- exec SP_CHECK_GAME 1642, 'C51FC003-0D7E-4009-ABB5-8E8F8615B0CF' 
-                                    --'FFA60E23-F537-4AB1-9138-7FCF0AB24BB7'
-                                    --, '00000000-0000-0000-0000-000000000000'
+print(concat('ID TIPO LOTERIA: ', @tpj_id));
 
-                                    -- select * from PersonLottery
-
-                                    --INSERT INTO PersonLottery (Id, LotteryId, PersonId, Concurse, Game) VALUES ('68F1AE8E-E45A-451E-A2B5-1512BC9E17DD','471C4E2E-EC90-41B0-A0F1-CF45422AA97E', 'C51FC003-0D7E-4009-ABB5-8E8F8615B0CF', 1642, '01-02-03-05-08-09-10-11-14-15-16-19-23-24-25')
-                                    --INSERT INTO PersonLottery (Id, LotteryId, PersonId, Concurse, Game) VALUES ('2129B82D-DB64-4F13-9038-D62A55D3F184','471C4E2E-EC90-41B0-A0F1-CF45422AA97E', 'C51FC003-0D7E-4009-ABB5-8E8F8615B0CF', 1642, '01-02-03-05-08-09-10-11-14-15-17-19-22-23-25')
-                                    --INSERT INTO PersonLottery (Id, LotteryId, PersonId, Concurse, Game) VALUES ('E774B32A-02A4-4952-9F41-DBEBD495E862','471C4E2E-EC90-41B0-A0F1-CF45422AA97E', 'C51FC003-0D7E-4009-ABB5-8E8F8615B0CF', 1642, '01-02-03-05-06-08-09-10-12-15-19-21-22-23-25')
+	print(CONCAT('PES_ID: ', @pes_id))
 
 
-	                                    --UPDATE Person_Lottery
-	                                    --		SET 
-	                                    --			lot_id = null,
-	                                    --			pl_hits = 0,
-	                                    --			pl_game_checked = null
-	                                    --		WHERE
-	                                    --		pl_concurse = 1679
+-- exec SP_CHECK_GAME 1642, 'C51FC003-0D7E-4009-ABB5-8E8F8615B0CF' 
+--'FFA60E23-F537-4AB1-9138-7FCF0AB24BB7'
+--, '00000000-0000-0000-0000-000000000000'
 
-	                                    --delete from Lottery where lot_concurse = 1679
+-- select * from PersonLottery
+
+--INSERT INTO PersonLottery (Id, PersonId, Concurse, Game) VALUES (NEWID(),'8BBC986B-BDA9-4D0B-871D-7B09AA7769EC', 1642, '02-05-06-07-10-11-13-15-17-18-19-20-22-24-25')
+--INSERT INTO PersonLottery (Id, PersonId, Concurse, Game) VALUES (NEWID(),'8BBC986B-BDA9-4D0B-871D-7B09AA7769EC', 1642, '01-02-05-06-07-10-11-13-15-17-18-19-22-24-25')
+--INSERT INTO PersonLottery (Id, PersonId, Concurse, Game) VALUES (NEWID(),'8BBC986B-BDA9-4D0B-871D-7B09AA7769EC', 1642, '01-03-05-06-07-10-11-13-15-17-18-19-22-24-25')
+--INSERT INTO PersonLottery (Id, PersonId, Concurse, Game) VALUES (NEWID(),'8BBC986B-BDA9-4D0B-871D-7B09AA7769EC', 1642, '01-03-04-06-07-10-11-13-15-17-18-19-22-24-25')
+--INSERT INTO PersonLottery (Id, PersonId, Concurse, Game) VALUES (NEWID(),'8BBC986B-BDA9-4D0B-871D-7B09AA7769EC', 1642, '01-02-03-05-08-09-10-13-15-17-18-19-22-24-25')
+--INSERT INTO PersonLottery (Id, PersonId, Concurse, Game) VALUES (NEWID(),'8BBC986B-BDA9-4D0B-871D-7B09AA7769EC', 1642, '01-02-03-05-06-08-09-10-12-15-19-21-22-23-25')
+
+
+	--UPDATE Person_Lottery
+	--		SET 
+	--			lot_id = null,
+	--			pl_hits = 0,
+	--			pl_game_checked = null
+	--		WHERE
+	--		pl_concurse = 1679
+
+	--delete from Lottery where lot_concurse = 1679
 	
 
-	                                    -- DECLARE @game varchar(100) = (SELECT TOP 1 lot_game from Lottery  where lot_concurse = @lot_concurse and tpj_id = @tpj_id order by 1 desc);
-	                                    DECLARE @lot_game varchar(100);
-	                                    DECLARE @lot_id uniqueidentifier;
-	                                    DECLARE @lot_shared15 DECIMAL(10,2);
-	                                    DECLARE @lot_shared14 DECIMAL(10,2);
-	                                    DECLARE @lot_shared13 DECIMAL(10,2);
-	                                    DECLARE @lot_shared12 DECIMAL(10,2);
-	                                    DECLARE @lot_shared11 DECIMAL(10,2);
+	-- DECLARE @game varchar(100) = (SELECT TOP 1 lot_game from Lottery  where lot_concurse = @lot_concurse and tpj_id = @tpj_id order by 1 desc);
+	DECLARE @lot_game varchar(100);
+	DECLARE @lot_id uniqueidentifier;
+	DECLARE @lot_shared15 DECIMAL(10,2);
+	DECLARE @lot_shared14 DECIMAL(10,2);
+	DECLARE @lot_shared13 DECIMAL(10,2);
+	DECLARE @lot_shared12 DECIMAL(10,2);
+	DECLARE @lot_shared11 DECIMAL(10,2);
 	
-	                                    SELECT TOP 1 @lot_id = Id, 
-	                                    @lot_game = Game, 
-	                                    @lot_shared15 = Shared15, 
-	                                    @lot_shared14 = Shared14, 
-	                                    @lot_shared13 = Shared13, 
-	                                    @lot_shared12 = Shared12, 
-	                                    @lot_shared11 = Shared11
-	                                    FROM Lottery 
-	                                    where Concurse = @lot_concurse
-	                                    and TypeLotteryId = @tpj_id
+	SELECT TOP 1 @lot_id = Id, 
+	@lot_game = Game, 
+	@lot_shared15 = Shared15, 
+	@lot_shared14 = Shared14, 
+	@lot_shared13 = Shared13, 
+	@lot_shared12 = Shared12, 
+	@lot_shared11 = Shared11
+	FROM Lottery 
+	where Concurse = @lot_concurse
+	and TypeLotteryId = @tpj_id
 
-	                                    DECLARE @hit_pessoa INT = 0;
+	DECLARE @hit_pessoa INT = 0;
 
-	                                    DECLARE @gamePessoas varchar(100)
-	                                    DECLARE @pl_id uniqueidentifier
-	                                    DECLARE @ticket_amount DECIMAL(10,2)
+	DECLARE @gamePessoas varchar(100)
+	DECLARE @pl_id uniqueidentifier
+	DECLARE @ticket_amount DECIMAL(10,2)
 
-	                                    /*Descomentar a partir daqui*/
-	                                    print('Declara o cursor: db_cursorPessoas');
-	                                    IF @pes_id = '00000000-0000-0000-0000-000000000000'
-	                                    BEGIN 
-	                                    DECLARE db_cursorPessoas CURSOR FOR
-	                                    SELECT  pl.Id, pl.Game
-			                                    FROM PersonLottery pl
-			                                    WHERE
-			                                    pl.Concurse = @lot_concurse 
-			                                    and
-			                                    ISNULL(pl.Game_Checked, null) is null 
-	                                    END
-	                                    ELSE
-	                                    BEGIN
-	                                    DECLARE db_cursorPessoas CURSOR FOR
-	                                    SELECT  pl.Id, pl.Game
-			                                    FROM PersonLottery pl
-			                                    WHERE
-			                                    pl.Concurse = @lot_concurse 
-			                                    and
-			                                    pl.PersonId = @pes_id
-			                                    and
-			                                    ISNULL(pl.Game_Checked, null) is null 
-	                                    END
+	/*Descomentar a partir daqui*/
+	print('Declara o cursor: db_cursorPessoas');
+	IF @pes_id = '00000000-0000-0000-0000-000000000000'
+	BEGIN 
+	DECLARE db_cursorPessoas CURSOR FOR
+	SELECT  pl.Id, pl.Game
+			FROM PersonLottery pl
+			WHERE
+			pl.Concurse = @lot_concurse 
+			and
+			ISNULL(pl.Game_Checked, null) is null 
+	END
+	ELSE
+	BEGIN
+	DECLARE db_cursorPessoas CURSOR FOR
+	SELECT  pl.Id, pl.Game
+			FROM PersonLottery pl
+			WHERE
+			pl.Concurse = @lot_concurse 
+			and
+			pl.PersonId = @pes_id
+			and
+			ISNULL(pl.Game_Checked, null) is null 
+	END
 
 
-	                                    print('Abre o cursor: db_cursorPessoas');
-	                                    open db_cursorPessoas
-	                                    FETCH NEXT FROM db_cursorPessoas INTO @pl_id, @gamePessoas
+	print('Abre o cursor: db_cursorPessoas');
+	open db_cursorPessoas
+	FETCH NEXT FROM db_cursorPessoas INTO @pl_id, @gamePessoas
 	
-	                                    print('Inicia o cursor: db_cursorPessoas');
-	                                    WHILE @@FETCH_STATUS = 0  
-	                                    --INICIA O db_cursor
-	                                    BEGIN
-		                                    SET @hit_pessoa =0;
+	print('Inicia o cursor: db_cursorPessoas');
+	WHILE @@FETCH_STATUS = 0  
+	--INICIA O db_cursor
+	BEGIN
+		SET @hit_pessoa =0;
 
-		                                    select value into #gameLoteria FROM string_split(@lot_game, '-')  WHERE 	RTRIM(LTRIM(value)) <> ''
-		                                    ALTER TABLE #gameLoteria
-		                                    ADD lot_game int NULL DEFAULT(NULL);
+		select value into #gameLoteria FROM string_split(@lot_game, '-')  WHERE 	RTRIM(LTRIM(value)) <> ''
+		ALTER TABLE #gameLoteria
+		ADD lot_game int NULL DEFAULT(NULL);
 
-		                                    ALTER TABLE #gameLoteria
-		                                    ADD pl_id uniqueidentifier NULL DEFAULT(null);
+		ALTER TABLE #gameLoteria
+		ADD pl_id uniqueidentifier NULL DEFAULT(null);
 
-		                                    UPDATE #gameLoteria set lot_game = @lot_concurse;
-		                                    UPDATE #gameLoteria set pl_id = @pl_id;
+		UPDATE #gameLoteria set lot_game = @lot_concurse;
+		UPDATE #gameLoteria set pl_id = @pl_id;
 
-		                                    SELECT value into #gamePessoa FROM string_split(@gamePessoas, '-')  WHERE 	RTRIM(LTRIM(value)) <> ''
-		                                    ALTER TABLE #gamePessoa
-		                                    ADD lot_game int NULL DEFAULT(null);
+		SELECT value into #gamePessoa FROM string_split(@gamePessoas, '-')  WHERE 	RTRIM(LTRIM(value)) <> ''
+		ALTER TABLE #gamePessoa
+		ADD lot_game int NULL DEFAULT(null);
 
-		                                    ALTER TABLE #gamePessoa
-		                                    ADD pl_id uniqueidentifier NULL DEFAULT(null);
+		ALTER TABLE #gamePessoa
+		ADD pl_id uniqueidentifier NULL DEFAULT(null);
 
-		                                    UPDATE #gamePessoa set pl_id = @pl_id;
-		                                    UPDATE #gamePessoa set lot_game = @lot_concurse;
+		UPDATE #gamePessoa set pl_id = @pl_id;
+		UPDATE #gamePessoa set lot_game = @lot_concurse;
 
-		                                    --select * from #gameLoteria
-		                                    --select * from #gamePessoa
+		--select * from #gameLoteria
+		--select * from #gamePessoa
 
-		                                    SET @hit_pessoa = (select count(pes.value) as cont from #gamePessoa pes
-		                                    INNER JOIN #gameLoteria lot on pes.lot_game = lot.lot_game
-		                                    WHERE cast(pes.value as int) = cast(lot.value as int)
-		                                    and pes.pl_id = lot.pl_id
-		                                    and pes.lot_game = lot.lot_game)
-		                                    --select count(pes.value) as cont from #gamePessoa pes
-		                                    --INNER JOIN #gameLoteria lot on pes.lot_game = lot.lot_game
-		                                    ----INNER JOIN Person_Lottery pl on pes.pes_id = pl.pes_id
-		                                    --WHERE cast(pes.value as int) = cast(lot.value as int)
-		                                    --and pes.pl_id = lot.pl_id
+		SET @hit_pessoa = (select count(pes.value) as cont from #gamePessoa pes
+		INNER JOIN #gameLoteria lot on pes.lot_game = lot.lot_game
+		WHERE cast(pes.value as int) = cast(lot.value as int)
+		and pes.pl_id = lot.pl_id
+		and pes.lot_game = lot.lot_game)
+		--select count(pes.value) as cont from #gamePessoa pes
+		--INNER JOIN #gameLoteria lot on pes.lot_game = lot.lot_game
+		----INNER JOIN Person_Lottery pl on pes.pes_id = pl.pes_id
+		--WHERE cast(pes.value as int) = cast(lot.value as int)
+		--and pes.pl_id = lot.pl_id
 
-		                                    print(concat('HIT_PESSOA: ', @hit_pessoa));
+		print(concat('HIT_PESSOA: ', @hit_pessoa));
 						
-		                                    drop table #gameLoteria
-		                                    drop table #gamePessoa
+		drop table #gameLoteria
+		drop table #gamePessoa
 
-		                                    IF @hit_pessoa = 15
-		                                    BEGIN
-			                                    SET @ticket_amount = @lot_shared15;
-		                                    END
-		                                    ELSE IF @hit_pessoa = 14
-		                                    BEGIN
-			                                    SET @ticket_amount = @lot_shared14;
-		                                    END
-		                                    ELSE IF @hit_pessoa = 13
-		                                    BEGIN
-			                                    SET @ticket_amount = @lot_shared13;
-		                                    END
-		                                    ELSE IF @hit_pessoa = 12
-		                                    BEGIN
-			                                    SET @ticket_amount = @lot_shared12;
-		                                    END
-		                                    ELSE IF @hit_pessoa = 11
-		                                    BEGIN
-			                                    SET @ticket_amount = @lot_shared11;
-		                                    END
-		                                    ELSE IF @hit_pessoa <= 10
-		                                    BEGIN
-			                                    SET @ticket_amount = 0;
-		                                    END
+		IF @hit_pessoa = 15
+		BEGIN
+			SET @ticket_amount = @lot_shared15;
+		END
+		ELSE IF @hit_pessoa = 14
+		BEGIN
+			SET @ticket_amount = @lot_shared14;
+		END
+		ELSE IF @hit_pessoa = 13
+		BEGIN
+			SET @ticket_amount = @lot_shared13;
+		END
+		ELSE IF @hit_pessoa = 12
+		BEGIN
+			SET @ticket_amount = @lot_shared12;
+		END
+		ELSE IF @hit_pessoa = 11
+		BEGIN
+			SET @ticket_amount = @lot_shared11;
+		END
+		ELSE IF @hit_pessoa <= 10
+		BEGIN
+			SET @ticket_amount = 0;
+		END
 				
-		                                    print(CONCAT('PERSONLOTTERY_ID: ', @pl_id))
-		                                    print(CONCAT('HITS_ID: ', @hit_pessoa))
-		                                    print(CONCAT('LOT_ID: ', @lot_id))
+		print(CONCAT('PERSONLOTTERY_ID: ', @pl_id))
+		print(CONCAT('HITS_ID: ', @hit_pessoa))
+		print(CONCAT('LOT_ID: ', @lot_id))
 
-		                                    UPDATE PersonLottery 
-			                                    SET Hits = @hit_pessoa, LotteryId = @lot_id, Ticket_Amount = ISNULL(@ticket_amount, 0), Game_Checked = GETDATE()
-		                                    WHERE Id = @pl_id and Concurse = @lot_concurse
+		UPDATE PersonLottery 
+			SET Hits = @hit_pessoa, LotteryId = @lot_id, Ticket_Amount = ISNULL(@ticket_amount, 0), Game_Checked = GETDATE()
+		WHERE Id = @pl_id and Concurse = @lot_concurse
 
-	                                    print('Seta o próximo loop do cursor: db_cursorPessoas');
-	                                    FETCH NEXT FROM db_cursorPessoas INTO  @pl_id, @gamePessoas
-	                                    END 
+	print('Seta o próximo loop do cursor: db_cursorPessoas');
+	FETCH NEXT FROM db_cursorPessoas INTO  @pl_id, @gamePessoas
+	END 
 	
-	                                    print('Fecha o cursor: db_cursorPessoas');
-	                                    CLOSE db_cursorPessoas  
-	                                    print('Desaloca o cursor: db_cursorPessoas');
-	                                    DEALLOCATE db_cursorPessoas 
+	print('Fecha o cursor: db_cursorPessoas');
+	CLOSE db_cursorPessoas  
+	print('Desaloca o cursor: db_cursorPessoas');
+	DEALLOCATE db_cursorPessoas 
 
 	                                    IF @pes_id = '00000000-0000-0000-0000-000000000000'
 	                                    BEGIN 
@@ -234,7 +242,7 @@ namespace LoteriaFacil.Infra.Data.Seed
             catch (System.Exception ex)
             {
 
-                
+
             }
         }
     }
