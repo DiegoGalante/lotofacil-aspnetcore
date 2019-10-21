@@ -19,7 +19,7 @@ namespace LoteriaFacil.Infra.Data.Seed
 	                                    print(CONCAT('PES_ID: ', @pes_id))
 
 	                                    DECLARE @tpj_id uniqueidentifier;
-	                                    SELECT TOP 1 @tpj_id = Id from TypeLottery WHERE Id = 'FFA60E23-F537-4AB1-9138-7FCF0AB24BB7' --loto fácil
+	                                    SELECT TOP 1 @tpj_id = Id from TypeLottery --loto fácil
 
                                     -- exec SP_CHECK_GAME 1642, 'C51FC003-0D7E-4009-ABB5-8E8F8615B0CF' 
                                     --'FFA60E23-F537-4AB1-9138-7FCF0AB24BB7'
