@@ -153,7 +153,7 @@
                                                         <span class="caret"></span>
                                                         <span class="sr-only">Toggle Dropdown</span>
                                                     </button>
-                                                    <ul class="dropdown-menu" role="menu">
+                                                    <ul class="dropdown-menu btn bg-primary p-2" role="menu">
                                                         <li><a href="#" id="btnGerarJogoAutomatico" class="p-0">Gerar Jogo Automático</a></li>
                                                     </ul>
                                                 </div>
@@ -165,7 +165,7 @@
                                     </div>
                                 </div>
                                 <div class="card-body">
-                                    <h4>00-00-00-00-00-00-00-00-00-00-00</h4>
+                                    <h4 id="txtNumSelecionados">00-00-00-00-00-00-00-00-00-00-00</h4>
                                 </div>
                             </div>
                         </div>
@@ -205,3 +205,9 @@
         </div>
     </div>
 </div>
+
+@section Scripts{
+
+    <script src="~/static/js/pages/cadJogo/cadJogo.js"></script>
+
+}

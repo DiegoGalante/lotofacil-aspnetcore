@@ -1,3 +1,7 @@
+var imported = document.createElement('script');
+imported.src = '~/static/js/utils.js';
+document.head.appendChild(imported);
+
 var Grupo1 = "",
     Grupo2 = "", Grupo3 = "",
     Grupo4 = "", Grupo5 = "",
@@ -10,15 +14,17 @@ var ListGrupo1 = [],
     ListGrupo4 = [], ListGrupo5 = [],
     ListGrupo6 = [], ListGrupo7 = [];
 
-var CorDezenasFixas = str.fontColor("MistyRose");
-var CorGrupo1 = str.fontColor("Brown");
-var CorGrupo2 = str.fontColor("BlueViolet");
-var CorGrupo3 = str.fontColor("BurlyWood");
-var CorGrupo4 = str.fontColor("DarkGray");
-var CorGrupo5 = str.fontColor("DarkViolet");
-var CorGrupo6 = str.fontColor("Goldenrod");
-var CorGrupo7 = str.fontColor("Indigo");
-var CorPadrao = str.fontColor("White");
+//FAZER NO CSS btn-nome_da_cor PRA FICAR MELHOR O MANUSEIO DA COR DO BOTAO
+
+var CorDezenasFixas = "MistyRose";
+//var CorGrupo1 = str.fontColor("Brown");
+//var CorGrupo2 = str.fontColor("BlueViolet");
+//var CorGrupo3 = str.fontColor("BurlyWood");
+//var CorGrupo4 = str.fontColor("DarkGray");
+//var CorGrupo5 = str.fontColor("DarkViolet");
+//var CorGrupo6 = str.fontColor("Goldenrod");
+//var CorGrupo7 = str.fontColor("Indigo");
+var CorPadrao = "#F4F4F4";
 
 var concursoASerSorteado = 0;
 var txtDezena = "";
@@ -42,21 +48,24 @@ var btnGerarJogo = $('#btnGerarJogo');
 var btnGerarJogoAutomatico = $('#btnSalvarJogos');
 var btnLimpar = $('#btnLimpar');
 
+var txtNumSelecionados = $('#txtNumSelecionados');
 
 $(document).ready(function () {
 
+
+    Btn1.click(function () {
+        Btn1_Click();
+    });
+
     ResetaTela();
-
-
 });
-
 
 function ResetaTela() {
 
     concursoASerSorteado = 0;
     cont = 1;
-    lbAjuda.Text = "Selecione as dezenas Fexas!";
-    lbHover.Text = "";
+    //lbAjuda.Text = "Selecione as dezenas Fexas!";
+    //lbHover.Text = "";
 
     $('#btnGerarJogo').removeClass('Hide');
     $('#btnGerarJogoAutomatico').removeClass('Hide');
@@ -65,7 +74,7 @@ function ResetaTela() {
         PintarNumero(i, CorPadrao);
     }
 
-    txtNumSelecionados.Text = txtDezenaPadrao;
+    txtNumSelecionados.html = txtDezenaPadrao;
 
     listAutomaticoParFixa = [];
     listAutomaticoImparFixa = [];
@@ -81,93 +90,187 @@ function ResetaTela() {
 
     dezenasExistentes = "";
 
-    btnSalvarJogos.Visible = false;
-    btnEnviarJogosPorEmail.Visible = false;
+    //limpar as duas tabelas!!
+
+    //btnSalvarJogos.Visible = false;
+    //btnEnviarJogosPorEmail.Visible = false;
 }
 
 function PintarNumero(numero, corPintar) {
+    $('#btn' + numero).BackColor = corPintar;
+}
 
-    //experiemtnar esse cara!
-    //$('#btn' + numero).BackColor = corPintar;
+function Btn1_Click() {
 
-    switch (parseInt(numero)) {
+    if (Btn1.hasClass('btn-default')) {
+        DezenaEscolhida(parseInt(enumDezenas.Um));
+    }
+    else
+        alert('NAO É BrANCO');
+    //    RemoverDezena((int)Enums.Dezenas.Um, VerificaQualGrupoDezenaEsta((int)Enums.Dezenas.Um));
+}
+
+function DezenaEscolhida(dezenaString) {
+
+    var dezena = 0;
+    txtDezena = string.Empty;
+    dezena = parseInt(dezenaString);
+
+    var escolhidas = txtNumSelecionados.Text.Split('-');
+
+    var pos = -1;
+    for (var i = 0; i < escolhidas.Length; i++) {
+        var d = 0;
+        d = parseInt(escolhidas[i]);
+        if (d === 0) {
+            pos = i;
+            escolhidas[i] = dezena.ToString();
+            break;
+        }
+    }
+
+    for (var j = 0; j < escolhidas.Length; j++) {
+        txtDezena += FormataDezena(escolhidas[j]);
+        if (txtDezena.Length >= 2 && txtDezena.Length <= 30)
+            txtDezena += "-";
+    }
+
+    //já embutir a cor que é pra pintar o botão!
+    //fazer retonou como out no parametro do metodo
+    if (ListDezenasFixas.length === 0 || ListDezenasFixas.length !== 11) {
+        txtDezena = "";
+
+        ListDezenasFixas.push(parseInt(FormataDezena(dezenaString.ToString())));
+        PintarNumero(parseInt(dezenaString), CorDezenasFixas);
+    }
+    //else
+    //    if (ListGrupo1.Count == 0 || ListGrupo1.Count != 2) {
+    //        txtDezena = "";
+    //        ListGrupo1.Add(Convert.ToByte(FormataDezena(dezenaString.ToString())));
+    //        for (int i = 0; i < ListGrupo1.Count; i++)
+    //        {
+    //            txtDezena += FormataDezena(ListGrupo1[i].ToString());
+    //            if (txtDezena.Length >= 2 && txtDezena.Length <= 30)
+    //                txtDezena += "-";
+    //        }
+
+    //        Grupo1 = txtDezena;
+    //        PintarNumero((int)dezenaString, CorGrupo1);
+    //    }
+    //    else
+    //        if (ListGrupo2.Count == 0 || ListGrupo2.Count != 2) {
+    //            txtDezena = "";
+    //            ListGrupo2.Add(Convert.ToByte(FormataDezena(dezenaString.ToString())));
+    //            for (int i = 0; i < ListGrupo2.Count; i++)
+    //            {
+    //                txtDezena += FormataDezena(ListGrupo2[i].ToString());
+    //                if (txtDezena.Length >= 2 && txtDezena.Length <= 30)
+    //                    txtDezena += "-";
+    //            }
+
+    //            Grupo2 = txtDezena;
+    //            PintarNumero((int)dezenaString, CorGrupo2);
+    //        }
+    //        else
+    //            if (ListGrupo3.Count == 0 || ListGrupo3.Count != 2) {
+    //                txtDezena = "";
+    //                ListGrupo3.Add(Convert.ToByte(FormataDezena(dezenaString.ToString())));
+    //                for (int i = 0; i < ListGrupo3.Count; i++)
+    //                {
+    //                    txtDezena += FormataDezena(ListGrupo3[i].ToString());
+    //                    if (txtDezena.Length >= 2 && txtDezena.Length <= 30)
+    //                        txtDezena += "-";
+    //                }
+
+    //                Grupo3 = txtDezena;
+
+    //                PintarNumero((int)dezenaString, CorGrupo3);
+    //            }
+    //            else
+    //                if (ListGrupo4.Count == 0 || ListGrupo4.Count != 2) {
+    //                    txtDezena = "";
+    //                    ListGrupo4.Add(Convert.ToByte((FormataDezena(dezenaString.ToString()))));
+    //                    for (int i = 0; i < ListGrupo4.Count; i++)
+    //                    {
+    //                        txtDezena += FormataDezena(ListGrupo4[i].ToString());
+    //                        if (txtDezena.Length >= 2 && txtDezena.Length <= 30)
+    //                            txtDezena += "-";
+    //                    }
+
+    //                    Grupo4 = txtDezena;
+    //                    PintarNumero((int)dezenaString, CorGrupo4);
+    //                }
+
+    //                else
+    //                    if (ListGrupo5.Count == 0 || ListGrupo5.Count != 2) {
+    //                        txtDezena = "";
+    //                        ListGrupo5.Add(Convert.ToByte(FormataDezena(dezenaString.ToString())));
+    //                        for (int i = 0; i < ListGrupo5.Count; i++)
+    //                        {
+    //                            txtDezena += FormataDezena(ListGrupo5[i].ToString());
+    //                            if (txtDezena.Length >= 2 && txtDezena.Length <= 30)
+    //                                txtDezena += "-";
+    //                        }
+
+    //                        Grupo5 = txtDezena;
+    //                        PintarNumero((int)dezenaString, CorGrupo5);
+    //                    }
+    //                    else
+    //                        if (ListGrupo6.Count == 0 || ListGrupo6.Count != 2) {
+    //                            txtDezena = "";
+    //                            ListGrupo6.Add(Convert.ToByte(FormataDezena(dezenaString.ToString())));
+    //                            for (int i = 0; i < ListGrupo6.Count; i++)
+    //                            {
+    //                                txtDezena += FormataDezena(ListGrupo6[i].ToString());
+    //                                if (txtDezena.Length >= 2 && txtDezena.Length <= 30)
+    //                                    txtDezena += "-";
+    //                            }
+
+    //                            Grupo6 = txtDezena;
+    //                            PintarNumero((int)dezenaString, CorGrupo6);
+    //                        }
+    //                        else
+    //                            if (ListGrupo7.Count == 0 || ListGrupo7.Count != 2) {
+    //                                txtDezena = "";
+    //                                ListGrupo7.Add(Convert.ToByte(FormataDezena(dezenaString.ToString())));
+    //                                for (int i = 0; i < ListGrupo7.Count; i++)
+    //                                {
+    //                                    txtDezena += FormataDezena(ListGrupo7[i].ToString());
+    //                                    if (txtDezena.Length >= 2 && txtDezena.Length <= 30)
+    //                                        txtDezena += "-";
+    //                                }
+
+    //                                Grupo7 = txtDezena;
+    //                                PintarNumero((int)dezenaString, CorGrupo7);
+    //                            }
+
+    //AtualizarDadosTela();
+
+
+}
+
+function FormataDezena(dezenaString) {
+    var dezena = 0;
+    dezena = parseInt(dezenaString);
+    var retorno = "";
+
+    switch (dezena) {
+        case 0:
         case 1:
-            Btn1.BackColor = corPintar;
-            break;
         case 2:
-            Btn2.BackColor = corPintar;
-            break;
         case 3:
-            Btn3.BackColor = corPintar;
-            break;
         case 4:
-            Btn4.BackColor = corPintar;
-            break;
         case 5:
-            Btn5.BackColor = corPintar;
-            break;
         case 6:
-            Btn6.BackColor = corPintar;
-            break;
         case 7:
-            Btn7.BackColor = corPintar;
-            break;
         case 8:
-            Btn8.BackColor = corPintar;
-            break;
         case 9:
-            Btn9.BackColor = corPintar;
+            retorno = "0" + dezena.ToString().Trim();
             break;
-        case 10:
-            Btn10.BackColor = corPintar;
-            break;
-        case 11:
-            Btn11.BackColor = corPintar;
-            break;
-        case 12:
-            Btn12.BackColor = corPintar;
-            break;
-        case 13:
-            Btn13.BackColor = corPintar;
-            break;
-        case 14:
-            Btn14.BackColor = corPintar;
-            break;
-        case 15:
-            Btn15.BackColor = corPintar;
-            break;
-        case 16:
-            Btn16.BackColor = corPintar;
-            break;
-        case 17:
-            Btn17.BackColor = corPintar;
-            break;
-        case 18:
-            Btn18.BackColor = corPintar;
-            break;
-        case 19:
-            Btn19.BackColor = corPintar;
-            break;
-        case 20:
-            Btn20.BackColor = corPintar;
-            break;
-        case 21:
-            Btn21.BackColor = corPintar;
-            break;
-        case 22:
-            Btn22.BackColor = corPintar;
-            break;
-        case 23:
-            Btn23.BackColor = corPintar;
-            break;
-        case 24:
-            Btn24.BackColor = corPintar;
-            break;
-        case 25:
-            Btn25.BackColor = corPintar;
-            break;
-
         default:
+            retorno = dezena.ToString();
             break;
     }
+
+    return retorno;
 }
