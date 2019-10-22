@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading.Tasks;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 //using LoteriaFacil.Application.EventSourcedNormalizers;
@@ -39,42 +40,42 @@ namespace LoteriaFacil.Application.Services
             GC.SuppressFinalize(this);
         }
 
-        public IEnumerable<LotteryViewModel> GetAll()
+        public async Task<IEnumerable<LotteryViewModel>> GetAll()
         {
-            return _lotteryRepository.GetAll().ProjectTo<LotteryViewModel>(_mapper.ConfigurationProvider);
+            return await Task.Run(() => _lotteryRepository.GetAll().ProjectTo<LotteryViewModel>(_mapper.ConfigurationProvider));
         }
 
-        public LotteryViewModel GetById(Guid id)
+        public async Task<LotteryViewModel> GetById(Guid id)
         {
-            return _mapper.Map<LotteryViewModel>(_lotteryRepository.GetById(id));
+            return await Task.Run(() => _mapper.Map<LotteryViewModel>(_lotteryRepository.GetById(id)));
         }
 
-        public void Register(LotteryViewModel lotteryViewModel)
+        public async Task Register(LotteryViewModel lotteryViewModel)
         {
             var registerCommand = _mapper.Map<RegisterNewLotteryCommand>(lotteryViewModel);
-            Bus.SendCommand(registerCommand);
+            await Bus.SendCommand(registerCommand);
         }
 
         public void Register(List<LotteryViewModel> listlotteryViewModel)
         {
             if (listlotteryViewModel != null && listlotteryViewModel.Count > 0)
-                foreach (var lotteryViewModel in listlotteryViewModel)
-                {
-                    var registerCommand = _mapper.Map<RegisterNewLotteryCommand>(lotteryViewModel);
-                    Bus.SendCommand(registerCommand);
-                }
+                Parallel.ForEach(listlotteryViewModel, (lotteryViewModel) =>
+                 {
+                     var registerCommand = _mapper.Map<RegisterNewLotteryCommand>(lotteryViewModel);
+                     Bus.SendCommand(registerCommand);
+                 });
         }
 
-        public void Remove(Guid id)
+        public async Task Remove(Guid id)
         {
             var removeCommand = new RemoveLotteryCommand(id);
-            Bus.SendCommand(removeCommand);
+            await Bus.SendCommand(removeCommand);
         }
 
-        public void Update(LotteryViewModel lotteryViewModel)
+        public async Task Update(LotteryViewModel lotteryViewModel)
         {
             var updateCommand = _mapper.Map<UpdateLotteryCommand>(lotteryViewModel);
-            Bus.SendCommand(updateCommand);
+            await Bus.SendCommand(updateCommand);
         }
     }
 }

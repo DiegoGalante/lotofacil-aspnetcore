@@ -27,6 +27,8 @@ namespace LoteriaFacil.Infra.Data.Mappings
                 .IsRequired();
 
             builder.Property(c => c.DtRegister)
+                .HasColumnType("datetime2")
+                .HasDefaultValueSql("GETDATE()")
                 .IsRequired();
 
             builder.Property(c => c.Active)

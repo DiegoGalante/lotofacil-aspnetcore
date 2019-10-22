@@ -55,6 +55,54 @@ namespace LoteriaFacil.Infra.Data.Migrations
                     b.ToTable("Configuration");
                 });
 
+            modelBuilder.Entity("LoteriaFacil.Domain.Models.JsonDashboard", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("Concurse");
+
+                    b.Property<string>("DtConcurse");
+
+                    b.Property<string>("DtExtense");
+
+                    b.Property<string>("Game");
+
+                    b.Property<int>("Hit11");
+
+                    b.Property<int>("Hit12");
+
+                    b.Property<int>("Hit13");
+
+                    b.Property<int>("Hit14");
+
+                    b.Property<int>("Hit15");
+
+                    b.Property<decimal>("Percent11");
+
+                    b.Property<decimal>("Percent12");
+
+                    b.Property<decimal>("Percent13");
+
+                    b.Property<decimal>("Percent14");
+
+                    b.Property<decimal>("Percent15");
+
+                    b.Property<decimal>("Shared11");
+
+                    b.Property<decimal>("Shared12");
+
+                    b.Property<decimal>("Shared13");
+
+                    b.Property<decimal>("Shared14");
+
+                    b.Property<decimal>("Shared15");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("JsonDashboard");
+                });
+
             modelBuilder.Entity("LoteriaFacil.Domain.Models.Lottery", b =>
                 {
                     b.Property<Guid>("Id")
@@ -114,7 +162,7 @@ namespace LoteriaFacil.Infra.Data.Migrations
                         .HasColumnType("decimal(10, 2)")
                         .HasDefaultValue(0m);
 
-                    b.Property<Guid?>("TypeLotteryId");
+                    b.Property<Guid>("TypeLotteryId");
 
                     b.HasKey("Id");
 
@@ -134,7 +182,10 @@ namespace LoteriaFacil.Infra.Data.Migrations
                         .HasColumnType("bit")
                         .HasDefaultValue(true);
 
-                    b.Property<DateTime>("DtRegister");
+                    b.Property<DateTime>("DtRegister")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("GETDATE()");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -154,6 +205,30 @@ namespace LoteriaFacil.Infra.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Person");
+                });
+
+            modelBuilder.Entity("LoteriaFacil.Domain.Models.PersonGame", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("Concurse");
+
+                    b.Property<string>("Game");
+
+                    b.Property<int>("Hits");
+
+                    b.Property<Guid>("LotteryId");
+
+                    b.Property<string>("Name");
+
+                    b.Property<Guid>("PesId");
+
+                    b.Property<decimal>("Ticket_Amount");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("PersonGame");
                 });
 
             modelBuilder.Entity("LoteriaFacil.Domain.Models.PersonLottery", b =>
@@ -183,9 +258,9 @@ namespace LoteriaFacil.Infra.Data.Migrations
                         .HasColumnType("int")
                         .HasDefaultValue(0);
 
-                    b.Property<Guid?>("LotteryId");
+                    b.Property<Guid>("LotteryId");
 
-                    b.Property<Guid?>("PersonId");
+                    b.Property<Guid>("PersonId");
 
                     b.Property<decimal>("Ticket_Amount")
                         .ValueGeneratedOnAdd()
@@ -234,18 +309,21 @@ namespace LoteriaFacil.Infra.Data.Migrations
                 {
                     b.HasOne("LoteriaFacil.Domain.Models.TypeLottery", "TypeLottery")
                         .WithMany()
-                        .HasForeignKey("TypeLotteryId");
+                        .HasForeignKey("TypeLotteryId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("LoteriaFacil.Domain.Models.PersonLottery", b =>
                 {
                     b.HasOne("LoteriaFacil.Domain.Models.Lottery", "Lottery")
                         .WithMany()
-                        .HasForeignKey("LotteryId");
+                        .HasForeignKey("LotteryId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("LoteriaFacil.Domain.Models.Person", "Person")
                         .WithMany()
-                        .HasForeignKey("PersonId");
+                        .HasForeignKey("PersonId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }
